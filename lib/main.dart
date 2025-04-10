@@ -4,35 +4,35 @@ import 'package:window_size/window_size.dart';
 import 'dart:io';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:logging/logging.dart';
 
 import 'repositories/term_repository.dart';
 import 'repositories/project_repository.dart';
+import 'repositories/subscription_repository.dart';
 import 'services/term_matcher.dart';
 import 'services/correction_service.dart';
 import 'ui/screens/project_list_screen.dart';
 import 'ui/theme/app_theme.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Logger yapılandırması
-  Logger.root.level = Level.INFO;
-  Logger.root.onRecord.listen((record) {
-    // ignore: avoid_print
-    print('${record.level.name}: ${record.time}: ${record.message}');
-  });
 
   if (Platform.isMacOS) {
     setWindowMinSize(const Size(800, 600));
     setWindowMaxSize(Size.infinite);
   }
 
+  // Abonelik repository'sini oluştur ve yükle
+  final subscriptionRepo = SubscriptionRepository();
+  await subscriptionRepo.loadSubscription();
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => TermRepository()),
         ChangeNotifierProvider(create: (_) => ProjectRepository()),
+        ChangeNotifierProvider.value(value: subscriptionRepo),
         ProxyProvider<TermRepository, TermMatcher>(
           update: (_, termRepo, __) => TermMatcher(termRepo),
         ),

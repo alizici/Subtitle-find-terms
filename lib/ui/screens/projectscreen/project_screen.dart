@@ -3,7 +3,9 @@ import 'package:chinese_english_term_corrector/models/project.dart';
 import 'package:chinese_english_term_corrector/repositories/document_repository.dart';
 import 'package:chinese_english_term_corrector/repositories/project_repository.dart';
 import 'package:chinese_english_term_corrector/repositories/term_repository.dart';
+import 'package:chinese_english_term_corrector/repositories/subscription_repository.dart';
 import 'package:chinese_english_term_corrector/ui/screens/document_processing_screen.dart';
+import 'package:chinese_english_term_corrector/ui/screens/subscription_screen.dart';
 import 'package:chinese_english_term_corrector/utils/ass_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -90,6 +92,57 @@ class _ProjectScreenState extends State<ProjectScreen>
               ),
             ],
             icon: const Icon(Icons.add_circle_outline),
+          ),
+          // Abonelik durumu butonu
+          Consumer<SubscriptionRepository>(
+            builder: (context, subscriptionRepo, child) {
+              final remainingUploads =
+                  subscriptionRepo.subscription.remainingUploads;
+              final maxUploads = subscriptionRepo.subscription.remainingUploads;
+
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.receipt_long),
+                    tooltip: 'Abonelik Durumum',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SubscriptionScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  if (remainingUploads == 0)
+                    Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: const Text(
+                          '!',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
         ],
         bottom: TabBar(
@@ -294,6 +347,16 @@ class _ProjectScreenState extends State<ProjectScreen>
 
   Future<void> _addDocument() async {
     try {
+      // Abonelik durumunu kontrol et
+      final subscriptionRepo =
+          Provider.of<SubscriptionRepository>(context, listen: false);
+
+      if (!subscriptionRepo.subscription.hasRemainingUploads) {
+        // Yükleme hakkı kalmadıysa abonelik ekranına yönlendir
+        _showSubscriptionDialog();
+        return;
+      }
+
       final chineseResult = await FilePicker.platform.pickFiles(
         dialogTitle: 'Çince Kaynak Belgeyi Seçin',
         type: FileType.custom,
@@ -364,22 +427,39 @@ class _ProjectScreenState extends State<ProjectScreen>
 
           await projectRepo.addDocument(document);
 
+          // Abonelik hakkını kullan
+          await subscriptionRepo.useUpload();
+
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Belge başarıyla eklendi'),
+              duration: Duration(seconds: 2),
             ),
           );
         }
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Hata: $e')),
+        SnackBar(
+          content: Text('Hata: $e'),
+          duration: const Duration(seconds: 3),
+        ),
       );
     }
   }
 
   Future<void> _addDocumentsFromFolder() async {
     try {
+      // Abonelik durumunu kontrol et
+      final subscriptionRepo =
+          Provider.of<SubscriptionRepository>(context, listen: false);
+
+      if (!subscriptionRepo.subscription.hasRemainingUploads) {
+        // Yükleme hakkı kalmadıysa abonelik ekranına yönlendir
+        _showSubscriptionDialog();
+        return;
+      }
+
       // Klasör seçme
       final result = await FilePicker.platform.getDirectoryPath(
         dialogTitle: 'Altyazı Dosyalarını İçeren Klasörü Seçin',
@@ -402,11 +482,28 @@ class _ProjectScreenState extends State<ProjectScreen>
         // Eşleştirme için geri kalanları işle
         final pairs = _matchSubtitleFiles(subtitleFiles);
 
+        // Abonelik limiti nedeniyle yüklenebilecek dosya sayısını kontrol et
+        final remainingUploads = subscriptionRepo.subscription.remainingUploads;
+        final pairsToUpload = pairs.length > remainingUploads
+            ? pairs.sublist(0, remainingUploads)
+            : pairs;
+
+        if (pairs.length > remainingUploads) {
+          // Kullanıcıyı bilgilendir
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                  'Kalan hakkınız: $remainingUploads. Sadece $remainingUploads dosya çifti yüklenecek.'),
+              duration: const Duration(seconds: 5),
+            ),
+          );
+        }
+
         int addedCount = 0;
         int errorCount = 0;
 
         // Her bir eşleşme için belge oluştur ve projeye ekle
-        for (var pair in pairs) {
+        for (var pair in pairsToUpload) {
           try {
             final document = await _createDocumentFromFiles(
                 pair.chineseFile, pair.englishFile);
@@ -418,6 +515,9 @@ class _ProjectScreenState extends State<ProjectScreen>
 
             await projectRepo.addDocument(document);
             addedCount++;
+
+            // Abonelik hakkını kullan
+            await subscriptionRepo.useUpload();
           } catch (e) {
             errorCount++;
             print('Dosya eklenirken hata: ${pair.chineseFile.path} - $e');
@@ -447,6 +547,35 @@ class _ProjectScreenState extends State<ProjectScreen>
         SnackBar(content: Text('Hata: $e')),
       );
     }
+  }
+
+  // Abonelik diyaloğunu göster
+  void _showSubscriptionDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Altyazı Yükleme Limiti'),
+        content: const Text(
+            'Altyazı yükleme hakkınız kalmadı. Daha fazla altyazı yüklemek için abonelik paketlerimizden birini satın alabilirsiniz.'),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('İptal')),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SubscriptionScreen(),
+                ),
+              );
+            },
+            child: const Text('Abonelik Paketlerini Gör'),
+          ),
+        ],
+      ),
+    );
   }
 
   // Altyazı dosyalarını eşleştir
