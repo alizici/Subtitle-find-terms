@@ -1,0 +1,48 @@
+name: chinese_english_term_corrector
+description: Çince-İngilizce çevirilerdeki terim tutarsızlıklarını düzeltmek için geliştirilen bir Flutter uygulaması.
+publish_to: 'none' # Bu paketin pub.dev'de yayınlanmayacağını belirtir
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.19.0 <4.0.0"  # Daha geniş uyumluluk aralığı
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # Temel bileşenler
+  provider: ^6.0.5        # Durum yönetimi için
+  path_provider: ^2.1.1   # Dosya sistemi erişimi için
+  file_picker: ^5.3.3     # Dosya seçme diyalogları için
+  shared_preferences: ^2.2.2  # Kullanıcı tercihlerini kaydetmek için
+  
+  # Kullanıcı arayüzü bileşenleri
+  fl_chart: ^0.63.0       # Grafikler için
+  google_fonts: ^5.1.0    # Özel yazı tipleri için
+  collection: ^1.17.2     # Gelişmiş koleksiyon işlemleri için
+  cupertino_icons: ^1.0.6  # iOS tarzı ikonlar için
+  
+  # macOS pencere özellikleri
+  window_size:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding.git
+      path: plugins/window_size
+      ref: 6c66ad23ee79749f30a8eece542cf54eaf157ed8  # Sabit commit referansı
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.3
+
+flutter:
+  uses-material-design: true
+  
+  fonts:
+    - family: NotoSansSC
+      fonts:
+        - asset: assets/fonts/NotoSansSC-Regular.ttf
+        - asset: assets/fonts/NotoSansSC-Bold.ttf
+          weight: 700
+  
+  assets:
+    - assets/images/
