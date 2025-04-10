@@ -1,15 +1,53 @@
 import 'dart:core'; // Duration için gerekli
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+// Lokalizasyon yardımcı sınıfı
+class AssParserLocalizer {
+  static String invalidTimeFormat(BuildContext context, String timestamp) {
+    return AppLocalizations.of(context)!.invalidTimeFormat(timestamp);
+  }
+
+  static String invalidSecondsFormat(BuildContext context, String timestamp) {
+    return AppLocalizations.of(context)!.invalidSecondsFormat(timestamp);
+  }
+
+  static String timestampParsingError(
+      BuildContext context, String timestamp, String error) {
+    return AppLocalizations.of(context)!
+        .timestampParsingError(timestamp, error);
+  }
+
+  static String warningDialogueMissingFields(
+      BuildContext context, String line) {
+    return AppLocalizations.of(context)!.warningDialogueMissingFields(line);
+  }
+
+  static String dialogueParsingError(
+      BuildContext context, String line, String format, String error) {
+    return AppLocalizations.of(context)!
+        .dialogueParsingError(line, format, error);
+  }
+}
 
 // Zaman damgasını Duration nesnesine çeviren yardımcı fonksiyon
-Duration _parseAssTimestamp(String timestamp) {
+Duration _parseAssTimestamp(String timestamp, [BuildContext? context]) {
   try {
     final parts = timestamp.split(':');
-    if (parts.length != 3)
-      throw FormatException("Geçersiz zaman formatı: $timestamp");
+    if (parts.length != 3) {
+      final errorMsg = context != null
+          ? AssParserLocalizer.invalidTimeFormat(context, timestamp)
+          : "Invalid time format: $timestamp";
+      throw FormatException(errorMsg);
+    }
 
     final secondsParts = parts[2].split('.');
-    if (secondsParts.length != 2)
-      throw FormatException("Geçersiz saniye/salise formatı: $timestamp");
+    if (secondsParts.length != 2) {
+      final errorMsg = context != null
+          ? AssParserLocalizer.invalidSecondsFormat(context, timestamp)
+          : "Invalid seconds/centiseconds format: $timestamp";
+      throw FormatException(errorMsg);
+    }
 
     final hours = int.parse(parts[0]);
     final minutes = int.parse(parts[1]);
@@ -23,7 +61,12 @@ Duration _parseAssTimestamp(String timestamp) {
       milliseconds: centiseconds * 10, // Milisaniyeye çevir
     );
   } catch (e) {
-    print("Zaman damgası ayrıştırma hatası: '$timestamp' - $e");
+    if (context != null) {
+      print(AssParserLocalizer.timestampParsingError(
+          context, timestamp, e.toString()));
+    } else {
+      print("Timestamp parsing error: '$timestamp' - $e");
+    }
     // Hata durumunda varsayılan bir değer döndür veya hatayı yeniden fırlat
     return Duration.zero;
   }
@@ -56,7 +99,8 @@ class AssEvent {
   });
 
   // Dialogue satırını ve format bilgisini alarak AssEvent nesnesi oluşturur
-  factory AssEvent.fromLine(String line, List<String> format) {
+  factory AssEvent.fromLine(String line, List<String> format,
+      [BuildContext? context]) {
     // Satırın 'Dialogue: ' kısmını atla
     final valuesString = line.substring(line.indexOf(':') + 1).trim();
     final values = <String>[];
@@ -75,7 +119,12 @@ class AssEvent {
         } else {
           // Eksik alanlar var, boş ekle ve uyar
           values.add('');
-          print("Uyarı: Dialogue satırında yeterli alan bulunamadı: $line");
+          if (context != null) {
+            print(
+                AssParserLocalizer.warningDialogueMissingFields(context, line));
+          } else {
+            print("Warning: Not enough fields in Dialogue line: $line");
+          }
         }
         // Kalan beklenen alanları boş ile doldur
         while (values.length < fieldsToSplit) {
@@ -110,8 +159,8 @@ class AssEvent {
 
     return AssEvent(
       layer: int.tryParse(data['Layer'] ?? '0') ?? 0,
-      start: _parseAssTimestamp(data['Start'] ?? '0:00:00.00'),
-      end: _parseAssTimestamp(data['End'] ?? '0:00:00.00'),
+      start: _parseAssTimestamp(data['Start'] ?? '0:00:00.00', context),
+      end: _parseAssTimestamp(data['End'] ?? '0:00:00.00', context),
       style: data['Style'] ?? 'Default',
       name: data['Name'] ?? '',
       marginL: int.tryParse(data['MarginL'] ?? '0') ?? 0,
@@ -129,7 +178,7 @@ class AssEvent {
 }
 
 // .ass dosya içeriğini ayrıştırıp AssEvent listesi döndüren fonksiyon
-List<AssEvent> parseAssContent(String content) {
+List<AssEvent> parseAssContent(String content, [BuildContext? context]) {
   final events = <AssEvent>[];
   final lines = content.split('\n'); // Satırları newline karakterine göre ayır
   bool inEventsSection = false;
@@ -166,11 +215,16 @@ List<AssEvent> parseAssContent(String content) {
       } else if (line.startsWith('Dialogue:') && eventFormat.isNotEmpty) {
         // Dialogue satırını işle (Format tanımlanmışsa)
         try {
-          events.add(AssEvent.fromLine(line, eventFormat));
+          events.add(AssEvent.fromLine(line, eventFormat, context));
         } catch (e) {
           // Hata mesajındaki kaçış karakterlerini düzelt
-          print(
-              "Dialogue satırı ayrıştırılamadı: '$line'\nFormat: $eventFormat\nHata: $e");
+          if (context != null) {
+            print(AssParserLocalizer.dialogueParsingError(
+                context, line, eventFormat.toString(), e.toString()));
+          } else {
+            print(
+                "Could not parse Dialogue line: '$line'\nFormat: $eventFormat\nError: $e");
+          }
           // Hatalı satırları atlayabilir veya farklı bir şekilde işleyebilirsiniz
         }
       }

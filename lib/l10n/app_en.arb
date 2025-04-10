@@ -1,0 +1,1271 @@
+{
+  "appTitle": "Chinese-English Term Corrector",
+  "@appTitle": {
+    "description": "Application title"
+  },
+  "projectsScreenTitle": "Projects",
+  "@projectsScreenTitle": {
+    "description": "Projects screen title"
+  },
+  "newProject": "New Project",
+  "@newProject": {
+    "description": "New project button text"
+  },
+  "deleteProject": "Delete Project",
+  "@deleteProject": {
+    "description": "Delete project button text"
+  },
+  "editProject": "Edit Project",
+  "@editProject": {
+    "description": "Edit project button text"
+  },
+  "projectName": "Project Name",
+  "@projectName": {
+    "description": "Project name field label"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button text"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "deleteConfirmation": "Are you sure you want to delete this project?",
+  "@deleteConfirmation": {
+    "description": "Delete confirmation message"
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "Yes button text"
+  },
+  "no": "No",
+  "@no": {
+    "description": "No button text"
+  },
+  "saveDialogTitle": "Save",
+  "@saveDialogTitle": {
+    "description": "Save dialog title"
+  },
+  "categoryPerson": "Person",
+  "@categoryPerson": {
+    "description": "Person category name"
+  },
+  "categoryPlace": "Place",
+  "@categoryPlace": {
+    "description": "Place category name"
+  },
+  "categoryOrganization": "Organization",
+  "@categoryOrganization": {
+    "description": "Organization category name"
+  },
+  "categoryTechnical": "Technical",
+  "@categoryTechnical": {
+    "description": "Technical category name"
+  },
+  "categoryOther": "Other",
+  "@categoryOther": {
+    "description": "Other category name"
+  },
+  "categoryGeneral": "General",
+  "@categoryGeneral": {
+    "description": "General category name"
+  },
+  "defaultTermsFileName": "terms.json",
+  "@defaultTermsFileName": {
+    "description": "Default terms file name"
+  },
+  "defaultReportFileName": "term_report.html",
+  "@defaultReportFileName": {
+    "description": "Default report file name"
+  },
+  "errorFileLoad": "An error occurred while loading the file",
+  "@errorFileLoad": {
+    "description": "Error message for file loading"
+  },
+  "errorFileSave": "An error occurred while saving the file",
+  "@errorFileSave": {
+    "description": "Error message for file saving"
+  },
+  "errorTermImport": "An error occurred while importing terms",
+  "@errorTermImport": {
+    "description": "Error message for term importing"
+  },
+  "errorTermExport": "An error occurred while exporting terms",
+  "@errorTermExport": {
+    "description": "Error message for term exporting"
+  },
+  "successTermImport": "Terms successfully imported",
+  "@successTermImport": {
+    "description": "Success message for term importing"
+  },
+  "successTermExport": "Terms successfully exported",
+  "@successTermExport": {
+    "description": "Success message for term exporting"
+  },
+  "successFileLoad": "File successfully loaded",
+  "@successFileLoad": {
+    "description": "Success message for file loading"
+  },
+  "successFileSave": "File successfully saved",
+  "@successFileSave": {
+    "description": "Success message for file saving"
+  },
+  "successCorrectionsApplied": "Corrections successfully applied",
+  "@successCorrectionsApplied": {
+    "description": "Success message for applying corrections"
+  },
+  "invalidTimeFormat": "Invalid time format: {timestamp}",
+  "@invalidTimeFormat": {
+    "description": "Error message for invalid time format",
+    "placeholders": {
+      "timestamp": {
+        "type": "String",
+        "example": "12:34:56.789"
+      }
+    }
+  },
+  "invalidSecondsFormat": "Invalid seconds/centiseconds format: {timestamp}",
+  "@invalidSecondsFormat": {
+    "description": "Error message for invalid seconds format",
+    "placeholders": {
+      "timestamp": {
+        "type": "String",
+        "example": "12:34:56.789"
+      }
+    }
+  },
+  "timestampParsingError": "Timestamp parsing error: '{timestamp}' - {error}",
+  "@timestampParsingError": {
+    "description": "Error message for timestamp parsing error",
+    "placeholders": {
+      "timestamp": {
+        "type": "String",
+        "example": "12:34:56.789"
+      },
+      "error": {
+        "type": "String",
+        "example": "FormatException"
+      }
+    }
+  },
+  "warningDialogueMissingFields": "Warning: Not enough fields in Dialogue line: {line}",
+  "@warningDialogueMissingFields": {
+    "description": "Warning message for dialogue line with missing fields",
+    "placeholders": {
+      "line": {
+        "type": "String",
+        "example": "Dialogue: 0,0:00:10.00,0:00:12.00,Default,,0,0,0,,Hello"
+      }
+    }
+  },
+  "dialogueParsingError": "Could not parse Dialogue line: '{line}'\nFormat: {format}\nError: {error}",
+  "@dialogueParsingError": {
+    "description": "Error message for dialogue parsing error",
+    "placeholders": {
+      "line": {
+        "type": "String",
+        "example": "Dialogue: 0,0:00:10.00,0:00:12.00,Default,,0,0,0,,Hello"
+      },
+      "format": {
+        "type": "String",
+        "example": "[Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text]"
+      },
+      "error": {
+        "type": "String",
+        "example": "FormatException"
+      }
+    }
+  },
+  "editButton": "Edit",
+  "@editButton": {
+    "description": "Edit button tooltip text"
+  },
+  "deleteButton": "Delete",
+  "@deleteButton": {
+    "description": "Delete button tooltip text"
+  },
+  "sourceText": "Source Text",
+  "@sourceText": {
+    "description": "Title for the source text column"
+  },
+  "englishTranslation": "English Translation",
+  "@englishTranslation": {
+    "description": "Title for the English translation column"
+  },
+  "corrected": "Corrected",
+  "@corrected": {
+    "description": "Label for corrected text"
+  },
+  "categoryPerson": "Person",
+  "@categoryPerson": {
+    "description": "Category name for persons"
+  },
+  "categoryPlace": "Place",
+  "@categoryPlace": {
+    "description": "Category name for places"
+  },
+  "categoryOrganization": "Organization",
+  "@categoryOrganization": {
+    "description": "Category name for organizations"
+  },
+  "categoryTechnical": "Technical",
+  "@categoryTechnical": {
+    "description": "Category name for technical terms"
+  },
+  "categoryGeneral": "General",
+  "@categoryGeneral": {
+    "description": "Category name for general terms"
+  },
+  "categoryOther": "Other",
+  "@categoryOther": {
+    "description": "Category name for other terms"
+  },
+  "applyButton": "Apply",
+  "@applyButton": {
+    "description": "Apply button text for correction items"
+  },
+  "appliedStatus": "Applied",
+  "@appliedStatus": {
+    "description": "Status text when a correction has been applied"
+  },
+  "linePrefix": "Line",
+  "@linePrefix": {
+    "description": "Prefix for line number display"
+  },
+  "incorrectLabel": "Incorrect:",
+  "@incorrectLabel": {
+    "description": "Label for incorrect translation"
+  },
+  "correctLabel": "Correct:",
+  "@correctLabel": {
+    "description": "Label for correct translation"
+  },
+  "termManagement": "Term Management",
+  "@termManagement": {
+    "description": "Title for the term management screen"
+  },
+  "import": "Import",
+  "@import": {
+    "description": "Import button tooltip text"
+  },
+  "export": "Export",
+  "@export": {
+    "description": "Export button tooltip text"
+  },
+  "searchTerm": "Search Term",
+  "@searchTerm": {
+    "description": "Search field label"
+  },
+  "filterCategory": "Filter Category",
+  "@filterCategory": {
+    "description": "Category filter dropdown label"
+  },
+  "all": "All",
+  "@all": {
+    "description": "All categories option"
+  },
+  "personName": "Person Name",
+  "@personName": {
+    "description": "Person category name"
+  },
+  "placeName": "Place Name",
+  "@placeName": {
+    "description": "Place category name"
+  },
+  "organization": "Organization",
+  "@organization": {
+    "description": "Organization category name"
+  },
+  "technicalTerm": "Technical Term",
+  "@technicalTerm": {
+    "description": "Technical term category name"
+  },
+  "general": "General",
+  "@general": {
+    "description": "General category name"
+  },
+  "other": "Other",
+  "@other": {
+    "description": "Other category name"
+  },
+  "noTermsFound": "No terms found",
+  "@noTermsFound": {
+    "description": "Message when no terms match the filters"
+  },
+  "editTerm": "Edit Term",
+  "@editTerm": {
+    "description": "Edit term dialog title"
+  },
+  "addNewTerm": "Add New Term",
+  "@addNewTerm": {
+    "description": "Add new term dialog title"
+  },
+  "chineseTerm": "Chinese Term",
+  "@chineseTerm": {
+    "description": "Chinese term field label"
+  },
+  "enterChineseTerm": "Please enter Chinese term",
+  "@enterChineseTerm": {
+    "description": "Validation message for Chinese term"
+  },
+  "englishTerm": "English Term",
+  "@englishTerm": {
+    "description": "English term field label"
+  },
+  "enterEnglishTerm": "Please enter English term",
+  "@enterEnglishTerm": {
+    "description": "Validation message for English term"
+  },
+  "category": "Category",
+  "@category": {
+    "description": "Category field label"
+  },
+  "notes": "Notes",
+  "@notes": {
+    "description": "Notes field label"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Add button text"
+  },
+  "update": "Update",
+  "@update": {
+    "description": "Update button text"
+  },
+  "deleteTerm": "Delete Term",
+  "@deleteTerm": {
+    "description": "Delete term dialog title"
+  },
+  "confirmDelete": "Are you sure you want to delete this term?",
+  "@confirmDelete": {
+    "description": "Confirmation message for term deletion"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button text"
+  },
+  "importSuccess": "Terms imported successfully",
+  "@importSuccess": {
+    "description": "Success message for import operation"
+  },
+  "error": "Error",
+  "@error": {
+    "description": "Error dialog title"
+  },
+  "errorWithMessage": "Error: {message}",
+  "@errorWithMessage": {
+    "description": "Error message with details",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "example": "File not found"
+      }
+    }
+  },
+  "importResult": "Import Result",
+  "@importResult": {
+    "description": "Import result dialog title"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button text"
+  },
+  "exportTerms": "Export Terms",
+  "@exportTerms": {
+    "description": "Export dialog title"
+  },
+  "exportSuccess": "Terms exported successfully",
+  "@exportSuccess": {
+    "description": "Success message for export operation"
+  },
+  "reports": "Reports",
+  "@reports": {
+    "description": "Title for the reports screen"
+  },
+  
+  "exportReport": "Export Report",
+  "@exportReport": {
+    "description": "Export report button tooltip text"
+  },
+  
+  "pleaseUploadDocument": "Please upload a document from the Document Processing screen first",
+  "@pleaseUploadDocument": {
+    "description": "Message shown when no document is loaded"
+  },
+  
+  "error": "Error",
+  "@error": {
+    "description": "Error label"
+  },
+  
+  "summary": "Summary",
+  "@summary": {
+    "description": "Title for the summary section"
+  },
+  
+  "totalLines": "Total Lines",
+  "@totalLines": {
+    "description": "Label for total lines count"
+  },
+  
+  "correctedLines": "Corrected Lines",
+  "@correctedLines": {
+    "description": "Label for corrected lines count"
+  },
+  
+  "totalCorrections": "Total Corrections",
+  "@totalCorrections": {
+    "description": "Label for total corrections count"
+  },
+  
+  "appliedCorrections": "Applied Corrections",
+  "@appliedCorrections": {
+    "description": "Label for applied corrections count"
+  },
+  
+  "consistencyScore": "Consistency Score",
+  "@consistencyScore": {
+    "description": "Title for the consistency score section"
+  },
+  
+  "excellentConsistency": "Excellent consistency",
+  "@excellentConsistency": {
+    "description": "Text for excellent consistency score"
+  },
+  
+  "goodConsistency": "Good consistency",
+  "@goodConsistency": {
+    "description": "Text for good consistency score"
+  },
+  
+  "mediumConsistency": "Medium consistency",
+  "@mediumConsistency": {
+    "description": "Text for medium consistency score"
+  },
+  
+  "lowConsistency": "Low consistency",
+  "@lowConsistency": {
+    "description": "Text for low consistency score"
+  },
+  
+  "veryLowConsistency": "Very low consistency",
+  "@veryLowConsistency": {
+    "description": "Text for very low consistency score"
+  },
+  
+  "mostFrequentlyMistranslatedTerms": "Most Frequently Mistranslated Terms",
+  "@mostFrequentlyMistranslatedTerms": {
+    "description": "Title for the mistranslated terms section"
+  },
+  
+  "noMistranslatedTermsFound": "No mistranslated terms found",
+  "@noMistranslatedTermsFound": {
+    "description": "Message shown when no mistranslated terms are found"
+  },
+  
+  "timesOccurred": "{count} times",
+  "@timesOccurred": {
+    "description": "Number of times a term was mistranslated",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  
+  "correctionDetails": "Correction Details",
+  "@correctionDetails": {
+    "description": "Title for the correction details section"
+  },
+  
+  "totalCorrections2": "Total: {count} corrections",
+  "@totalCorrections2": {
+    "description": "Total number of corrections",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "10"
+      }
+    }
+  },
+  
+  "noCorrectionSuggestions": "No correction suggestions yet",
+  "@noCorrectionSuggestions": {
+    "description": "Message shown when no correction suggestions are available"
+  },
+  
+  "line": "Line: {number}",
+  "@line": {
+    "description": "Line number",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "42"
+      }
+    }
+  },
+  
+  "saveReport": "Save Report",
+  "@saveReport": {
+    "description": "Save report dialog title"
+  },
+  
+  "consistencyReportFileName": "term_consistency_report.html",
+  "@consistencyReportFileName": {
+    "description": "Default filename for the consistency report"
+  },
+  
+  "reportSavedSuccessfully": "Report saved successfully",
+  "@reportSavedSuccessfully": {
+    "description": "Message shown when report is saved successfully"
+  },
+  "projectsScreenTitle": "Projects",
+  "@projectsScreenTitle": {
+    "description": "Title for the projects screen"
+  },
+  
+  "importProjectTooltip": "Import Project",
+  "@importProjectTooltip": {
+    "description": "Tooltip for import project button"
+  },
+
+  "errorWithMessage": "Error: {message}",
+  "@errorWithMessage": {
+    "description": "Error message with specific error details",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+
+  "noProjectsMessage": "You haven't created any projects yet",
+  "@noProjectsMessage": {
+    "description": "Message shown when user has no projects"
+  },
+
+  "totalProjects": "Total {count} projects",
+  "@totalProjects": {
+    "description": "Total number of projects",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "newProject": "New Project",
+  "@newProject": {
+    "description": "New project button and dialog title"
+  },
+
+  "projectName": "Project Name",
+  "@projectName": {
+    "description": "Project name field label"
+  },
+
+  "descriptionOptional": "Description (Optional)",
+  "@descriptionOptional": {
+    "description": "Optional description field label"
+  },
+
+  "descriptionHint": "E.g.: Standardization of subtitle terms for 5-season Wuxia series",
+  "@descriptionHint": {
+    "description": "Example hint for project description field"
+  },
+
+  "projectNameHint": "E.g.: Wuxia Series Term Translation",
+  "@projectNameHint": {
+    "description": "Example hint for project name field"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+
+  "save": "Save",
+  "@save": {
+    "description": "Save button text"
+  },
+
+  "deleteProject": "Delete Project",
+  "@deleteProject": {
+    "description": "Delete project dialog title"
+  },
+
+  "deleteConfirmation": "Are you sure you want to delete this project? This action cannot be undone.",
+  "@deleteConfirmation": {
+    "description": "Delete confirmation message"
+  },
+
+  "yes": "Yes",
+  "@yes": {
+    "description": "Yes button text"
+  },
+
+  "projectDeleted": "Project deleted",
+  "@projectDeleted": {
+    "description": "Message shown after project is deleted"
+  },
+
+  "exportProjectDialogTitle": "Export Project",
+  "@exportProjectDialogTitle": {
+    "description": "Title for export project dialog"
+  },
+
+  "exportSuccess": "Project exported successfully",
+  "@exportSuccess": {
+    "description": "Message shown after successful project export"
+  },
+
+  "importSuccess": "Project imported successfully",
+  "@importSuccess": {
+    "description": "Message shown after successful project import"
+  },
+
+  "projectDetails": "Documents: {docCount} | Last update: {updateDate}",
+  "@projectDetails": {
+    "description": "Project details showing document count and last update date",
+    "placeholders": {
+      "docCount": {
+        "type": "int"
+      },
+      "updateDate": {
+        "type": "String"
+      }
+    }
+  },
+
+  "exportAction": "Export",
+  "@exportAction": {
+    "description": "Export action label in popup menu"
+  },
+
+  "deleteAction": "Delete",
+  "@deleteAction": {
+    "description": "Delete action label in popup menu"
+  },
+  
+  "termManagement": "Term Management",
+  "@termManagement": {
+    "description": "Navigation label for term management screen"
+  },
+  
+  "documentProcessing": "Document Processing",
+  "@documentProcessing": {
+    "description": "Navigation label for document processing screen"
+  },
+  
+  "reports": "Reports",
+  "@reports": {
+    "description": "Navigation label for reports screen"
+  },
+
+  "documentProcessingTitle": "Document Processing",
+  "@documentProcessingTitle": {
+    "description": "Title for document processing screen"
+  },
+
+  "horizontalPanelTooltip": "Horizontal Panel View",
+  "@horizontalPanelTooltip": {
+    "description": "Tooltip for horizontal panel view"
+  },
+
+  "verticalPanelTooltip": "Vertical Panel View",
+  "@verticalPanelTooltip": {
+    "description": "Tooltip for vertical panel view"
+  },
+
+  "changeViewTooltip": "Change View",
+  "@changeViewTooltip": {
+    "description": "Tooltip for changing document view mode"
+  },
+
+  "openDocumentTooltip": "Open Document",
+  "@openDocumentTooltip": {
+    "description": "Tooltip for open document button"
+  },
+
+  "saveDocumentTooltip": "Save Document",
+  "@saveDocumentTooltip": {
+    "description": "Tooltip for save document button"
+  },
+
+  "pleaseUploadDocument": "Please upload a document",
+  "@pleaseUploadDocument": {
+    "description": "Message shown when no document is loaded"
+  },
+
+  "resetPanelSizeTooltip": "Reset Panel Size",
+  "@resetPanelSizeTooltip": {
+    "description": "Tooltip for resetting panel size"
+  },
+
+  "correctionsCount": "Corrections ({count})",
+  "@correctionsCount": {
+    "description": "Title showing number of corrections",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "applyAllCorrections": "Apply All",
+  "@applyAllCorrections": {
+    "description": "Button to apply all corrections at once"
+  },
+
+  "applyCorrections": "Apply",
+  "@applyCorrections": {
+    "description": "Button to apply corrections (short version)"
+  },
+
+  "clearCorrections": "Clear",
+  "@clearCorrections": {
+    "description": "Button to clear all corrections"
+  },
+
+  "total": "Total",
+  "@total": {
+    "description": "Label for total corrections count"
+  },
+
+  "applied": "Applied",
+  "@applied": {
+    "description": "Label for applied corrections count"
+  },
+
+  "pending": "Pending",
+  "@pending": {
+    "description": "Label for pending corrections count"
+  },
+
+  "noCorrectionsYet": "No correction suggestions yet",
+  "@noCorrectionsYet": {
+    "description": "Message shown when there are no corrections"
+  },
+
+  "clickButtonForCorrections": "Click the button in the bottom right corner to see correction suggestions",
+  "@clickButtonForCorrections": {
+    "description": "Instruction for generating corrections"
+  },
+
+  "filterByLine": "Filter by line:",
+  "@filterByLine": {
+    "description": "Label for line filter dropdown"
+  },
+
+  "allLines": "All lines",
+  "@allLines": {
+    "description": "Option for showing all lines in filter"
+  },
+
+  "lineNumber": "Line {number}",
+  "@lineNumber": {
+    "description": "Line number label",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "applyCorrection": "Apply Correction",
+  "@applyCorrection": {
+    "description": "Tooltip for applying single correction"
+  },
+
+  "currentLineText": "Current Line Text:",
+  "@currentLineText": {
+    "description": "Label for current line text field"
+  },
+
+  "enterCorrectedText": "Enter corrected text here",
+  "@enterCorrectedText": {
+    "description": "Hint for entering corrected text"
+  },
+
+  "correctionForLine": "Correction for line {number}",
+  "@correctionForLine": {
+    "description": "Helper text for correction field",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "termDatabaseReference": "Term Database Reference:",
+  "@termDatabaseReference": {
+    "description": "Title for term database reference section"
+  },
+
+  "termSearchedInDatabase": "Term Searched in Database: ",
+  "@termSearchedInDatabase": {
+    "description": "Label for term searched in database"
+  },
+
+  "suggestedTerm": "Suggested Term: ",
+  "@suggestedTerm": {
+    "description": "Label for suggested term"
+  },
+
+  "dataDiscrepancyWarning": "Warning: There may be discrepancies between the data. The information in the term database may not match the current content of the line! You can make your own correction.",
+  "@dataDiscrepancyWarning": {
+    "description": "Warning about potential discrepancies in data"
+  },
+
+  "saveChanges": "Save Changes",
+  "@saveChanges": {
+    "description": "Button to save changes"
+  },
+
+  "selectChineseSourceDocument": "Select Chinese Source Document",
+  "@selectChineseSourceDocument": {
+    "description": "Dialog title for selecting Chinese source document"
+  },
+
+  "selectEnglishTranslationDocument": "Select English Translation Document",
+  "@selectEnglishTranslationDocument": {
+    "description": "Dialog title for selecting English translation document"
+  },
+
+  "selectFolderToSave": "Select Folder to Save",
+  "@selectFolderToSave": {
+    "description": "Dialog title for selecting folder to save document"
+  },
+
+  "documentSavedSuccessfully": "Document saved successfully",
+  "@documentSavedSuccessfully": {
+    "description": "Message shown when document is saved successfully"
+  },
+
+  "emptyTermDatabase": "Term database is empty. Please add terms first.",
+  "@emptyTermDatabase": {
+    "description": "Warning when term database is empty"
+  },
+
+  "processingDocument": "Processing document, please wait...",
+  "@processingDocument": {
+    "description": "Message shown while document is being processed"
+  },
+
+  "noCorrectionsFound": "No correction suggestions found. All terms are used correctly or there are no matching terms.",
+  "@noCorrectionsFound": {
+    "description": "Message when no corrections are found"
+  },
+
+  "correctionsFound": "{count} correction suggestions found.",
+  "@correctionsFound": {
+    "description": "Message showing number of corrections found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "errorProcessingDocument": "Error processing document: {error}",
+  "@errorProcessingDocument": {
+    "description": "Error message while processing document",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "correctionTextEmpty": "Correction text cannot be empty!",
+  "@correctionTextEmpty": {
+    "description": "Error when correction text is empty"
+  },
+
+  "correctionAppliedSuccessfully": "Correction applied successfully",
+  "@correctionAppliedSuccessfully": {
+    "description": "Message when correction is applied successfully"
+  },
+
+  "errorApplyingCorrection": "Error applying correction: {error}",
+  "@errorApplyingCorrection": {
+    "description": "Error message when applying correction",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "noCorrectionsToApply": "No corrections to apply",
+  "@noCorrectionsToApply": {
+    "description": "Message when there are no corrections to apply"
+  },
+
+  "allCorrectionsApplied": "All corrections applied",
+  "@allCorrectionsApplied": {
+    "description": "Message when all corrections are applied"
+  },
+  "projectTerms": "Project Terms",
+  "@projectTerms": {
+    "description": "Project terms title"
+  },
+  "import": "Import",
+  "@import": {
+    "description": "Import button text"
+  },
+  "newTerm": "New Term",
+  "@newTerm": {
+    "description": "New term button text"
+  },
+  "noTermsInProject": "No terms in this project yet",
+  "@noTermsInProject": {
+    "description": "Text shown when project has no terms"
+  },
+  "addTerm": "Add Term",
+  "@addTerm": {
+    "description": "Add term button text"
+  },
+  "addNewTerm": "Add New Term",
+  "@addNewTerm": {
+    "description": "Dialog title for adding new term"
+  },
+  "chineseTerm": "Chinese Term",
+  "@chineseTerm": {
+    "description": "Chinese term input label"
+  },
+  "englishTerm": "English Term",
+  "@englishTerm": {
+    "description": "English term input label"
+  },
+  "category": "Category",
+  "@category": {
+    "description": "Category dropdown label"
+  },
+  "optionalNotes": "Notes (Optional)",
+  "@optionalNotes": {
+    "description": "Optional notes input label"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "add": "Add",
+  "@add": {
+    "description": "Add button text"
+  },
+  "termsRequired": "Chinese and English terms are required",
+  "@termsRequired": {
+    "description": "Error message for required fields"
+  },
+  "termAdded": "Term added",
+  "@termAdded": {
+    "description": "Success message after adding term"
+  },
+  "editTerm": "Edit Term",
+  "@editTerm": {
+    "description": "Dialog title for editing term"
+  },
+  "update": "Update",
+  "@update": {
+    "description": "Update button text"
+  },
+  "termUpdated": "Term updated",
+  "@termUpdated": {
+    "description": "Success message after updating term"
+  },
+  "deleteTerm": "Delete Term",
+  "@deleteTerm": {
+    "description": "Dialog title for deleting term"
+  },
+  "deleteTermConfirmation": "Are you sure you want to delete this term?",
+  "@deleteTermConfirmation": {
+    "description": "Confirmation message for term deletion"
+  },
+  "delete": "Delete",
+  "@delete": {
+    "description": "Delete button text"
+  },
+  "termDeleted": "Term deleted",
+  "@termDeleted": {
+    "description": "Success message after deleting term"
+  },
+  "error": "Error: {error}",
+  "@error": {
+    "description": "Error message template",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "File not found"
+      }
+    }
+  },
+  "personName": "Person Name",
+  "@personName": {
+    "description": "Category: Person Name"
+  },
+  "placeName": "Place Name",
+  "@placeName": {
+    "description": "Category: Place Name"
+  },
+  "organization": "Organization",
+  "@organization": {
+    "description": "Category: Organization"
+  },
+  "technicalTerm": "Technical Term",
+  "@technicalTerm": {
+    "description": "Category: Technical Term"
+  },
+  "general": "General",
+  "@general": {
+    "description": "Category: General"
+  },
+  "other": "Other",
+  "@other": {
+    "description": "Category: Other"
+  },
+  "editButton": "Edit",
+  "@editButton": {
+    "description": "Edit button tooltip text"
+  },
+  "deleteButton": "Delete",
+  "@deleteButton": {
+    "description": "Delete button tooltip text"
+  },
+  "addDocument": "Add Document",
+  "@addDocument": {
+    "description": "Text for add document button"
+  },
+  "addFromFolder": "Add from Folder",
+  "@addFromFolder": {
+    "description": "Text for add from folder option"
+  },
+  "projectNotFound": "Project not found",
+  "@projectNotFound": {
+    "description": "Message shown when project is not found"
+  },
+  "noDocumentsInProject": "No documents in this project yet",
+  "@noDocumentsInProject": {
+    "description": "Message shown when there are no documents in project"
+  },
+  "lastUpdate": "Last Update",
+  "@lastUpdate": {
+    "description": "Label for last update date"
+  },
+  "addDocumentsForReports": "Add documents first to generate reports",
+  "@addDocumentsForReports": {
+    "description": "Message shown when no documents to generate reports"
+  },
+  "documentAddedSuccessfully": "Document added successfully",
+  "@documentAddedSuccessfully": {
+    "description": "Message shown when document is added"
+  },
+  "selectSubtitleFolder": "Select Folder Containing Subtitle Files",
+  "@selectSubtitleFolder": {
+    "description": "Dialog title for selecting subtitle folder"
+  },
+  "filesAdded": "{count} file pairs added",
+  "@filesAdded": {
+    "description": "Message showing number of files added",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "errorsOccurred": "{count} errors occurred",
+  "@errorsOccurred": {
+    "description": "Message showing number of errors",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noMatchingSubtitlePairs": "No matching subtitle pairs found",
+  "@noMatchingSubtitlePairs": {
+    "description": "Message when no matching subtitle pairs are found"
+  },
+  "deleteDocumentConfirmation": "Are you sure you want to delete this document from the project?",
+  "@deleteDocumentConfirmation": {
+    "description": "Confirmation message for document deletion"
+  },
+  "documentDeleted": "Document deleted",
+  "@documentDeleted": {
+    "description": "Message shown after document is deleted"
+  },
+  "deleteDocument": "Delete Document",
+  "@deleteDocument": {
+    "description": "Title for document deletion dialog"
+  },
+  "documentLineInfo": "Lines: {lineCount} | {correctionInfo}",
+  "@documentLineInfo": {
+    "description": "Document line information with correction status",
+    "placeholders": {
+      "lineCount": {
+        "type": "int",
+        "example": "42"
+      },
+      "correctionInfo": {
+        "type": "String",
+        "example": "5 lines with corrections"
+      }
+    }
+  },
+  "documentCorrectionInfo": "Corrections in {count} lines",
+  "@documentCorrectionInfo": {
+    "description": "Information about corrections in document lines",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "documentDateInfo": "Added: {importDate} {processedInfo}",
+  "@documentDateInfo": {
+    "description": "Document date information",
+    "placeholders": {
+      "importDate": {
+        "type": "String",
+        "example": "01/01/2023"
+      },
+      "processedInfo": {
+        "type": "String",
+        "example": "| Last processed: 02/01/2023"
+      }
+    }
+  },
+  "documentLastProcessedInfo": "| Last processed: {date}",
+  "@documentLastProcessedInfo": {
+    "description": "Last processed date information",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "01/01/2023"
+      }
+    }
+  },
+  "consistencyReportTitle": "Term Consistency Report",
+  "@consistencyReportTitle": {
+    "description": "Title for the term consistency report"
+  },
+  "document": "Document",
+  "@document": {
+    "description": "Label for document name"
+  },
+  "creationDate": "Creation Date",
+  "@creationDate": {
+    "description": "Label for creation date"
+  },
+  "totalLinesReport": "Total number of lines",
+  "@totalLinesReport": {
+    "description": "Label for total lines in report"
+  },
+  "correctedLinesReport": "Number of corrected lines",
+  "@correctedLinesReport": {
+    "description": "Label for corrected lines in report"
+  },
+  "totalCorrectionsReport": "Total number of corrections",
+  "@totalCorrectionsReport": {
+    "description": "Label for total corrections in report"
+  },
+  "appliedCorrectionsReport": "Number of applied corrections",
+  "@appliedCorrectionsReport": {
+    "description": "Label for applied corrections in report"
+  },
+  "termLabel": "Term",
+  "@termLabel": {
+    "description": "Label for term column in table"
+  },
+  "frequencyLabel": "Frequency",
+  "@frequencyLabel": {
+    "description": "Label for frequency column in table"
+  },
+  "statusLabel": "Status",
+  "@statusLabel": {
+    "description": "Label for status column in table"
+  },
+  "pendingStatus": "Pending",
+  "@pendingStatus": {
+    "description": "Status text when a correction is pending"
+  },
+  "incorrectEnglishTerm": "Incorrect English Term",
+  "@incorrectEnglishTerm": {
+    "description": "Label for incorrect English term"
+  },
+  "correctEnglishTerm": "Correct English Term",
+  "@correctEnglishTerm": {
+    "description": "Label for correct English term"
+  },
+  "lineNumber1": "Line Number",
+  "@lineNumber": {
+    "description": "Label for line number"
+  },
+  "processingDocument": "Processing document",
+  "@processingDocument": {
+    "description": "Message when processing document"
+  },
+  "includingDuplicates": "including duplicates",
+  "@includingDuplicates": {
+    "description": "Text for including duplicates in counts"
+  },
+  "uniqueCorrections": "Unique corrections",
+  "@uniqueCorrections": {
+    "description": "Label for unique corrections count"
+  },
+  "lineNotFound": "Line not found",
+  "@lineNotFound": {
+    "description": "Error message when line not found"
+  },
+  "processingLine": "Processing line",
+  "@processingLine": {
+    "description": "Message when processing a line"
+  },
+  "termMatchesFound": "term matches found",
+  "@termMatchesFound": {
+    "description": "Message for number of term matches found"
+  },
+  "warning": "WARNING",
+  "@warning": {
+    "description": "Warning label"
+  },
+  "mismatchedLineNumbers": "Mismatched line numbers",
+  "@mismatchedLineNumbers": {
+    "description": "Warning about mismatched line numbers"
+  },
+  "correcting": "Correcting",
+  "@correcting": {
+    "description": "Message about correcting an issue"
+  },
+  "correction": "Correction",
+  "@correction": {
+    "description": "Label for a correction item"
+  },
+  "shouldBe": "should be",
+  "@shouldBe": {
+    "description": "Text indicating what something should be"
+  },
+  "incorrectTermNotFound": "Incorrect term not found",
+  "@incorrectTermNotFound": {
+    "description": "Warning when incorrect term not found in text"
+  },
+  "inLine": "in line",
+  "@inLine": {
+    "description": "Preposition for specifying in which line"
+  },
+  "correctionsApplied": "corrections applied",
+  "@correctionsApplied": {
+    "description": "Message for number of corrections applied"
+  },
+  "correct": "correct",
+  "@correct": {
+    "description": "Label for correct items count"
+  }
+} 

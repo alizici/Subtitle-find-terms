@@ -1,0 +1,1271 @@
+{
+  "appTitle": "Çince-İngilizce Terim Düzeltici",
+  "@appTitle": {
+    "description": "Uygulama başlığı"
+  },
+  "projectsScreenTitle": "Projeler",
+  "@projectsScreenTitle": {
+    "description": "Projeler ekranı başlığı"
+  },
+  "newProject": "Yeni Proje",
+  "@newProject": {
+    "description": "Yeni proje butonu metni"
+  },
+  "deleteProject": "Projeyi Sil",
+  "@deleteProject": {
+    "description": "Proje silme butonu metni"
+  },
+  "editProject": "Projeyi Düzenle",
+  "@editProject": {
+    "description": "Proje düzenleme butonu metni"
+  },
+  "projectName": "Proje Adı",
+  "@projectName": {
+    "description": "Proje adı alan etiketi"
+  },
+  "save": "Kaydet",
+  "@save": {
+    "description": "Kaydet butonu metni"
+  },
+  "cancel": "İptal",
+  "@cancel": {
+    "description": "İptal butonu metni"
+  },
+  "deleteConfirmation": "Bu projeyi silmek istediğinize emin misiniz?",
+  "@deleteConfirmation": {
+    "description": "Silme onay mesajı"
+  },
+  "yes": "Evet",
+  "@yes": {
+    "description": "Evet butonu metni"
+  },
+  "no": "Hayır",
+  "@no": {
+    "description": "Hayır butonu metni"
+  },
+  "saveDialogTitle": "Kaydet",
+  "@saveDialogTitle": {
+    "description": "Kaydet iletişim kutusu başlığı"
+  },
+  "categoryPerson": "Kişi",
+  "@categoryPerson": {
+    "description": "Kişi kategori adı"
+  },
+  "categoryPlace": "Yer",
+  "@categoryPlace": {
+    "description": "Yer kategori adı"
+  },
+  "categoryOrganization": "Organizasyon",
+  "@categoryOrganization": {
+    "description": "Organizasyon kategori adı"
+  },
+  "categoryTechnical": "Teknik",
+  "@categoryTechnical": {
+    "description": "Teknik kategori adı"
+  },
+  "categoryOther": "Diğer",
+  "@categoryOther": {
+    "description": "Diğer kategori adı"
+  },
+  "categoryGeneral": "Genel",
+  "@categoryGeneral": {
+    "description": "Genel kategori adı"
+  },
+  "defaultTermsFileName": "terimler.json",
+  "@defaultTermsFileName": {
+    "description": "Varsayılan terimler dosya adı"
+  },
+  "defaultReportFileName": "terim_raporu.html",
+  "@defaultReportFileName": {
+    "description": "Varsayılan rapor dosya adı"
+  },
+  "errorFileLoad": "Dosya yüklenirken bir hata oluştu",
+  "@errorFileLoad": {
+    "description": "Dosya yükleme hata mesajı"
+  },
+  "errorFileSave": "Dosya kaydedilirken bir hata oluştu",
+  "@errorFileSave": {
+    "description": "Dosya kaydetme hata mesajı"
+  },
+  "errorTermImport": "Terimler içe aktarılırken bir hata oluştu",
+  "@errorTermImport": {
+    "description": "Terim içe aktarma hata mesajı"
+  },
+  "errorTermExport": "Terimler dışa aktarılırken bir hata oluştu",
+  "@errorTermExport": {
+    "description": "Terim dışa aktarma hata mesajı"
+  },
+  "successTermImport": "Terimler başarıyla içe aktarıldı",
+  "@successTermImport": {
+    "description": "Terim içe aktarma başarı mesajı"
+  },
+  "successTermExport": "Terimler başarıyla dışa aktarıldı",
+  "@successTermExport": {
+    "description": "Terim dışa aktarma başarı mesajı"
+  },
+  "successFileLoad": "Dosya başarıyla yüklendi",
+  "@successFileLoad": {
+    "description": "Dosya yükleme başarı mesajı"
+  },
+  "successFileSave": "Dosya başarıyla kaydedildi",
+  "@successFileSave": {
+    "description": "Dosya kaydetme başarı mesajı"
+  },
+  "successCorrectionsApplied": "Düzeltmeler başarıyla uygulandı",
+  "@successCorrectionsApplied": {
+    "description": "Düzeltme uygulama başarı mesajı"
+  },
+  "invalidTimeFormat": "Geçersiz zaman formatı: {timestamp}",
+  "@invalidTimeFormat": {
+    "description": "Geçersiz zaman formatı hata mesajı",
+    "placeholders": {
+      "timestamp": {
+        "type": "String",
+        "example": "12:34:56.789"
+      }
+    }
+  },
+  "invalidSecondsFormat": "Geçersiz saniye/salise formatı: {timestamp}",
+  "@invalidSecondsFormat": {
+    "description": "Geçersiz saniye formatı hata mesajı",
+    "placeholders": {
+      "timestamp": {
+        "type": "String",
+        "example": "12:34:56.789"
+      }
+    }
+  },
+  "timestampParsingError": "Zaman damgası ayrıştırma hatası: '{timestamp}' - {error}",
+  "@timestampParsingError": {
+    "description": "Zaman damgası ayrıştırma hata mesajı",
+    "placeholders": {
+      "timestamp": {
+        "type": "String",
+        "example": "12:34:56.789"
+      },
+      "error": {
+        "type": "String",
+        "example": "FormatException"
+      }
+    }
+  },
+  "warningDialogueMissingFields": "Uyarı: Dialogue satırında yeterli alan bulunamadı: {line}",
+  "@warningDialogueMissingFields": {
+    "description": "Dialogue satırında eksik alan uyarı mesajı",
+    "placeholders": {
+      "line": {
+        "type": "String",
+        "example": "Dialogue: 0,0:00:10.00,0:00:12.00,Default,,0,0,0,,Merhaba"
+      }
+    }
+  },
+  "dialogueParsingError": "Dialogue satırı ayrıştırılamadı: '{line}'\nFormat: {format}\nHata: {error}",
+  "@dialogueParsingError": {
+    "description": "Dialogue ayrıştırma hata mesajı",
+    "placeholders": {
+      "line": {
+        "type": "String",
+        "example": "Dialogue: 0,0:00:10.00,0:00:12.00,Default,,0,0,0,,Merhaba"
+      },
+      "format": {
+        "type": "String",
+        "example": "[Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text]"
+      },
+      "error": {
+        "type": "String",
+        "example": "FormatException"
+      }
+    }
+  },
+  "editButton": "Düzenle",
+  "@editButton": {
+    "description": "Edit button tooltip text"
+  },
+  "deleteButton": "Sil",
+  "@deleteButton": {
+    "description": "Delete button tooltip text"
+  },
+  "sourceText": "Kaynak Metin",
+  "@sourceText": {
+    "description": "Title for the source text column"
+  },
+  "englishTranslation": "İngilizce Çeviri",
+  "@englishTranslation": {
+    "description": "Title for the English translation column"
+  },
+  "corrected": "Düzeltildi",
+  "@corrected": {
+    "description": "Label for corrected text"
+  },
+  "categoryPerson": "Kişi",
+  "@categoryPerson": {
+    "description": "Category name for persons"
+  },
+  "categoryPlace": "Yer",
+  "@categoryPlace": {
+    "description": "Category name for places"
+  },
+  "categoryOrganization": "Organizasyon",
+  "@categoryOrganization": {
+    "description": "Category name for organizations"
+  },
+  "categoryTechnical": "Teknik",
+  "@categoryTechnical": {
+    "description": "Category name for technical terms"
+  },
+  "categoryGeneral": "Genel",
+  "@categoryGeneral": {
+    "description": "Category name for general terms"
+  },
+  "categoryOther": "Diğer",
+  "@categoryOther": {
+    "description": "Category name for other terms"
+  },
+  "applyButton": "Uygula",
+  "@applyButton": {
+    "description": "Apply button text for correction items"
+  },
+  "appliedStatus": "Uygulandı",
+  "@appliedStatus": {
+    "description": "Status text when a correction has been applied"
+  },
+  "linePrefix": "Satır",
+  "@linePrefix": {
+    "description": "Prefix for line number display"
+  },
+  "incorrectLabel": "Hatalı:",
+  "@incorrectLabel": {
+    "description": "Label for incorrect translation"
+  },
+  "correctLabel": "Doğru:",
+  "@correctLabel": {
+    "description": "Label for correct translation"
+  },
+  "termManagement": "Terim Yönetimi",
+  "@termManagement": {
+    "description": "Title for the term management screen"
+  },
+  "import": "İçe Aktar",
+  "@import": {
+    "description": "Import button tooltip text"
+  },
+  "export": "Dışa Aktar",
+  "@export": {
+    "description": "Export button tooltip text"
+  },
+  "searchTerm": "Terim Ara",
+  "@searchTerm": {
+    "description": "Search field label"
+  },
+  "filterCategory": "Kategori Filtrele",
+  "@filterCategory": {
+    "description": "Category filter dropdown label"
+  },
+  "all": "Tümü",
+  "@all": {
+    "description": "All categories option"
+  },
+  "personName": "Kişi İsmi",
+  "@personName": {
+    "description": "Person category name"
+  },
+  "placeName": "Yer İsmi",
+  "@placeName": {
+    "description": "Place category name"
+  },
+  "organization": "Organizasyon",
+  "@organization": {
+    "description": "Organization category name"
+  },
+  "technicalTerm": "Teknik Terim",
+  "@technicalTerm": {
+    "description": "Technical term category name"
+  },
+  "general": "Genel",
+  "@general": {
+    "description": "General category name"
+  },
+  "other": "Diğer",
+  "@other": {
+    "description": "Other category name"
+  },
+  "noTermsFound": "Hiçbir terim bulunamadı",
+  "@noTermsFound": {
+    "description": "Message when no terms match the filters"
+  },
+  "editTerm": "Terimi Düzenle",
+  "@editTerm": {
+    "description": "Edit term dialog title"
+  },
+  "addNewTerm": "Yeni Terim Ekle",
+  "@addNewTerm": {
+    "description": "Add new term dialog title"
+  },
+  "chineseTerm": "Çince Terim",
+  "@chineseTerm": {
+    "description": "Chinese term field label"
+  },
+  "enterChineseTerm": "Lütfen Çince terimi girin",
+  "@enterChineseTerm": {
+    "description": "Validation message for Chinese term"
+  },
+  "englishTerm": "İngilizce Terim",
+  "@englishTerm": {
+    "description": "English term field label"
+  },
+  "enterEnglishTerm": "Lütfen İngilizce terimi girin",
+  "@enterEnglishTerm": {
+    "description": "Validation message for English term"
+  },
+  "category": "Kategori",
+  "@category": {
+    "description": "Category field label"
+  },
+  "notes": "Notlar",
+  "@notes": {
+    "description": "Notes field label"
+  },
+  "cancel": "İptal",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "add": "Ekle",
+  "@add": {
+    "description": "Add button text"
+  },
+  "update": "Güncelle",
+  "@update": {
+    "description": "Update button text"
+  },
+  "deleteTerm": "Terimi Sil",
+  "@deleteTerm": {
+    "description": "Delete term dialog title"
+  },
+  "confirmDelete": "Bu terimi silmek istediğinizden emin misiniz?",
+  "@confirmDelete": {
+    "description": "Confirmation message for term deletion"
+  },
+  "delete": "Sil",
+  "@delete": {
+    "description": "Delete button text"
+  },
+  "importSuccess": "Terimler başarıyla içe aktarıldı",
+  "@importSuccess": {
+    "description": "Success message for import operation"
+  },
+  "error": "Hata",
+  "@error": {
+    "description": "Error dialog title"
+  },
+  "errorWithMessage": "Hata: {message}",
+  "@errorWithMessage": {
+    "description": "Error message with details",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "example": "Dosya bulunamadı"
+      }
+    }
+  },
+  "importResult": "İçe Aktarma Sonucu",
+  "@importResult": {
+    "description": "Import result dialog title"
+  },
+  "ok": "Tamam",
+  "@ok": {
+    "description": "OK button text"
+  },
+  "exportTerms": "Terimleri Dışa Aktar",
+  "@exportTerms": {
+    "description": "Export dialog title"
+  },
+  "exportSuccess": "Terimler başarıyla dışa aktarıldı",
+  "@exportSuccess": {
+    "description": "Success message for export operation"
+  },
+  "reports": "Raporlar",
+  "@reports": {
+    "description": "Title for the reports screen"
+  },
+  
+  "exportReport": "Rapor Dışa Aktar",
+  "@exportReport": {
+    "description": "Export report button tooltip text"
+  },
+  
+  "pleaseUploadDocument": "Lütfen önce Belge İşleme ekranından bir belge yükleyin",
+  "@pleaseUploadDocument": {
+    "description": "Message shown when no document is loaded"
+  },
+  
+  "error": "Hata",
+  "@error": {
+    "description": "Error label"
+  },
+  
+  "summary": "Özet",
+  "@summary": {
+    "description": "Title for the summary section"
+  },
+  
+  "totalLines": "Toplam Satır",
+  "@totalLines": {
+    "description": "Label for total lines count"
+  },
+  
+  "correctedLines": "Düzeltilen Satır",
+  "@correctedLines": {
+    "description": "Label for corrected lines count"
+  },
+  
+  "totalCorrections": "Toplam Düzeltme",
+  "@totalCorrections": {
+    "description": "Label for total corrections count"
+  },
+  
+  "appliedCorrections": "Uygulanan Düzeltme",
+  "@appliedCorrections": {
+    "description": "Label for applied corrections count"
+  },
+  
+  "consistencyScore": "Tutarlılık Puanı",
+  "@consistencyScore": {
+    "description": "Title for the consistency score section"
+  },
+  
+  "excellentConsistency": "Mükemmel tutarlılık",
+  "@excellentConsistency": {
+    "description": "Text for excellent consistency score"
+  },
+  
+  "goodConsistency": "İyi tutarlılık",
+  "@goodConsistency": {
+    "description": "Text for good consistency score"
+  },
+  
+  "mediumConsistency": "Orta tutarlılık",
+  "@mediumConsistency": {
+    "description": "Text for medium consistency score"
+  },
+  
+  "lowConsistency": "Düşük tutarlılık",
+  "@lowConsistency": {
+    "description": "Text for low consistency score"
+  },
+  
+  "veryLowConsistency": "Çok düşük tutarlılık",
+  "@veryLowConsistency": {
+    "description": "Text for very low consistency score"
+  },
+  
+  "mostFrequentlyMistranslatedTerms": "En Sık Yanlış Çevrilen Terimler",
+  "@mostFrequentlyMistranslatedTerms": {
+    "description": "Title for the mistranslated terms section"
+  },
+  
+  "noMistranslatedTermsFound": "Yanlış çevrilen terim bulunamadı",
+  "@noMistranslatedTermsFound": {
+    "description": "Message shown when no mistranslated terms are found"
+  },
+  
+  "timesOccurred": "{count} kez",
+  "@timesOccurred": {
+    "description": "Number of times a term was mistranslated",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  
+  "correctionDetails": "Düzeltme Detayları",
+  "@correctionDetails": {
+    "description": "Title for the correction details section"
+  },
+  
+  "totalCorrections2": "Toplam: {count} düzeltme",
+  "@totalCorrections2": {
+    "description": "Total number of corrections",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "10"
+      }
+    }
+  },
+  
+  "noCorrectionSuggestions": "Henüz düzeltme önerisi yok",
+  "@noCorrectionSuggestions": {
+    "description": "Message shown when no correction suggestions are available"
+  },
+  
+  "line": "Satır: {number}",
+  "@line": {
+    "description": "Line number",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "42"
+      }
+    }
+  },
+  
+  "saveReport": "Raporu Kaydet",
+  "@saveReport": {
+    "description": "Save report dialog title"
+  },
+  
+  "consistencyReportFileName": "terim_tutarlilik_raporu.html",
+  "@consistencyReportFileName": {
+    "description": "Default filename for the consistency report"
+  },
+  
+  "reportSavedSuccessfully": "Rapor başarıyla kaydedildi",
+  "@reportSavedSuccessfully": {
+    "description": "Message shown when report is saved successfully"
+  },
+  "projectsScreenTitle": "Projeler",
+  "@projectsScreenTitle": {
+    "description": "Title for the projects screen"
+  },
+  
+  "importProjectTooltip": "Projeyi İçe Aktar",
+  "@importProjectTooltip": {
+    "description": "Tooltip for import project button"
+  },
+
+  "errorWithMessage": "Hata: {message}",
+  "@errorWithMessage": {
+    "description": "Error message with specific error details",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+
+  "noProjectsMessage": "Henüz bir proje oluşturmadınız",
+  "@noProjectsMessage": {
+    "description": "Message shown when user has no projects"
+  },
+
+  "totalProjects": "Toplam {count} proje",
+  "@totalProjects": {
+    "description": "Total number of projects",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "newProject": "Yeni Proje",
+  "@newProject": {
+    "description": "New project button and dialog title"
+  },
+
+  "projectName": "Proje Adı",
+  "@projectName": {
+    "description": "Project name field label"
+  },
+
+  "descriptionOptional": "Açıklama (İsteğe Bağlı)",
+  "@descriptionOptional": {
+    "description": "Optional description field label"
+  },
+
+  "descriptionHint": "Örn: 5 sezonluk Wuxia serisi altyazı termlerinin standardizasyonu",
+  "@descriptionHint": {
+    "description": "Example hint for project description field"
+  },
+
+  "projectNameHint": "Örn: Wuxia Serisi Terim Çevirisi",
+  "@projectNameHint": {
+    "description": "Example hint for project name field"
+  },
+
+  "cancel": "İptal",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+
+  "save": "Kaydet",
+  "@save": {
+    "description": "Save button text"
+  },
+
+  "deleteProject": "Projeyi Sil",
+  "@deleteProject": {
+    "description": "Delete project dialog title"
+  },
+
+  "deleteConfirmation": "Bu projeyi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+  "@deleteConfirmation": {
+    "description": "Delete confirmation message"
+  },
+
+  "yes": "Evet",
+  "@yes": {
+    "description": "Yes button text"
+  },
+
+  "projectDeleted": "Proje silindi",
+  "@projectDeleted": {
+    "description": "Message shown after project is deleted"
+  },
+
+  "exportProjectDialogTitle": "Projeyi Dışa Aktar",
+  "@exportProjectDialogTitle": {
+    "description": "Title for export project dialog"
+  },
+
+  "exportSuccess": "Proje başarıyla dışa aktarıldı",
+  "@exportSuccess": {
+    "description": "Message shown after successful project export"
+  },
+
+  "importSuccess": "Proje başarıyla içe aktarıldı",
+  "@importSuccess": {
+    "description": "Message shown after successful project import"
+  },
+
+  "projectDetails": "Belgeler: {docCount} | Son güncelleme: {updateDate}",
+  "@projectDetails": {
+    "description": "Project details showing document count and last update date",
+    "placeholders": {
+      "docCount": {
+        "type": "int"
+      },
+      "updateDate": {
+        "type": "String"
+      }
+    }
+  },
+
+  "exportAction": "Dışa Aktar",
+  "@exportAction": {
+    "description": "Export action label in popup menu"
+  },
+
+  "deleteAction": "Sil",
+  "@deleteAction": {
+    "description": "Delete action label in popup menu"
+  },
+  
+  "termManagement": "Terim Yönetimi",
+  "@termManagement": {
+    "description": "Navigation label for term management screen"
+  },
+  
+  "documentProcessing": "Belge İşleme",
+  "@documentProcessing": {
+    "description": "Navigation label for document processing screen"
+  },
+  
+  "reports": "Raporlar",
+  "@reports": {
+    "description": "Navigation label for reports screen"
+  },
+
+  "documentProcessingTitle": "Belge İşleme",
+  "@documentProcessingTitle": {
+    "description": "Title for document processing screen"
+  },
+
+  "horizontalPanelTooltip": "Yatay Panel Görünümü",
+  "@horizontalPanelTooltip": {
+    "description": "Tooltip for horizontal panel view"
+  },
+
+  "verticalPanelTooltip": "Dikey Panel Görünümü",
+  "@verticalPanelTooltip": {
+    "description": "Tooltip for vertical panel view"
+  },
+
+  "changeViewTooltip": "Görünümü Değiştir",
+  "@changeViewTooltip": {
+    "description": "Tooltip for changing document view mode"
+  },
+
+  "openDocumentTooltip": "Belge Aç",
+  "@openDocumentTooltip": {
+    "description": "Tooltip for open document button"
+  },
+
+  "saveDocumentTooltip": "Belgeyi Kaydet",
+  "@saveDocumentTooltip": {
+    "description": "Tooltip for save document button"
+  },
+
+  "pleaseUploadDocument": "Lütfen bir belge yükleyin",
+  "@pleaseUploadDocument": {
+    "description": "Message shown when no document is loaded"
+  },
+
+  "resetPanelSizeTooltip": "Panel Boyutunu Sıfırla",
+  "@resetPanelSizeTooltip": {
+    "description": "Tooltip for resetting panel size"
+  },
+
+  "correctionsCount": "Düzeltmeler ({count})",
+  "@correctionsCount": {
+    "description": "Title showing number of corrections",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "applyAllCorrections": "Tümünü Uygula",
+  "@applyAllCorrections": {
+    "description": "Button to apply all corrections at once"
+  },
+
+  "applyCorrections": "Uygula",
+  "@applyCorrections": {
+    "description": "Button to apply corrections (short version)"
+  },
+
+  "clearCorrections": "Temizle",
+  "@clearCorrections": {
+    "description": "Button to clear all corrections"
+  },
+
+  "total": "Toplam",
+  "@total": {
+    "description": "Label for total corrections count"
+  },
+
+  "applied": "Uygulandı",
+  "@applied": {
+    "description": "Label for applied corrections count"
+  },
+
+  "pending": "Bekliyor",
+  "@pending": {
+    "description": "Label for pending corrections count"
+  },
+
+  "noCorrectionsYet": "Henüz düzeltme önerisi yok",
+  "@noCorrectionsYet": {
+    "description": "Message shown when there are no corrections"
+  },
+
+  "clickButtonForCorrections": "Düzeltme önerilerini görmek için sağ alt köşedeki düğmeye tıklayın",
+  "@clickButtonForCorrections": {
+    "description": "Instruction for generating corrections"
+  },
+
+  "filterByLine": "Satıra göre filtrele:",
+  "@filterByLine": {
+    "description": "Label for line filter dropdown"
+  },
+
+  "allLines": "Tüm satırlar",
+  "@allLines": {
+    "description": "Option for showing all lines in filter"
+  },
+
+  "lineNumber": "Satır {number}",
+  "@lineNumber": {
+    "description": "Line number label",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "applyCorrection": "Düzeltmeyi Uygula",
+  "@applyCorrection": {
+    "description": "Tooltip for applying single correction"
+  },
+
+  "currentLineText": "Satırın Mevcut Metni:",
+  "@currentLineText": {
+    "description": "Label for current line text field"
+  },
+
+  "enterCorrectedText": "Düzeltilmiş metni buraya yazın",
+  "@enterCorrectedText": {
+    "description": "Hint for entering corrected text"
+  },
+
+  "correctionForLine": "Satır {number} için düzeltme",
+  "@correctionForLine": {
+    "description": "Helper text for correction field",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "termDatabaseReference": "Terim Veritabanı Referansı:",
+  "@termDatabaseReference": {
+    "description": "Title for term database reference section"
+  },
+
+  "termSearchedInDatabase": "Veritabanında Aranan Terim: ",
+  "@termSearchedInDatabase": {
+    "description": "Label for term searched in database"
+  },
+
+  "suggestedTerm": "Önerilen Terim: ",
+  "@suggestedTerm": {
+    "description": "Label for suggested term"
+  },
+
+  "dataDiscrepancyWarning": "Uyarı: Veriler arasında uyumsuzluk olabilir. Terim veritabanındaki bilgiler satırın mevcut içeriğiyle uyuşmayabilir! Kendi düzeltmenizi yapabilirsiniz.",
+  "@dataDiscrepancyWarning": {
+    "description": "Warning about potential discrepancies in data"
+  },
+
+  "saveChanges": "Değişiklikleri Kaydet",
+  "@saveChanges": {
+    "description": "Button to save changes"
+  },
+
+  "selectChineseSourceDocument": "Çince Kaynak Belgeyi Seçin",
+  "@selectChineseSourceDocument": {
+    "description": "Dialog title for selecting Chinese source document"
+  },
+
+  "selectEnglishTranslationDocument": "İngilizce Çeviri Belgesini Seçin",
+  "@selectEnglishTranslationDocument": {
+    "description": "Dialog title for selecting English translation document"
+  },
+
+  "selectFolderToSave": "Kaydetmek İçin Klasör Seçin",
+  "@selectFolderToSave": {
+    "description": "Dialog title for selecting folder to save document"
+  },
+
+  "documentSavedSuccessfully": "Belge başarıyla kaydedildi",
+  "@documentSavedSuccessfully": {
+    "description": "Message shown when document is saved successfully"
+  },
+
+  "emptyTermDatabase": "Terim veritabanı boş. Lütfen önce terim ekleyin.",
+  "@emptyTermDatabase": {
+    "description": "Warning when term database is empty"
+  },
+
+  "processingDocument": "Belge işleniyor, lütfen bekleyin...",
+  "@processingDocument": {
+    "description": "Message shown while document is being processed"
+  },
+
+  "noCorrectionsFound": "Hiçbir düzeltme önerisi bulunamadı. Tüm terimler doğru kullanılmış veya eşleşen terim yok.",
+  "@noCorrectionsFound": {
+    "description": "Message when no corrections are found"
+  },
+
+  "correctionsFound": "{count} düzeltme önerisi bulundu.",
+  "@correctionsFound": {
+    "description": "Message showing number of corrections found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "errorProcessingDocument": "Belge işlenirken hata oluştu: {error}",
+  "@errorProcessingDocument": {
+    "description": "Error message while processing document",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "correctionTextEmpty": "Düzeltme metni boş olamaz!",
+  "@correctionTextEmpty": {
+    "description": "Error when correction text is empty"
+  },
+
+  "correctionAppliedSuccessfully": "Düzeltme başarıyla uygulandı",
+  "@correctionAppliedSuccessfully": {
+    "description": "Message when correction is applied successfully"
+  },
+
+  "errorApplyingCorrection": "Düzeltme uygulanırken hata oluştu: {error}",
+  "@errorApplyingCorrection": {
+    "description": "Error message when applying correction",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "noCorrectionsToApply": "Uygulanacak düzeltme bulunamadı",
+  "@noCorrectionsToApply": {
+    "description": "Message when there are no corrections to apply"
+  },
+
+  "allCorrectionsApplied": "Tüm düzeltmeler uygulandı",
+  "@allCorrectionsApplied": {
+    "description": "Message when all corrections are applied"
+  },
+  "projectTerms": "Proje Terimleri",
+  "@projectTerms": {
+    "description": "Project terms title"
+  },
+  "import": "İçe Aktar",
+  "@import": {
+    "description": "Import button text"
+  },
+  "newTerm": "Yeni Terim",
+  "@newTerm": {
+    "description": "New term button text"
+  },
+  "noTermsInProject": "Bu projede henüz terim yok",
+  "@noTermsInProject": {
+    "description": "Text shown when project has no terms"
+  },
+  "addTerm": "Terim Ekle",
+  "@addTerm": {
+    "description": "Add term button text"
+  },
+  "addNewTerm": "Yeni Terim Ekle",
+  "@addNewTerm": {
+    "description": "Dialog title for adding new term"
+  },
+  "chineseTerm": "Çince Terim",
+  "@chineseTerm": {
+    "description": "Chinese term input label"
+  },
+  "englishTerm": "İngilizce Terim",
+  "@englishTerm": {
+    "description": "English term input label"
+  },
+  "category": "Kategori",
+  "@category": {
+    "description": "Category dropdown label"
+  },
+  "optionalNotes": "Notlar (İsteğe Bağlı)",
+  "@optionalNotes": {
+    "description": "Optional notes input label"
+  },
+  "cancel": "İptal",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "add": "Ekle",
+  "@add": {
+    "description": "Add button text"
+  },
+  "termsRequired": "Çince ve İngilizce terimler gereklidir",
+  "@termsRequired": {
+    "description": "Error message for required fields"
+  },
+  "termAdded": "Terim eklendi",
+  "@termAdded": {
+    "description": "Success message after adding term"
+  },
+  "editTerm": "Terimi Düzenle",
+  "@editTerm": {
+    "description": "Dialog title for editing term"
+  },
+  "update": "Güncelle",
+  "@update": {
+    "description": "Update button text"
+  },
+  "termUpdated": "Terim güncellendi",
+  "@termUpdated": {
+    "description": "Success message after updating term"
+  },
+  "deleteTerm": "Terimi Sil",
+  "@deleteTerm": {
+    "description": "Dialog title for deleting term"
+  },
+  "deleteTermConfirmation": "Bu terimi silmek istediğinizden emin misiniz?",
+  "@deleteTermConfirmation": {
+    "description": "Confirmation message for term deletion"
+  },
+  "delete": "Sil",
+  "@delete": {
+    "description": "Delete button text"
+  },
+  "termDeleted": "Terim silindi",
+  "@termDeleted": {
+    "description": "Success message after deleting term"
+  },
+  "error": "Hata: {error}",
+  "@error": {
+    "description": "Error message template",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "Dosya bulunamadı"
+      }
+    }
+  },
+  "personName": "Kişi İsmi",
+  "@personName": {
+    "description": "Category: Person Name"
+  },
+  "placeName": "Yer İsmi",
+  "@placeName": {
+    "description": "Category: Place Name"
+  },
+  "organization": "Organizasyon",
+  "@organization": {
+    "description": "Category: Organization"
+  },
+  "technicalTerm": "Teknik Terim",
+  "@technicalTerm": {
+    "description": "Category: Technical Term"
+  },
+  "general": "Genel",
+  "@general": {
+    "description": "Category: General"
+  },
+  "other": "Diğer",
+  "@other": {
+    "description": "Category: Other"
+  },
+  "editButton": "Düzenle",
+  "@editButton": {
+    "description": "Edit button tooltip text"
+  },
+  "deleteButton": "Sil",
+  "@deleteButton": {
+    "description": "Delete button tooltip text"
+  },
+  "addDocument": "Belge Ekle",
+  "@addDocument": {
+    "description": "Text for add document button"
+  },
+  "addFromFolder": "Klasörden Ekle",
+  "@addFromFolder": {
+    "description": "Text for add from folder option"
+  },
+  "projectNotFound": "Proje bulunamadı",
+  "@projectNotFound": {
+    "description": "Message shown when project is not found"
+  },
+  "noDocumentsInProject": "Bu projede henüz belge yok",
+  "@noDocumentsInProject": {
+    "description": "Message shown when there are no documents in project"
+  },
+  "lastUpdate": "Son Güncelleme",
+  "@lastUpdate": {
+    "description": "Label for last update date"
+  },
+  "addDocumentsForReports": "Raporlar oluşturmak için önce belgeler eklemelisiniz",
+  "@addDocumentsForReports": {
+    "description": "Message shown when no documents to generate reports"
+  },
+  "documentAddedSuccessfully": "Belge başarıyla eklendi",
+  "@documentAddedSuccessfully": {
+    "description": "Message shown when document is added"
+  },
+  "selectSubtitleFolder": "Altyazı Dosyalarını İçeren Klasörü Seçin",
+  "@selectSubtitleFolder": {
+    "description": "Dialog title for selecting subtitle folder"
+  },
+  "filesAdded": "{count} dosya çifti eklendi",
+  "@filesAdded": {
+    "description": "Message showing number of files added",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "errorsOccurred": "{count} hata oluştu",
+  "@errorsOccurred": {
+    "description": "Message showing number of errors",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noMatchingSubtitlePairs": "Eşleşen altyazı çifti bulunamadı",
+  "@noMatchingSubtitlePairs": {
+    "description": "Message when no matching subtitle pairs are found"
+  },
+  "deleteDocumentConfirmation": "Bu belgeyi projeden silmek istediğinizden emin misiniz?",
+  "@deleteDocumentConfirmation": {
+    "description": "Confirmation message for document deletion"
+  },
+  "documentDeleted": "Belge silindi",
+  "@documentDeleted": {
+    "description": "Message shown after document is deleted"
+  },
+  "deleteDocument": "Belgeyi Sil",
+  "@deleteDocument": {
+    "description": "Title for document deletion dialog"
+  },
+  "documentLineInfo": "Satır sayısı: {lineCount} | {correctionInfo}",
+  "@documentLineInfo": {
+    "description": "Document line information with correction status",
+    "placeholders": {
+      "lineCount": {
+        "type": "int",
+        "example": "42"
+      },
+      "correctionInfo": {
+        "type": "String",
+        "example": "5 satırda düzeltme"
+      }
+    }
+  },
+  "documentCorrectionInfo": "{count} satırda düzeltme",
+  "@documentCorrectionInfo": {
+    "description": "Information about corrections in document lines",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "documentDateInfo": "Eklenme: {importDate} {processedInfo}",
+  "@documentDateInfo": {
+    "description": "Document date information",
+    "placeholders": {
+      "importDate": {
+        "type": "String",
+        "example": "01/01/2023"
+      },
+      "processedInfo": {
+        "type": "String",
+        "example": "| Son işlem: 02/01/2023"
+      }
+    }
+  },
+  "documentLastProcessedInfo": "| Son işlem: {date}",
+  "@documentLastProcessedInfo": {
+    "description": "Last processed date information",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "01/01/2023"
+      }
+    }
+  },
+  "consistencyReportTitle": "Terim Tutarlılık Raporu",
+  "@consistencyReportTitle": {
+    "description": "Title for the term consistency report"
+  },
+  "document": "Belge",
+  "@document": {
+    "description": "Label for document name"
+  },
+  "creationDate": "Oluşturulma Tarihi",
+  "@creationDate": {
+    "description": "Label for creation date"
+  },
+  "totalLinesReport": "Toplam satır sayısı",
+  "@totalLinesReport": {
+    "description": "Label for total lines in report"
+  },
+  "correctedLinesReport": "Düzeltilen satır sayısı",
+  "@correctedLinesReport": {
+    "description": "Label for corrected lines in report"
+  },
+  "totalCorrectionsReport": "Toplam düzeltme sayısı",
+  "@totalCorrectionsReport": {
+    "description": "Label for total corrections in report"
+  },
+  "appliedCorrectionsReport": "Uygulanan düzeltme sayısı",
+  "@appliedCorrectionsReport": {
+    "description": "Label for applied corrections in report"
+  },
+  "termLabel": "Terim",
+  "@termLabel": {
+    "description": "Label for term column in table"
+  },
+  "frequencyLabel": "Sıklık",
+  "@frequencyLabel": {
+    "description": "Label for frequency column in table"
+  },
+  "statusLabel": "Durum",
+  "@statusLabel": {
+    "description": "Label for status column in table"
+  },
+  "pendingStatus": "Beklemede",
+  "@pendingStatus": {
+    "description": "Status text when a correction is pending"
+  },
+  "incorrectEnglishTerm": "Yanlış İngilizce Terim",
+  "@incorrectEnglishTerm": {
+    "description": "Label for incorrect English term"
+  },
+  "correctEnglishTerm": "Doğru İngilizce Terim",
+  "@correctEnglishTerm": {
+    "description": "Label for correct English term"
+  },
+  "lineNumber1": "Satır No",
+  "@lineNumber": {
+    "description": "Label for line number"
+  },
+  "processingDocument": "Belge işleniyor",
+  "@processingDocument": {
+    "description": "Message when processing document"
+  },
+  "includingDuplicates": "tekrarlar dahil",
+  "@includingDuplicates": {
+    "description": "Text for including duplicates in counts"
+  },
+  "uniqueCorrections": "Benzersiz düzeltmeler",
+  "@uniqueCorrections": {
+    "description": "Label for unique corrections count"
+  },
+  "lineNotFound": "Satır bulunamadı",
+  "@lineNotFound": {
+    "description": "Error message when line not found"
+  },
+  "processingLine": "Satır işleniyor",
+  "@processingLine": {
+    "description": "Message when processing a line"
+  },
+  "termMatchesFound": "terim eşleşmesi bulundu",
+  "@termMatchesFound": {
+    "description": "Message for number of term matches found"
+  },
+  "warning": "UYARI",
+  "@warning": {
+    "description": "Warning label"
+  },
+  "mismatchedLineNumbers": "Eşleşmeyen satır numaraları",
+  "@mismatchedLineNumbers": {
+    "description": "Warning about mismatched line numbers"
+  },
+  "correcting": "Düzeltiliyor",
+  "@correcting": {
+    "description": "Message about correcting an issue"
+  },
+  "correction": "Düzeltme",
+  "@correction": {
+    "description": "Label for a correction item"
+  },
+  "shouldBe": "olması gereken",
+  "@shouldBe": {
+    "description": "Text indicating what something should be"
+  },
+  "incorrectTermNotFound": "Hatalı terim bulunamadı",
+  "@incorrectTermNotFound": {
+    "description": "Warning when incorrect term not found in text"
+  },
+  "inLine": "satırında",
+  "@inLine": {
+    "description": "Preposition for specifying in which line"
+  },
+  "correctionsApplied": "düzeltme uygulandı",
+  "@correctionsApplied": {
+    "description": "Message for number of corrections applied"
+  },
+  "correct": "doğru",
+  "@correct": {
+    "description": "Label for correct items count"
+  }
+} 

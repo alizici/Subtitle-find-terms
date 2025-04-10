@@ -1,0 +1,1270 @@
+{
+  "appTitle": "中英术语校正器",
+  "@appTitle": {
+    "description": "应用标题"
+  },
+  "projectsScreenTitle": "项目",
+  "@projectsScreenTitle": {
+    "description": "项目屏幕标题"
+  },
+  "newProject": "新项目",
+  "@newProject": {
+    "description": "新项目按钮文本"
+  },
+  "deleteProject": "删除项目",
+  "@deleteProject": {
+    "description": "删除项目按钮文本"
+  },
+  "editProject": "编辑项目",
+  "@editProject": {
+    "description": "编辑项目按钮文本"
+  },
+  "projectName": "项目名称",
+  "@projectName": {
+    "description": "项目名称字段标签"
+  },
+  "save": "保存",
+  "@save": {
+    "description": "保存按钮文本"
+  },
+  "cancel": "取消",
+  "@cancel": {
+    "description": "取消按钮文本"
+  },
+  "deleteConfirmation": "您确定要删除此项目吗？",
+  "@deleteConfirmation": {
+    "description": "删除确认消息"
+  },
+  "yes": "是",
+  "@yes": {
+    "description": "是按钮文本"
+  },
+  "no": "否",
+  "@no": {
+    "description": "否按钮文本"
+  },
+  "saveDialogTitle": "保存",
+  "@saveDialogTitle": {
+    "description": "保存对话框标题"
+  },
+  "categoryPerson": "人物",
+  "@categoryPerson": {
+    "description": "人物类别名称"
+  },
+  "categoryPlace": "地点",
+  "@categoryPlace": {
+    "description": "地点类别名称"
+  },
+  "categoryOrganization": "组织",
+  "@categoryOrganization": {
+    "description": "组织类别名称"
+  },
+  "categoryTechnical": "技术",
+  "@categoryTechnical": {
+    "description": "技术类别名称"
+  },
+  "categoryOther": "其他",
+  "@categoryOther": {
+    "description": "其他类别名称"
+  },
+  "categoryGeneral": "一般",
+  "@categoryGeneral": {
+    "description": "一般类别名称"
+  },
+  "defaultTermsFileName": "术语.json",
+  "@defaultTermsFileName": {
+    "description": "默认术语文件名"
+  },
+  "defaultReportFileName": "术语报告.html",
+  "@defaultReportFileName": {
+    "description": "默认报告文件名"
+  },
+  "errorFileLoad": "加载文件时出错",
+  "@errorFileLoad": {
+    "description": "文件加载错误消息"
+  },
+  "errorFileSave": "保存文件时出错",
+  "@errorFileSave": {
+    "description": "文件保存错误消息"
+  },
+  "errorTermImport": "导入术语时出错",
+  "@errorTermImport": {
+    "description": "术语导入错误消息"
+  },
+  "errorTermExport": "导出术语时出错",
+  "@errorTermExport": {
+    "description": "术语导出错误消息"
+  },
+  "successTermImport": "术语成功导入",
+  "@successTermImport": {
+    "description": "术语导入成功消息"
+  },
+  "successTermExport": "术语成功导出",
+  "@successTermExport": {
+    "description": "术语导出成功消息"
+  },
+  "successFileLoad": "文件加载成功",
+  "@successFileLoad": {
+    "description": "文件加载成功消息"
+  },
+  "successFileSave": "文件保存成功",
+  "@successFileSave": {
+    "description": "文件保存成功消息"
+  },
+  "successCorrectionsApplied": "成功应用更正",
+  "@successCorrectionsApplied": {
+    "description": "应用更正成功消息"
+  },
+  "invalidTimeFormat": "时间格式无效: {timestamp}",
+  "@invalidTimeFormat": {
+    "description": "无效时间格式错误消息",
+    "placeholders": {
+      "timestamp": {
+        "type": "String",
+        "example": "12:34:56.789"
+      }
+    }
+  },
+  "invalidSecondsFormat": "秒/厘秒格式无效: {timestamp}",
+  "@invalidSecondsFormat": {
+    "description": "无效秒格式错误消息",
+    "placeholders": {
+      "timestamp": {
+        "type": "String",
+        "example": "12:34:56.789"
+      }
+    }
+  },
+  "timestampParsingError": "时间戳解析错误: '{timestamp}' - {error}",
+  "@timestampParsingError": {
+    "description": "时间戳解析错误消息",
+    "placeholders": {
+      "timestamp": {
+        "type": "String",
+        "example": "12:34:56.789"
+      },
+      "error": {
+        "type": "String",
+        "example": "FormatException"
+      }
+    }
+  },
+  "warningDialogueMissingFields": "警告: 对话行中的字段不足: {line}",
+  "@warningDialogueMissingFields": {
+    "description": "对话行缺少字段警告消息",
+    "placeholders": {
+      "line": {
+        "type": "String",
+        "example": "Dialogue: 0,0:00:10.00,0:00:12.00,Default,,0,0,0,,你好"
+      }
+    }
+  },
+  "dialogueParsingError": "无法解析对话行: '{line}'\n格式: {format}\n错误: {error}",
+  "@dialogueParsingError": {
+    "description": "对话解析错误消息",
+    "placeholders": {
+      "line": {
+        "type": "String",
+        "example": "Dialogue: 0,0:00:10.00,0:00:12.00,Default,,0,0,0,,你好"
+      },
+      "format": {
+        "type": "String",
+        "example": "[Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text]"
+      },
+      "error": {
+        "type": "String",
+        "example": "FormatException"
+      }
+    }
+  },
+  "editButton": "编辑",
+  "@editButton": {
+    "description": "Edit button tooltip text"
+  },
+  "deleteButton": "删除",
+  "@deleteButton": {
+    "description": "Delete button tooltip text"
+  },
+  "sourceText": "源文本",
+  "@sourceText": {
+    "description": "Title for the source text column"
+  },
+  "englishTranslation": "英文翻译",
+  "@englishTranslation": {
+    "description": "Title for the English translation column"
+  },
+  "corrected": "已修正",
+  "@corrected": {
+    "description": "Label for corrected text"
+  },
+  "categoryPerson": "人物",
+  "@categoryPerson": {
+    "description": "Category name for persons"
+  },
+  "categoryPlace": "地点",
+  "@categoryPlace": {
+    "description": "Category name for places"
+  },
+  "categoryOrganization": "组织",
+  "@categoryOrganization": {
+    "description": "Category name for organizations"
+  },
+  "categoryTechnical": "技术",
+  "@categoryTechnical": {
+    "description": "Category name for technical terms"
+  },
+  "categoryGeneral": "一般",
+  "@categoryGeneral": {
+    "description": "Category name for general terms"
+  },
+  "categoryOther": "其他",
+  "@categoryOther": {
+    "description": "Category name for other terms"
+  },
+  "applyButton": "应用",
+  "@applyButton": {
+    "description": "Apply button text for correction items"
+  },
+  "appliedStatus": "已应用",
+  "@appliedStatus": {
+    "description": "Status text when a correction has been applied"
+  },
+  "linePrefix": "行",
+  "@linePrefix": {
+    "description": "Prefix for line number display"
+  },
+  "incorrectLabel": "错误:",
+  "@incorrectLabel": {
+    "description": "Label for incorrect translation"
+  },
+  "correctLabel": "正确:",
+  "@correctLabel": {
+    "description": "Label for correct translation"
+  },
+  "termManagement": "术语管理",
+  "@termManagement": {
+    "description": "Title for the term management screen"
+  },
+  "import": "导入",
+  "@import": {
+    "description": "Import button tooltip text"
+  },
+  "export": "导出",
+  "@export": {
+    "description": "Export button tooltip text"
+  },
+  "searchTerm": "搜索术语",
+  "@searchTerm": {
+    "description": "Search field label"
+  },
+  "filterCategory": "过滤类别",
+  "@filterCategory": {
+    "description": "Category filter dropdown label"
+  },
+  "all": "全部",
+  "@all": {
+    "description": "All categories option"
+  },
+  "personName": "人名",
+  "@personName": {
+    "description": "Person category name"
+  },
+  "placeName": "地名",
+  "@placeName": {
+    "description": "Place category name"
+  },
+  "organization": "组织机构",
+  "@organization": {
+    "description": "Organization category name"
+  },
+  "technicalTerm": "技术术语",
+  "@technicalTerm": {
+    "description": "Technical term category name"
+  },
+  "general": "通用",
+  "@general": {
+    "description": "General category name"
+  },
+  "other": "其他",
+  "@other": {
+    "description": "Other category name"
+  },
+  "noTermsFound": "未找到术语",
+  "@noTermsFound": {
+    "description": "Message when no terms match the filters"
+  },
+  "editTerm": "编辑术语",
+  "@editTerm": {
+    "description": "Edit term dialog title"
+  },
+  "addNewTerm": "添加新术语",
+  "@addNewTerm": {
+    "description": "Add new term dialog title"
+  },
+  "chineseTerm": "中文术语",
+  "@chineseTerm": {
+    "description": "Chinese term field label"
+  },
+  "enterChineseTerm": "请输入中文术语",
+  "@enterChineseTerm": {
+    "description": "Validation message for Chinese term"
+  },
+  "englishTerm": "英文术语",
+  "@englishTerm": {
+    "description": "English term field label"
+  },
+  "enterEnglishTerm": "请输入英文术语",
+  "@enterEnglishTerm": {
+    "description": "Validation message for English term"
+  },
+  "category": "类别",
+  "@category": {
+    "description": "Category field label"
+  },
+  "notes": "笔记",
+  "@notes": {
+    "description": "Notes field label"
+  },
+  "cancel": "取消",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "add": "添加",
+  "@add": {
+    "description": "Add button text"
+  },
+  "update": "更新",
+  "@update": {
+    "description": "Update button text"
+  },
+  "deleteTerm": "删除术语",
+  "@deleteTerm": {
+    "description": "Delete term dialog title"
+  },
+  "confirmDelete": "您确定要删除此术语吗？",
+  "@confirmDelete": {
+    "description": "Confirmation message for term deletion"
+  },
+  "delete": "删除",
+  "@delete": {
+    "description": "Delete button text"
+  },
+  "importSuccess": "术语导入成功",
+  "@importSuccess": {
+    "description": "Success message for import operation"
+  },
+  "error": "错误",
+  "@error": {
+    "description": "Error dialog title"
+  },
+  "errorWithMessage": "错误：{message}",
+  "@errorWithMessage": {
+    "description": "Error message with details",
+    "placeholders": {
+      "message": {
+        "type": "String",
+        "example": "文件未找到"
+      }
+    }
+  },
+  "importResult": "导入结果",
+  "@importResult": {
+    "description": "Import result dialog title"
+  },
+  "ok": "确定",
+  "@ok": {
+    "description": "OK button text"
+  },
+  "exportTerms": "导出术语",
+  "@exportTerms": {
+    "description": "Export dialog title"
+  },
+  "exportSuccess": "术语导出成功",
+  "@exportSuccess": {
+    "description": "Success message for export operation"
+  },
+  "reports": "报告",
+  "@reports": {
+    "description": "Title for the reports screen"
+  },
+  "exportReport": "导出报告",
+  "@exportReport": {
+    "description": "Export report button tooltip text"
+  },
+  
+  "pleaseUploadDocument": "请先从文档处理屏幕上传文档",
+  "@pleaseUploadDocument": {
+    "description": "Message shown when no document is loaded"
+  },
+  
+  "error": "错误",
+  "@error": {
+    "description": "Error label"
+  },
+  
+  "summary": "摘要",
+  "@summary": {
+    "description": "Title for the summary section"
+  },
+  
+  "totalLines": "总行数",
+  "@totalLines": {
+    "description": "Label for total lines count"
+  },
+  
+  "correctedLines": "已更正行数",
+  "@correctedLines": {
+    "description": "Label for corrected lines count"
+  },
+  
+  "totalCorrections": "总更正数",
+  "@totalCorrections": {
+    "description": "Label for total corrections count"
+  },
+  
+  "appliedCorrections": "已应用更正",
+  "@appliedCorrections": {
+    "description": "Label for applied corrections count"
+  },
+  
+  "consistencyScore": "一致性评分",
+  "@consistencyScore": {
+    "description": "Title for the consistency score section"
+  },
+  
+  "excellentConsistency": "优秀的一致性",
+  "@excellentConsistency": {
+    "description": "Text for excellent consistency score"
+  },
+  
+  "goodConsistency": "良好的一致性",
+  "@goodConsistency": {
+    "description": "Text for good consistency score"
+  },
+  
+  "mediumConsistency": "中等一致性",
+  "@mediumConsistency": {
+    "description": "Text for medium consistency score"
+  },
+  
+  "lowConsistency": "低一致性",
+  "@lowConsistency": {
+    "description": "Text for low consistency score"
+  },
+  
+  "veryLowConsistency": "非常低的一致性",
+  "@veryLowConsistency": {
+    "description": "Text for very low consistency score"
+  },
+  
+  "mostFrequentlyMistranslatedTerms": "最常被错误翻译的术语",
+  "@mostFrequentlyMistranslatedTerms": {
+    "description": "Title for the mistranslated terms section"
+  },
+  
+  "noMistranslatedTermsFound": "未找到错误翻译的术语",
+  "@noMistranslatedTermsFound": {
+    "description": "Message shown when no mistranslated terms are found"
+  },
+  
+  "timesOccurred": "{count} 次",
+  "@timesOccurred": {
+    "description": "Number of times a term was mistranslated",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  
+  "correctionDetails": "更正详情",
+  "@correctionDetails": {
+    "description": "Title for the correction details section"
+  },
+  
+  "totalCorrections2": "总计: {count} 项更正",
+  "@totalCorrections2": {
+    "description": "Total number of corrections",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "10"
+      }
+    }
+  },
+  
+  "noCorrectionSuggestions": "暂无更正建议",
+  "@noCorrectionSuggestions": {
+    "description": "Message shown when no correction suggestions are available"
+  },
+  
+  "line": "行: {number}",
+  "@line": {
+    "description": "Line number",
+    "placeholders": {
+      "number": {
+        "type": "int",
+        "example": "42"
+      }
+    }
+  },
+  
+  "saveReport": "保存报告",
+  "@saveReport": {
+    "description": "Save report dialog title"
+  },
+  
+  "consistencyReportFileName": "术语一致性报告.html",
+  "@consistencyReportFileName": {
+    "description": "Default filename for the consistency report"
+  },
+  
+  "reportSavedSuccessfully": "报告已成功保存",
+  "@reportSavedSuccessfully": {
+    "description": "Message shown when report is saved successfully"
+  },
+  "projectsScreenTitle": "项目",
+  "@projectsScreenTitle": {
+    "description": "Title for the projects screen"
+  },
+  
+  "importProjectTooltip": "导入项目",
+  "@importProjectTooltip": {
+    "description": "Tooltip for import project button"
+  },
+
+  "errorWithMessage": "错误：{message}",
+  "@errorWithMessage": {
+    "description": "Error message with specific error details",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+
+  "noProjectsMessage": "您尚未创建任何项目",
+  "@noProjectsMessage": {
+    "description": "Message shown when user has no projects"
+  },
+
+  "totalProjects": "共 {count} 个项目",
+  "@totalProjects": {
+    "description": "Total number of projects",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "newProject": "新项目",
+  "@newProject": {
+    "description": "New project button and dialog title"
+  },
+
+  "projectName": "项目名称",
+  "@projectName": {
+    "description": "Project name field label"
+  },
+
+  "descriptionOptional": "描述（可选）",
+  "@descriptionOptional": {
+    "description": "Optional description field label"
+  },
+
+  "descriptionHint": "例如：5季武侠系列字幕术语的标准化",
+  "@descriptionHint": {
+    "description": "Example hint for project description field"
+  },
+
+  "projectNameHint": "例如：武侠系列术语翻译",
+  "@projectNameHint": {
+    "description": "Example hint for project name field"
+  },
+
+  "cancel": "取消",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+
+  "save": "保存",
+  "@save": {
+    "description": "Save button text"
+  },
+
+  "deleteProject": "删除项目",
+  "@deleteProject": {
+    "description": "Delete project dialog title"
+  },
+
+  "deleteConfirmation": "您确定要删除此项目吗？此操作无法撤消。",
+  "@deleteConfirmation": {
+    "description": "Delete confirmation message"
+  },
+
+  "yes": "是",
+  "@yes": {
+    "description": "Yes button text"
+  },
+
+  "projectDeleted": "项目已删除",
+  "@projectDeleted": {
+    "description": "Message shown after project is deleted"
+  },
+
+  "exportProjectDialogTitle": "导出项目",
+  "@exportProjectDialogTitle": {
+    "description": "Title for export project dialog"
+  },
+
+  "exportSuccess": "项目导出成功",
+  "@exportSuccess": {
+    "description": "Message shown after successful project export"
+  },
+
+  "importSuccess": "项目导入成功",
+  "@importSuccess": {
+    "description": "Message shown after successful project import"
+  },
+
+  "projectDetails": "文档：{docCount} | 最后更新：{updateDate}",
+  "@projectDetails": {
+    "description": "Project details showing document count and last update date",
+    "placeholders": {
+      "docCount": {
+        "type": "int"
+      },
+      "updateDate": {
+        "type": "String"
+      }
+    }
+  },
+
+  "exportAction": "导出",
+  "@exportAction": {
+    "description": "Export action label in popup menu"
+  },
+
+  "deleteAction": "删除",
+  "@deleteAction": {
+    "description": "Delete action label in popup menu"
+  },
+  
+  "termManagement": "术语管理",
+  "@termManagement": {
+    "description": "Navigation label for term management screen"
+  },
+  
+  "documentProcessing": "文档处理",
+  "@documentProcessing": {
+    "description": "Navigation label for document processing screen"
+  },
+  
+  "reports": "报告",
+  "@reports": {
+    "description": "Navigation label for reports screen"
+  },
+
+  "documentProcessingTitle": "文档处理",
+  "@documentProcessingTitle": {
+    "description": "Title for document processing screen"
+  },
+
+  "horizontalPanelTooltip": "水平面板视图",
+  "@horizontalPanelTooltip": {
+    "description": "Tooltip for horizontal panel view"
+  },
+
+  "verticalPanelTooltip": "垂直面板视图",
+  "@verticalPanelTooltip": {
+    "description": "Tooltip for vertical panel view"
+  },
+
+  "changeViewTooltip": "更改视图",
+  "@changeViewTooltip": {
+    "description": "Tooltip for changing document view mode"
+  },
+
+  "openDocumentTooltip": "打开文档",
+  "@openDocumentTooltip": {
+    "description": "Tooltip for open document button"
+  },
+
+  "saveDocumentTooltip": "保存文档",
+  "@saveDocumentTooltip": {
+    "description": "Tooltip for save document button"
+  },
+
+  "pleaseUploadDocument": "请上传文档",
+  "@pleaseUploadDocument": {
+    "description": "Message shown when no document is loaded"
+  },
+
+  "resetPanelSizeTooltip": "重置面板大小",
+  "@resetPanelSizeTooltip": {
+    "description": "Tooltip for resetting panel size"
+  },
+
+  "correctionsCount": "校正 ({count})",
+  "@correctionsCount": {
+    "description": "Title showing number of corrections",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "applyAllCorrections": "应用所有",
+  "@applyAllCorrections": {
+    "description": "Button to apply all corrections at once"
+  },
+
+  "applyCorrections": "应用",
+  "@applyCorrections": {
+    "description": "Button to apply corrections (short version)"
+  },
+
+  "clearCorrections": "清除",
+  "@clearCorrections": {
+    "description": "Button to clear all corrections"
+  },
+
+  "total": "总计",
+  "@total": {
+    "description": "Label for total corrections count"
+  },
+
+  "applied": "已应用",
+  "@applied": {
+    "description": "Label for applied corrections count"
+  },
+
+  "pending": "待处理",
+  "@pending": {
+    "description": "Label for pending corrections count"
+  },
+
+  "noCorrectionsYet": "暂无校正建议",
+  "@noCorrectionsYet": {
+    "description": "Message shown when there are no corrections"
+  },
+
+  "clickButtonForCorrections": "点击右下角按钮查看校正建议",
+  "@clickButtonForCorrections": {
+    "description": "Instruction for generating corrections"
+  },
+
+  "filterByLine": "按行筛选：",
+  "@filterByLine": {
+    "description": "Label for line filter dropdown"
+  },
+
+  "allLines": "所有行",
+  "@allLines": {
+    "description": "Option for showing all lines in filter"
+  },
+
+  "lineNumber": "行 {number}",
+  "@lineNumber": {
+    "description": "Line number label",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "applyCorrection": "应用校正",
+  "@applyCorrection": {
+    "description": "Tooltip for applying single correction"
+  },
+
+  "currentLineText": "当前行文本：",
+  "@currentLineText": {
+    "description": "Label for current line text field"
+  },
+
+  "enterCorrectedText": "在此输入校正文本",
+  "@enterCorrectedText": {
+    "description": "Hint for entering corrected text"
+  },
+
+  "correctionForLine": "行 {number} 的校正",
+  "@correctionForLine": {
+    "description": "Helper text for correction field",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+
+  "termDatabaseReference": "术语数据库参考：",
+  "@termDatabaseReference": {
+    "description": "Title for term database reference section"
+  },
+
+  "termSearchedInDatabase": "在数据库中搜索的术语： ",
+  "@termSearchedInDatabase": {
+    "description": "Label for term searched in database"
+  },
+
+  "suggestedTerm": "建议术语： ",
+  "@suggestedTerm": {
+    "description": "Label for suggested term"
+  },
+
+  "dataDiscrepancyWarning": "警告：数据之间可能存在差异。术语数据库中的信息可能与行的当前内容不匹配！您可以进行自己的校正。",
+  "@dataDiscrepancyWarning": {
+    "description": "Warning about potential discrepancies in data"
+  },
+
+  "saveChanges": "保存更改",
+  "@saveChanges": {
+    "description": "Button to save changes"
+  },
+
+  "selectChineseSourceDocument": "选择中文源文档",
+  "@selectChineseSourceDocument": {
+    "description": "Dialog title for selecting Chinese source document"
+  },
+
+  "selectEnglishTranslationDocument": "选择英文翻译文档",
+  "@selectEnglishTranslationDocument": {
+    "description": "Dialog title for selecting English translation document"
+  },
+
+  "selectFolderToSave": "选择保存文件夹",
+  "@selectFolderToSave": {
+    "description": "Dialog title for selecting folder to save document"
+  },
+
+  "documentSavedSuccessfully": "文档保存成功",
+  "@documentSavedSuccessfully": {
+    "description": "Message shown when document is saved successfully"
+  },
+
+  "emptyTermDatabase": "术语数据库为空。请先添加术语。",
+  "@emptyTermDatabase": {
+    "description": "Warning when term database is empty"
+  },
+
+  "processingDocument": "正在处理文档，请稍候...",
+  "@processingDocument": {
+    "description": "Message shown while document is being processed"
+  },
+
+  "noCorrectionsFound": "未找到校正建议。所有术语使用正确或没有匹配的术语。",
+  "@noCorrectionsFound": {
+    "description": "Message when no corrections are found"
+  },
+
+  "correctionsFound": "找到 {count} 个校正建议。",
+  "@correctionsFound": {
+    "description": "Message showing number of corrections found",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "errorProcessingDocument": "处理文档时出错：{error}",
+  "@errorProcessingDocument": {
+    "description": "Error message while processing document",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "correctionTextEmpty": "校正文本不能为空！",
+  "@correctionTextEmpty": {
+    "description": "Error when correction text is empty"
+  },
+
+  "correctionAppliedSuccessfully": "校正应用成功",
+  "@correctionAppliedSuccessfully": {
+    "description": "Message when correction is applied successfully"
+  },
+
+  "errorApplyingCorrection": "应用校正时出错：{error}",
+  "@errorApplyingCorrection": {
+    "description": "Error message when applying correction",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+
+  "noCorrectionsToApply": "没有可应用的校正",
+  "@noCorrectionsToApply": {
+    "description": "Message when there are no corrections to apply"
+  },
+
+  "allCorrectionsApplied": "所有校正已应用",
+  "@allCorrectionsApplied": {
+    "description": "Message when all corrections are applied"
+  },
+  "projectTerms": "项目术语",
+  "@projectTerms": {
+    "description": "Project terms title"
+  },
+  "import": "导入",
+  "@import": {
+    "description": "Import button text"
+  },
+  "newTerm": "新术语",
+  "@newTerm": {
+    "description": "New term button text"
+  },
+  "noTermsInProject": "此项目中还没有术语",
+  "@noTermsInProject": {
+    "description": "Text shown when project has no terms"
+  },
+  "addTerm": "添加术语",
+  "@addTerm": {
+    "description": "Add term button text"
+  },
+  "addNewTerm": "添加新术语",
+  "@addNewTerm": {
+    "description": "Dialog title for adding new term"
+  },
+  "chineseTerm": "中文术语",
+  "@chineseTerm": {
+    "description": "Chinese term input label"
+  },
+  "englishTerm": "英文术语",
+  "@englishTerm": {
+    "description": "English term input label"
+  },
+  "category": "类别",
+  "@category": {
+    "description": "Category dropdown label"
+  },
+  "optionalNotes": "备注（可选）",
+  "@optionalNotes": {
+    "description": "Optional notes input label"
+  },
+  "cancel": "取消",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "add": "添加",
+  "@add": {
+    "description": "Add button text"
+  },
+  "termsRequired": "中文和英文术语是必填的",
+  "@termsRequired": {
+    "description": "Error message for required fields"
+  },
+  "termAdded": "术语已添加",
+  "@termAdded": {
+    "description": "Success message after adding term"
+  },
+  "editTerm": "编辑术语",
+  "@editTerm": {
+    "description": "Dialog title for editing term"
+  },
+  "update": "更新",
+  "@update": {
+    "description": "Update button text"
+  },
+  "termUpdated": "术语已更新",
+  "@termUpdated": {
+    "description": "Success message after updating term"
+  },
+  "deleteTerm": "删除术语",
+  "@deleteTerm": {
+    "description": "Dialog title for deleting term"
+  },
+  "deleteTermConfirmation": "您确定要删除此术语吗？",
+  "@deleteTermConfirmation": {
+    "description": "Confirmation message for term deletion"
+  },
+  "delete": "删除",
+  "@delete": {
+    "description": "Delete button text"
+  },
+  "termDeleted": "术语已删除",
+  "@termDeleted": {
+    "description": "Success message after deleting term"
+  },
+  "error": "错误: {error}",
+  "@error": {
+    "description": "Error message template",
+    "placeholders": {
+      "error": {
+        "type": "String",
+        "example": "文件未找到"
+      }
+    }
+  },
+  "personName": "人名",
+  "@personName": {
+    "description": "Category: Person Name"
+  },
+  "placeName": "地名",
+  "@placeName": {
+    "description": "Category: Place Name"
+  },
+  "organization": "组织",
+  "@organization": {
+    "description": "Category: Organization"
+  },
+  "technicalTerm": "技术术语",
+  "@technicalTerm": {
+    "description": "Category: Technical Term"
+  },
+  "general": "通用",
+  "@general": {
+    "description": "Category: General"
+  },
+  "other": "其他",
+  "@other": {
+    "description": "Category: Other"
+  },
+  "editButton": "编辑",
+  "@editButton": {
+    "description": "Edit button tooltip text"
+  },
+  "deleteButton": "删除",
+  "@deleteButton": {
+    "description": "Delete button tooltip text"
+  },
+  "addDocument": "添加文档",
+  "@addDocument": {
+    "description": "Text for add document button"
+  },
+  "addFromFolder": "从文件夹添加",
+  "@addFromFolder": {
+    "description": "Text for add from folder option"
+  },
+  "projectNotFound": "找不到项目",
+  "@projectNotFound": {
+    "description": "Message shown when project is not found"
+  },
+  "noDocumentsInProject": "此项目中还没有文档",
+  "@noDocumentsInProject": {
+    "description": "Message shown when there are no documents in project"
+  },
+  "lastUpdate": "最后更新",
+  "@lastUpdate": {
+    "description": "Label for last update date"
+  },
+  "addDocumentsForReports": "请先添加文档才能生成报告",
+  "@addDocumentsForReports": {
+    "description": "Message shown when no documents to generate reports"
+  },
+  "documentAddedSuccessfully": "文档添加成功",
+  "@documentAddedSuccessfully": {
+    "description": "Message shown when document is added"
+  },
+  "selectSubtitleFolder": "选择包含字幕文件的文件夹",
+  "@selectSubtitleFolder": {
+    "description": "Dialog title for selecting subtitle folder"
+  },
+  "filesAdded": "已添加{count}对文件",
+  "@filesAdded": {
+    "description": "Message showing number of files added",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "errorsOccurred": "发生了{count}个错误",
+  "@errorsOccurred": {
+    "description": "Message showing number of errors",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noMatchingSubtitlePairs": "找不到匹配的字幕对",
+  "@noMatchingSubtitlePairs": {
+    "description": "Message when no matching subtitle pairs are found"
+  },
+  "deleteDocumentConfirmation": "您确定要从项目中删除此文档吗？",
+  "@deleteDocumentConfirmation": {
+    "description": "Confirmation message for document deletion"
+  },
+  "documentDeleted": "文档已删除",
+  "@documentDeleted": {
+    "description": "Message shown after document is deleted"
+  },
+  "deleteDocument": "删除文档",
+  "@deleteDocument": {
+    "description": "Title for document deletion dialog"
+  },
+  "documentLineInfo": "行数: {lineCount} | {correctionInfo}",
+  "@documentLineInfo": {
+    "description": "Document line information with correction status",
+    "placeholders": {
+      "lineCount": {
+        "type": "int",
+        "example": "42"
+      },
+      "correctionInfo": {
+        "type": "String",
+        "example": "5 行有校正"
+      }
+    }
+  },
+  "documentCorrectionInfo": "{count} 行有校正",
+  "@documentCorrectionInfo": {
+    "description": "Information about corrections in document lines",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  "documentDateInfo": "添加时间: {importDate} {processedInfo}",
+  "@documentDateInfo": {
+    "description": "Document date information",
+    "placeholders": {
+      "importDate": {
+        "type": "String",
+        "example": "01/01/2023"
+      },
+      "processedInfo": {
+        "type": "String",
+        "example": "| 最后处理: 02/01/2023"
+      }
+    }
+  },
+  "documentLastProcessedInfo": "| 最后处理: {date}",
+  "@documentLastProcessedInfo": {
+    "description": "Last processed date information",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "01/01/2023"
+      }
+    }
+  },
+  "consistencyReportTitle": "术语一致性报告",
+  "@consistencyReportTitle": {
+    "description": "Title for the term consistency report"
+  },
+  "document": "文档",
+  "@document": {
+    "description": "Label for document name"
+  },
+  "creationDate": "创建日期",
+  "@creationDate": {
+    "description": "Label for creation date"
+  },
+  "totalLinesReport": "总行数",
+  "@totalLinesReport": {
+    "description": "Label for total lines in report"
+  },
+  "correctedLinesReport": "已更正行数",
+  "@correctedLinesReport": {
+    "description": "Label for corrected lines in report"
+  },
+  "totalCorrectionsReport": "总更正数",
+  "@totalCorrectionsReport": {
+    "description": "Label for total corrections in report"
+  },
+  "appliedCorrectionsReport": "已应用更正数",
+  "@appliedCorrectionsReport": {
+    "description": "Label for applied corrections in report"
+  },
+  "termLabel": "术语",
+  "@termLabel": {
+    "description": "Label for term column in table"
+  },
+  "frequencyLabel": "频率",
+  "@frequencyLabel": {
+    "description": "Label for frequency column in table"
+  },
+  "statusLabel": "状态",
+  "@statusLabel": {
+    "description": "Label for status column in table"
+  },
+  "pendingStatus": "待处理",
+  "@pendingStatus": {
+    "description": "Status text when a correction is pending"
+  },
+  "incorrectEnglishTerm": "错误英文术语",
+  "@incorrectEnglishTerm": {
+    "description": "Label for incorrect English term"
+  },
+  "correctEnglishTerm": "正确英文术语",
+  "@correctEnglishTerm": {
+    "description": "Label for correct English term"
+  },
+  "lineNumber1": "行号",
+  "@lineNumber": {
+    "description": "Label for line number"
+  },
+  "processingDocument": "正在处理文档",
+  "@processingDocument": {
+    "description": "Message when processing document"
+  },
+  "includingDuplicates": "包括重复项",
+  "@includingDuplicates": {
+    "description": "Text for including duplicates in counts"
+  },
+  "uniqueCorrections": "唯一校正",
+  "@uniqueCorrections": {
+    "description": "Label for unique corrections count"
+  },
+  "lineNotFound": "未找到行",
+  "@lineNotFound": {
+    "description": "Error message when line not found"
+  },
+  "processingLine": "正在处理行",
+  "@processingLine": {
+    "description": "Message when processing a line"
+  },
+  "termMatchesFound": "找到术语匹配",
+  "@termMatchesFound": {
+    "description": "Message for number of term matches found"
+  },
+  "warning": "警告",
+  "@warning": {
+    "description": "Warning label"
+  },
+  "mismatchedLineNumbers": "行号不匹配",
+  "@mismatchedLineNumbers": {
+    "description": "Warning about mismatched line numbers"
+  },
+  "correcting": "正在修正",
+  "@correcting": {
+    "description": "Message about correcting an issue"
+  },
+  "correction": "校正",
+  "@correction": {
+    "description": "Label for a correction item"
+  },
+  "shouldBe": "应该是",
+  "@shouldBe": {
+    "description": "Text indicating what something should be"
+  },
+  "incorrectTermNotFound": "未找到不正确的术语",
+  "@incorrectTermNotFound": {
+    "description": "Warning when incorrect term not found in text"
+  },
+  "inLine": "在行",
+  "@inLine": {
+    "description": "Preposition for specifying in which line"
+  },
+  "correctionsApplied": "应用了校正",
+  "@correctionsApplied": {
+    "description": "Message for number of corrections applied"
+  },
+  "correct": "正确",
+  "@correct": {
+    "description": "Label for correct items count"
+  }
+} 

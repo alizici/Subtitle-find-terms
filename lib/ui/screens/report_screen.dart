@@ -65,7 +65,7 @@ class _ReportScreenState extends State<ReportScreen> {
       final termMatcher = Provider.of<TermMatcher>(context, listen: false);
       final correctionService = CorrectionService(termMatcher);
 
-      _consistencyScore = correctionService.calculateConsistencyScore(
+      _consistencyScore ??= correctionService.calculateConsistencyScore(
         _documentRepo.currentDocument!,
         _documentRepo.corrections,
       );

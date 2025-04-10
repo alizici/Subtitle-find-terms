@@ -139,7 +139,7 @@ class TermMatcher {
             ));
 
             print(
-                "Eşleştirme eklendi (Satır ${line.lineNumber}): '${term.chineseTerm}' -> '${incorrectTerm}' olması gereken: '${term.englishTerm}'");
+                "Eşleştirme eklendi (Satır ${line.lineNumber}): '${term.chineseTerm}' -> '$incorrectTerm' olması gereken: '${term.englishTerm}'");
           }
 
           // Eğer hiçbir yanlış terim bulunamadıysa ama Çince terim varsa,
@@ -166,7 +166,7 @@ class TermMatcher {
             } else {
               // Hiçbir benzer terim bulunamadıysa tüm satırı işaretle
               final trimmedEnglish = line.englishText.length > 50
-                  ? line.englishText.substring(0, 50) + "..."
+                  ? "${line.englishText.substring(0, 50)}..."
                   : line.englishText;
 
               matches.add(TermMatch(
@@ -201,27 +201,8 @@ class TermMatcher {
       return _dynamicVariations[term]!;
     }
 
-    // Sabit varyasyonlar
-    Map<String, List<String>> knownVariations = {
-      'Lin Feng': [
-        'Lin Fong',
-        'Lin Fung',
-        'Lynn Feng',
-        'Lynn Fong',
-        'Lin Fēng'
-      ],
-      'Beijing': ['Peking', 'Beijin', 'Beijng', 'Beiijing'],
-      // Daha fazla yaygın hata eklenebilir
-    };
-
-    // Bilinen varyasyonları ekle
-    List<String> variations = [];
-    if (knownVariations.containsKey(term)) {
-      variations.addAll(knownVariations[term]!);
-    }
-
     // Dinamik varyasyonlar oluştur
-    variations.addAll(_generateDynamicVariations(term));
+    List<String> variations = _generateDynamicVariations(term);
 
     // Benzersiz varyasyonları filtrele ve önbellekle
     variations = variations.toSet().toList();
@@ -233,72 +214,9 @@ class TermMatcher {
   /// Terimin dinamik varyasyonlarını oluştur
   List<String> _generateDynamicVariations(String term) {
     final variations = <String>[];
-    final words = term.split(' ');
-
-    // 1. Her kelime için yaygın transliterasyon hataları
-    final Map<String, List<String>> transliterationVariants = {
-      'a': ['a', 'ah', 'ar'],
-      'e': ['e', 'eh', 'er'],
-      'i': ['i', 'ee', 'y', 'ie'],
-      'o': ['o', 'oh', 'oe'],
-      'u': ['u', 'oo', 'ou'],
-      'ai': ['ai', 'ay', 'eye'],
-      'ei': ['ei', 'ey', 'ay'],
-      'ao': ['ao', 'ow', 'ou'],
-      'ou': ['ou', 'ow', 'o'],
-      'an': ['an', 'en', 'ahn'],
-      'en': ['en', 'ern', 'un'],
-      'ang': ['ang', 'ung', 'eng'],
-      'eng': ['eng', 'ung', 'ing'],
-      'ing': ['ing', 'in', 'een'],
-      'ong': ['ong', 'ung', 'on'],
-      'zh': ['j', 'ch', 'zh'],
-      'ch': ['ch', 'q', 'tch'],
-      'sh': ['sh', 'x', 's'],
-    };
-
-    // Çince transkripsiyonlarda yaygın isim varyasyonları
-    if (words.length <= 3) {
-      // Sadece isimler için (çok kelimeli terimler için değil)
-      for (final word in words) {
-        final lowercaseWord = word.toLowerCase();
-
-        // Basit harf değişimleri
-        for (var i = 0; i < lowercaseWord.length; i++) {
-          for (var entry in transliterationVariants.entries) {
-            if (lowercaseWord.contains(entry.key)) {
-              for (var variant in entry.value) {
-                if (variant != entry.key) {
-                  final newWord = lowercaseWord.replaceAll(entry.key, variant);
-                  // İlk harfi büyük yap
-                  final capitalizedWord =
-                      newWord.substring(0, 1).toUpperCase() +
-                          newWord.substring(1);
-                  variations.add(_replaceWord(term, word, capitalizedWord));
-                }
-              }
-            }
-          }
-        }
-
-        // Yaygın çince isim varyasyonları için özel kontroller
-        if (word == 'Lin') {
-          variations.add(_replaceWord(term, word, 'Lyn'));
-          variations.add(_replaceWord(term, word, 'Lynn'));
-        }
-        if (word == 'Feng') {
-          variations.add(_replaceWord(term, word, 'Fong'));
-          variations.add(_replaceWord(term, word, 'Fung'));
-        }
-      }
-    }
-
+    // Burada terimin dinamik varyasyonları oluşturulabilir
+    // ancak sabit varyasyonlar ve transliterasyon kontrolleri kaldırıldı
     return variations;
-  }
-
-  /// Bir metinde belirli bir kelimeyi değiştirir
-  String _replaceWord(String text, String oldWord, String newWord) {
-    return text.replaceAll(RegExp('\\b$oldWord\\b'), newWord);
   }
 
   /// İngilizce metinde olası terimleri bulur

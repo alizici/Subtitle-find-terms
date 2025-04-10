@@ -124,19 +124,16 @@ class CorrectionService {
     List<Correction> corrections,
     DocumentRepository repository,
   ) {
-    int count = 0;
-    for (var correction in corrections.where((c) => !c.isApplied)) {
-      final lineIndex = document.lines.indexWhere(
-        (line) => line.lineNumber == correction.lineNumber,
-      );
+    // Uygulanmamış düzeltme sayısını kontrol et
+    final unappliedCorrections = corrections.where((c) => !c.isApplied).length;
 
-      if (lineIndex != -1) {
-        final line = document.lines[lineIndex];
-        repository.applyCustomCorrection(correction.id, line.englishText, "");
-        count++;
-      }
+    if (unappliedCorrections > 0) {
+      // Tüm düzeltmeleri tek seferde uygula
+      repository.applyAllCorrections();
+      print("$unappliedCorrections düzeltme uygulandı");
+    } else {
+      print("Uygulanacak düzeltme bulunamadı");
     }
-    print("$count düzeltme uygulandı");
   }
 
   /// Tutarlılık puanı hesaplar (0-100 arası)

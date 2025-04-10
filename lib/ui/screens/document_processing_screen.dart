@@ -27,8 +27,8 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
   bool _showVerticalPanel =
       true; // true olarak değiştirildi (dikey panel varsayılan)
   double _panelSize = 300.0; // Panel boyutu için varsayılan değer
-  double _minPanelSize = 150.0; // Minimum panel boyutu
-  double _maxPanelSize = 600.0; // Maksimum panel boyutu
+  final double _minPanelSize = 150.0; // Minimum panel boyutu
+  final double _maxPanelSize = 600.0; // Maksimum panel boyutu
 
   // Düzeltmeler listesi için kaydırma kontrolcüsü ekleyelim
   final ScrollController _correctionsScrollController = ScrollController();
@@ -666,7 +666,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
         SnackBar(
           content: Text('Belge işlenirken hata oluştu: $e'),
           backgroundColor: Colors.red,
-          duration: Duration(seconds: 5),
+          duration: const Duration(seconds: 5),
         ),
       );
     }
@@ -1021,9 +1021,9 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.edit, size: 14, color: Colors.blue),
+                        const Icon(Icons.edit, size: 14, color: Colors.blue),
                         const SizedBox(width: 4),
-                        Text(
+                        const Text(
                           'Satırın Mevcut Metni:',
                           style: TextStyle(
                             fontSize: 14,

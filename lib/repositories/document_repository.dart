@@ -4,8 +4,11 @@ import 'package:flutter/foundation.dart';
 import '../models/document.dart';
 import '../models/correction.dart';
 import '../utils/ass_parser.dart';
+import 'package:logging/logging.dart';
 
 class DocumentRepository extends ChangeNotifier {
+  final _logger = Logger('DocumentRepository');
+
   // Ekranlar arası durumu korumak için statik değişkenler
   static Document? _loadedDocument;
   static List<File>? _loadedFiles;
@@ -29,6 +32,12 @@ class DocumentRepository extends ChangeNotifier {
       _corrections.addAll(_savedCorrections);
       notifyListeners();
     }
+  }
+
+  // Belge bilgisini statik olarak ayarlamak için metod
+  static void setLoadedDocument(Document document) {
+    _loadedDocument = document;
+    _savedCorrections = [];
   }
 
   Future<void> loadDocument(File chineseFile, File englishFile) async {
@@ -179,7 +188,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
     if (existingIndex != -1) {
       // Aynı satır ve terim için zaten bir düzeltme var, üzerine yazma
-      print(
+      _logger.info(
           "Aynı satır ve terim için var olan düzeltme güncellendi: ${correction.uniqueKey}");
       return;
     }
@@ -205,14 +214,14 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 
   void applyAllCorrections() {
     if (_currentDocument == null) {
-      print("Belge yok, düzeltmeler uygulanamıyor.");
+      _logger.warning("Belge yok, düzeltmeler uygulanamıyor.");
       return;
     }
 
     int appliedCount = 0;
     int failedCount = 0;
 
-    print(
+    _logger.info(
         "Tüm düzeltmeler uygulanıyor (${_corrections.where((c) => !c.isApplied).length} adet)...");
 
     for (var correction in _corrections.where((c) => !c.isApplied)) {
@@ -234,12 +243,12 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
           appliedCount++;
         } else {
           failedCount++;
-          print("Satır bulunamadı: ${correction.lineNumber}");
+          _logger.warning("Satır bulunamadı: ${correction.lineNumber}");
         }
       }
     }
 
-    print(
+    _logger.info(
         "Düzeltme işlemi tamamlandı: $appliedCount başarılı, $failedCount başarısız.");
     notifyListeners();
   }
@@ -298,15 +307,16 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
   // Düzenlenmiş düzeltmeyi uygulamak için metot
   void applyCustomCorrection(
       String correctionId, String newIncorrectTerm, String newCorrectTerm) {
-    print("Düzenlenmiş düzeltme repository'de uygulanıyor - ID: $correctionId");
-    print("  Kullanıcının düzelttiği metin: $newIncorrectTerm");
+    _logger.info(
+        "Düzenlenmiş düzeltme repository'de uygulanıyor - ID: $correctionId");
+    _logger.info("  Kullanıcının düzelttiği metin: $newIncorrectTerm");
 
     final correctionIndex =
         _corrections.indexWhere((c) => c.id == correctionId);
 
     if (correctionIndex != -1 && _currentDocument != null) {
       final correction = _corrections[correctionIndex];
-      print(
+      _logger.info(
           "  Düzeltme bulundu: ID=${correction.id}, Satır=${correction.lineNumber}, Çince Terim=${correction.chineseTerm}");
 
       // Belgedeki ilgili satırı bul
@@ -318,8 +328,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         // Satırı al
         final line = _currentDocument!.lines[lineIndex];
 
-        print("  Satır ${correction.lineNumber} düzeltiliyor");
-        print("  Orijinal satır metni: ${line.englishText}");
+        _logger.info("  Satır ${correction.lineNumber} düzeltiliyor");
+        _logger.info("  Orijinal satır metni: ${line.englishText}");
 
         // DÜZELTME: Kullanıcının girdiği metni doğrudan tüm satıra yerleştirmek yerine
         // sadece belirli bir kelimeyi değiştiriyoruz
@@ -331,7 +341,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
               correction.incorrectEnglishTerm,
               newIncorrectTerm,
             );
-            print(
+            _logger.info(
                 "  Belirli kısım değiştirildi: ${correction.incorrectEnglishTerm} -> $newIncorrectTerm");
           } else {
             // Eğer tam eşleşme yoksa, benzer bir kelime bulmaya çalış
@@ -342,7 +352,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
               if (pattern.hasMatch(line.englishText)) {
                 line.englishText =
                     line.englishText.replaceAll(pattern, newIncorrectTerm);
-                print(
+                _logger.info(
                     "  Esnek eşleşme ile düzeltildi: ${correction.incorrectEnglishTerm} -> $newIncorrectTerm");
               } else {
                 // Hala bir eşleşme bulunamadıysa, basit bir arama yap
@@ -359,29 +369,30 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                   final after = line.englishText.substring(endIndex);
 
                   line.englishText = before + newIncorrectTerm + after;
-                  print(
+                  _logger.info(
                       "  Basit eşleşme ile düzeltildi: ${correction.incorrectEnglishTerm} -> $newIncorrectTerm");
                 } else {
-                  print(
+                  _logger.warning(
                       "  Hiçbir şekilde eşleşme bulunamadı! Tüm satır değiştiriliyor...");
                   line.englishText = newIncorrectTerm;
                 }
               }
             } catch (e) {
-              print("  Regex hatası: $e - Doğrudan değiştirme yapılıyor");
+              _logger
+                  .severe("  Regex hatası: $e - Doğrudan değiştirme yapılıyor");
               line.englishText = newIncorrectTerm;
             }
           }
         } else {
           // Kullanıcı tarafından düzenlenmiş metin yoksa, tam metin yerleştirme yap
           line.englishText = newIncorrectTerm;
-          print("  Tüm satır metni değiştirildi: $newIncorrectTerm");
+          _logger.info("  Tüm satır metni değiştirildi: $newIncorrectTerm");
         }
 
         // Düzeltmeyi uygulanmış olarak işaretle
         correction.apply();
 
-        print("  Düzeltme sonrası metin: ${line.englishText}");
+        _logger.info("  Düzeltme sonrası metin: ${line.englishText}");
 
         // Tekrarları önlemek için aynı satırdaki diğer düzeltmeleri de uygula
         final sameLineCorrections = _corrections
@@ -392,7 +403,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             .toList();
 
         if (sameLineCorrections.isNotEmpty) {
-          print(
+          _logger.info(
               "  Aynı satırdaki diğer düzeltmeler otomatik olarak uygulandı (${sameLineCorrections.length} adet)");
 
           // Aynı satırdaki diğer düzeltmeleri de uygulanmış olarak işaretle
@@ -404,15 +415,16 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         notifyListeners();
         return;
       } else {
-        print("  Düzeltme için satır bulunamadı: ${correction.lineNumber}");
-        print(
+        _logger.warning(
+            "  Düzeltme için satır bulunamadı: ${correction.lineNumber}");
+        _logger.warning(
             "  Mevcut satırlar: ${_currentDocument!.lines.map((l) => l.lineNumber).toList()}");
 
         // Satır bulunamadı, bu durumda belgedeki tüm satırlardaki metin içinde arama yapalım
         for (int i = 0; i < _currentDocument!.lines.length; i++) {
           final line = _currentDocument!.lines[i];
           if (line.englishText.contains(correction.incorrectEnglishTerm)) {
-            print(
+            _logger.info(
                 "  Hatalı terim satır ${line.lineNumber}'de bulundu, düzeltme uygulanıyor");
 
             // Düzeltmeyi bu satıra uygulayalım
@@ -432,15 +444,16 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             _corrections[correctionIndex] = newCorrection;
             newCorrection.apply();
 
-            print("  Satır ${line.lineNumber} düzeltildi: ${line.englishText}");
+            _logger.info(
+                "  Satır ${line.lineNumber} düzeltildi: ${line.englishText}");
             notifyListeners();
             return;
           }
         }
       }
     } else {
-      print("  Düzeltme bulunamadı: $correctionId");
-      print(
+      _logger.warning("  Düzeltme bulunamadı: $correctionId");
+      _logger.warning(
           "  Mevcut düzeltmeler: ${_corrections.map((c) => "${c.id} (Satır: ${c.lineNumber})").toList()}");
     }
 

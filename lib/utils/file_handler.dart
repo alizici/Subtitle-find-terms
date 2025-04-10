@@ -1,8 +1,10 @@
 // lib/utils/file_handler.dart
 import 'dart:io';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../models/term_pair.dart';
 
 class FileHandler {
@@ -93,24 +95,30 @@ class FileHandler {
 
   /// Terim kategorisi parse etme
   static TermCategory _parseCategory(String categoryStr) {
+    // Lokalizasyon için context'imiz olmadığından, kategori isimlerini birebir kontrol ediyoruz
     switch (categoryStr) {
       case 'person':
       case 'kişi':
       case 'kişi ismi':
+      case '人物': // Çince kategori adı
         return TermCategory.person;
       case 'place':
       case 'yer':
       case 'yer ismi':
+      case '地点': // Çince kategori adı
         return TermCategory.place;
       case 'organization':
       case 'organizasyon':
+      case '组织': // Çince kategori adı
         return TermCategory.organization;
       case 'technical':
       case 'teknik':
       case 'teknik terim':
+      case '技术': // Çince kategori adı
         return TermCategory.technical;
       case 'other':
       case 'diğer':
+      case '其他': // Çince kategori adı
         return TermCategory.other;
       default:
         return TermCategory.general;
@@ -155,10 +163,11 @@ class FileHandler {
     String content,
     String fileName,
     String extension,
+    BuildContext context,
   ) async {
     try {
       final result = await FilePicker.platform.saveFile(
-        dialogTitle: 'Kaydet',
+        dialogTitle: AppLocalizations.of(context)!.save,
         fileName: fileName,
         type: FileType.custom,
         allowedExtensions: [extension],

@@ -76,7 +76,7 @@ class ExportService {
         <p>Oluşturulma Tarihi: ${DateTime.now().toString()}</p>
         
         <h2>Tutarlılık Puanı</h2>
-        <p class="score">${consistencyScore}%</p>
+        <p class="score">$consistencyScore%</p>
         
         <h2>Özet</h2>
         <ul>
