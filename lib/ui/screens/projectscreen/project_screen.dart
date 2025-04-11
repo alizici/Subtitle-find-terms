@@ -98,7 +98,7 @@ class _ProjectScreenState extends State<ProjectScreen>
             builder: (context, subscriptionRepo, child) {
               final remainingUploads =
                   subscriptionRepo.subscription.remainingUploads;
-              final maxUploads = subscriptionRepo.subscription.remainingUploads;
+              //final maxUploads = subscriptionRepo.subscription.remainingUploads;
 
               return Stack(
                 alignment: Alignment.center,
@@ -692,7 +692,7 @@ class _ProjectScreenState extends State<ProjectScreen>
 
   void _openDocument(Document document) {
     // Belgeyi yükleme ve işleme için DocumentRepository'ye aktar
-    final documentRepo = DocumentRepository();
+    //final documentRepo = DocumentRepository();
 
     // Static belge bilgisini ayarla (DocumentRepository üzerinden erişilebilir)
     DocumentRepository.setLoadedDocument(document);

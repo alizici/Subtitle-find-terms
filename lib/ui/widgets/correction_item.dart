@@ -15,7 +15,7 @@ class CorrectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
+    //final l10n = AppLocalizations.of(context)!;
 
     return LayoutBuilder(builder: (context, constraints) {
       final isVerySmallWidth = constraints.maxWidth < 300;
