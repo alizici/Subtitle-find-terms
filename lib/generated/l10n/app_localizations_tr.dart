@@ -456,7 +456,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get suggestedTerm => 'Önerilen Terim: ';
 
   @override
-  String get dataDiscrepancyWarning => 'Uyarı: Veriler arasında uyumsuzluk olabilir. Terim veritabanındaki bilgiler satırın mevcut içeriğiyle uyuşmayabilir! Kendi düzeltmenizi yapabilirsiniz.';
+  String get dataDiscrepancyWarning => 'Uyarı: Kendi düzeltmenizi yapabilirsiniz.';
 
   @override
   String get saveChanges => 'Değişiklikleri Kaydet';

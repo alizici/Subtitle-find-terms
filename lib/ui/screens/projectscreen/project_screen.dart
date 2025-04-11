@@ -1,3 +1,4 @@
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 import 'package:chinese_english_term_corrector/models/document.dart';
 import 'package:chinese_english_term_corrector/models/project.dart';
 import 'package:chinese_english_term_corrector/repositories/document_repository.dart';
@@ -56,12 +57,14 @@ class _ProjectScreenState extends State<ProjectScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Proje: ${widget.project.name}'),
+        title: Text('${l10n.projectName}: ${widget.project.name}'),
         actions: [
           PopupMenuButton<String>(
-            tooltip: 'Belge Ekle',
+            tooltip: l10n.addDocument,
             onSelected: (value) {
               if (value == 'add_files') {
                 _addDocument();
@@ -70,30 +73,30 @@ class _ProjectScreenState extends State<ProjectScreen>
               }
             },
             itemBuilder: (context) => [
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'add_files',
                 child: Row(
                   children: [
-                    Icon(Icons.upload_file, size: 18),
-                    SizedBox(width: 8),
-                    Text('Dosya Ekle'),
+                    const Icon(Icons.upload_file, size: 18),
+                    const SizedBox(width: 8),
+                    Text(l10n.addDocument),
                   ],
                 ),
               ),
-              const PopupMenuItem(
+              PopupMenuItem(
                 value: 'add_folder',
                 child: Row(
                   children: [
-                    Icon(Icons.folder_open, size: 18),
-                    SizedBox(width: 8),
-                    Text('Klasörden Ekle'),
+                    const Icon(Icons.folder_open, size: 18),
+                    const SizedBox(width: 8),
+                    Text(l10n.addFromFolder),
                   ],
                 ),
               ),
             ],
             icon: const Icon(Icons.add_circle_outline),
           ),
-          // Abonelik durumu butonu
+          // Subscription status button
           Consumer<SubscriptionRepository>(
             builder: (context, subscriptionRepo, child) {
               final remainingUploads =
@@ -105,7 +108,7 @@ class _ProjectScreenState extends State<ProjectScreen>
                 children: [
                   IconButton(
                     icon: const Icon(Icons.receipt_long),
-                    tooltip: 'Abonelik Durumum',
+                    tooltip: l10n.subscriptionTitle,
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -147,10 +150,12 @@ class _ProjectScreenState extends State<ProjectScreen>
         ],
         bottom: TabBar(
           controller: _tabController,
-          tabs: const [
-            Tab(icon: Icon(Icons.description), text: 'Belgeler'),
-            Tab(icon: Icon(Icons.library_books), text: 'Terimler'),
-            Tab(icon: Icon(Icons.assessment), text: 'Raporlar'),
+          tabs: [
+            Tab(icon: const Icon(Icons.description), text: l10n.document),
+            Tab(
+                icon: const Icon(Icons.library_books),
+                text: l10n.termManagement),
+            Tab(icon: const Icon(Icons.assessment), text: l10n.reports),
           ],
         ),
       ),
@@ -167,12 +172,14 @@ class _ProjectScreenState extends State<ProjectScreen>
 
   // Belgeler sekmesi
   Widget _buildDocumentsTab() {
+    final l10n = AppLocalizations.of(context)!;
+
     return Consumer<ProjectRepository>(
       builder: (context, projectRepo, child) {
         final project = projectRepo.currentProject;
 
         if (project == null) {
-          return const Center(child: Text('Proje bulunamadı'));
+          return Center(child: Text(l10n.projectNotFound));
         }
 
         if (project.documents.isEmpty) {
@@ -186,15 +193,15 @@ class _ProjectScreenState extends State<ProjectScreen>
                   color: Colors.grey.shade400,
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  'Bu projede henüz belge yok',
-                  style: TextStyle(fontSize: 18),
+                Text(
+                  l10n.noDocumentsInProject,
+                  style: const TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   onPressed: _addDocument,
                   icon: const Icon(Icons.add),
-                  label: const Text('Belge Ekle'),
+                  label: Text(l10n.addDocument),
                 ),
               ],
             ),
@@ -227,12 +234,14 @@ class _ProjectScreenState extends State<ProjectScreen>
 
   // Terimler sekmesi
   Widget _buildTermsTab() {
+    final l10n = AppLocalizations.of(context)!;
+
     return Consumer<ProjectRepository>(
       builder: (context, projectRepo, child) {
         final project = projectRepo.currentProject;
 
         if (project == null) {
-          return const Center(child: Text('Proje bulunamadı'));
+          return Center(child: Text(l10n.projectNotFound));
         }
 
         // Terimler yönetimi sayfasını burada çağır
@@ -243,17 +252,19 @@ class _ProjectScreenState extends State<ProjectScreen>
 
   // Raporlar sekmesi
   Widget _buildReportsTab() {
+    final l10n = AppLocalizations.of(context)!;
+
     return Consumer<ProjectRepository>(
       builder: (context, projectRepo, child) {
         final project = projectRepo.currentProject;
 
         if (project == null) {
-          return const Center(child: Text('Proje bulunamadı'));
+          return Center(child: Text(l10n.projectNotFound));
         }
 
         if (project.documents.isEmpty) {
-          return const Center(
-            child: Text('Raporlar oluşturmak için önce belgeler eklemelisiniz'),
+          return Center(
+            child: Text(l10n.addDocumentsForReports),
           );
         }
 
@@ -264,6 +275,8 @@ class _ProjectScreenState extends State<ProjectScreen>
   }
 
   Widget _buildProjectInfo(Project project) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -291,19 +304,19 @@ class _ProjectScreenState extends State<ProjectScreen>
           Row(
             children: [
               _buildStatCard(
-                'Belgeler',
+                l10n.document,
                 '${project.documents.length}',
                 Icons.description,
               ),
               const SizedBox(width: 16),
               _buildStatCard(
-                'Düzeltmeler',
+                l10n.correction,
                 '${project.corrections.length}',
                 Icons.auto_fix_high,
               ),
               const SizedBox(width: 16),
               _buildStatCard(
-                'Son Güncelleme',
+                l10n.lastUpdate,
                 _formatDate(project.updatedAt),
                 Icons.update,
               ),
@@ -346,6 +359,7 @@ class _ProjectScreenState extends State<ProjectScreen>
   }
 
   Future<void> _addDocument() async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       // Abonelik durumunu kontrol et
       final subscriptionRepo =
@@ -358,14 +372,14 @@ class _ProjectScreenState extends State<ProjectScreen>
       }
 
       final chineseResult = await FilePicker.platform.pickFiles(
-        dialogTitle: 'Çince Kaynak Belgeyi Seçin',
+        dialogTitle: l10n.selectChineseSourceDocument,
         type: FileType.custom,
         allowedExtensions: ['txt', 'ass'],
       );
 
       if (chineseResult != null) {
         final englishResult = await FilePicker.platform.pickFiles(
-          dialogTitle: 'İngilizce Çeviri Belgesini Seçin',
+          dialogTitle: l10n.selectEnglishTranslationDocument,
           type: FileType.custom,
           allowedExtensions: ['txt', 'ass'],
         );
@@ -431,9 +445,9 @@ class _ProjectScreenState extends State<ProjectScreen>
           await subscriptionRepo.useUpload();
 
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Belge başarıyla eklendi'),
-              duration: Duration(seconds: 2),
+            SnackBar(
+              content: Text(l10n.documentAddedSuccessfully),
+              duration: const Duration(seconds: 2),
             ),
           );
         }
@@ -441,7 +455,7 @@ class _ProjectScreenState extends State<ProjectScreen>
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Hata: $e'),
+          content: Text(l10n.errorWithMessage(e.toString())),
           duration: const Duration(seconds: 3),
         ),
       );
@@ -449,6 +463,7 @@ class _ProjectScreenState extends State<ProjectScreen>
   }
 
   Future<void> _addDocumentsFromFolder() async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       // Abonelik durumunu kontrol et
       final subscriptionRepo =
@@ -462,7 +477,7 @@ class _ProjectScreenState extends State<ProjectScreen>
 
       // Klasör seçme
       final result = await FilePicker.platform.getDirectoryPath(
-        dialogTitle: 'Altyazı Dosyalarını İçeren Klasörü Seçin',
+        dialogTitle: l10n.selectSubtitleFolder,
       );
 
       if (result != null) {
@@ -492,8 +507,8 @@ class _ProjectScreenState extends State<ProjectScreen>
           // Kullanıcıyı bilgilendir
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(
-                  'Kalan hakkınız: $remainingUploads. Sadece $remainingUploads dosya çifti yüklenecek.'),
+              content: Text(l10n.subtitleUploadsRemaining(
+                  remainingUploads, remainingUploads)),
               duration: const Duration(seconds: 5),
             ),
           );
@@ -529,38 +544,38 @@ class _ProjectScreenState extends State<ProjectScreen>
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
-                  '$addedCount dosya çifti eklendi${errorCount > 0 ? ', $errorCount hata oluştu' : ''}'),
+                  '${l10n.filesAdded(addedCount)}${errorCount > 0 ? ', ${l10n.errorsOccurred(errorCount)}' : ''}'),
               duration: const Duration(seconds: 3),
             ),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Eşleşen altyazı çifti bulunamadı'),
-              duration: Duration(seconds: 3),
+            SnackBar(
+              content: Text(l10n.noMatchingSubtitlePairs),
+              duration: const Duration(seconds: 3),
             ),
           );
         }
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Hata: $e')),
+        SnackBar(content: Text(l10n.errorWithMessage(e.toString()))),
       );
     }
   }
 
   // Abonelik diyaloğunu göster
   void _showSubscriptionDialog() {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Altyazı Yükleme Limiti'),
-        content: const Text(
-            'Altyazı yükleme hakkınız kalmadı. Daha fazla altyazı yüklemek için abonelik paketlerimizden birini satın alabilirsiniz.'),
+        title: Text(l10n.subtitleUploadRights),
+        content: Text(l10n.noUploadsRemaining),
         actions: [
           TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('İptal')),
+              child: Text(l10n.cancel)),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop();
@@ -571,7 +586,7 @@ class _ProjectScreenState extends State<ProjectScreen>
                 ),
               );
             },
-            child: const Text('Abonelik Paketlerini Gör'),
+            child: Text(l10n.packages),
           ),
         ],
       ),
@@ -707,22 +722,22 @@ class _ProjectScreenState extends State<ProjectScreen>
   }
 
   Future<void> _deleteDocument(String documentId) async {
+    final l10n = AppLocalizations.of(context)!;
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Belgeyi Sil'),
-        content: const Text(
-          'Bu belgeyi projeden silmek istediğinizden emin misiniz?',
-        ),
+        title: Text(l10n.deleteDocument),
+        content: Text(l10n.deleteDocumentConfirmation),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('İptal'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(true),
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text('Sil'),
+            child: Text(l10n.delete),
           ),
         ],
       ),
@@ -736,7 +751,7 @@ class _ProjectScreenState extends State<ProjectScreen>
       await projectRepo.removeDocument(documentId);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Belge silindi')),
+        SnackBar(content: Text(l10n.documentDeleted)),
       );
     }
   }

@@ -808,7 +808,7 @@
     "description": "Label for suggested term"
   },
 
-  "dataDiscrepancyWarning": "Warning: There may be discrepancies between the data. The information in the term database may not match the current content of the line! You can make your own correction.",
+  "dataDiscrepancyWarning": "Warning: You can make your own correction.",
   "@dataDiscrepancyWarning": {
     "description": "Warning about potential discrepancies in data"
   },

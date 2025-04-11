@@ -456,7 +456,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get suggestedTerm => '建议术语： ';
 
   @override
-  String get dataDiscrepancyWarning => '警告：数据之间可能存在差异。术语数据库中的信息可能与行的当前内容不匹配！您可以进行自己的校正。';
+  String get dataDiscrepancyWarning => '警告：您可以进行自己的校正。';
 
   @override
   String get saveChanges => '保存更改';

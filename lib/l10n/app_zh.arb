@@ -807,7 +807,7 @@
     "description": "Label for suggested term"
   },
 
-  "dataDiscrepancyWarning": "警告：数据之间可能存在差异。术语数据库中的信息可能与行的当前内容不匹配！您可以进行自己的校正。",
+  "dataDiscrepancyWarning": "警告：您可以进行自己的校正。",
   "@dataDiscrepancyWarning": {
     "description": "Warning about potential discrepancies in data"
   },

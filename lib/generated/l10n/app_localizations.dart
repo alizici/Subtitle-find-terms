@@ -934,7 +934,7 @@ abstract class AppLocalizations {
   /// Warning about potential discrepancies in data
   ///
   /// In en, this message translates to:
-  /// **'Warning: There may be discrepancies between the data. The information in the term database may not match the current content of the line! You can make your own correction.'**
+  /// **'Warning: You can make your own correction.'**
   String get dataDiscrepancyWarning;
 
   /// Button to save changes

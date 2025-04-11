@@ -109,7 +109,7 @@ class ProjectRepository extends ChangeNotifier {
   // Belge ekle
   Future<void> addDocument(Document document) async {
     if (_currentProject == null) {
-      _error = 'Aktif proje bulunamadı, lütfen önce bir proje oluşturun.';
+      _error = 'projectNotFound'; // Using the key from ARB file
       notifyListeners();
       return;
     }

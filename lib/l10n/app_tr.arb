@@ -808,7 +808,7 @@
     "description": "Label for suggested term"
   },
 
-  "dataDiscrepancyWarning": "Uyarı: Veriler arasında uyumsuzluk olabilir. Terim veritabanındaki bilgiler satırın mevcut içeriğiyle uyuşmayabilir! Kendi düzeltmenizi yapabilirsiniz.",
+  "dataDiscrepancyWarning": "Uyarı: Kendi düzeltmenizi yapabilirsiniz.",
   "@dataDiscrepancyWarning": {
     "description": "Warning about potential discrepancies in data"
   },

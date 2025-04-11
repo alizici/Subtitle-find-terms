@@ -1,9 +1,9 @@
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 import 'package:chinese_english_term_corrector/models/document.dart';
 import 'package:chinese_english_term_corrector/models/project.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-// Proje için Raporlar Widget'ı
 class ReportScreenForProject extends StatelessWidget {
   final Project project;
 
@@ -14,52 +14,51 @@ class ReportScreenForProject extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Burada ReportScreen'deki yapıyı proje bazlı olarak adapte et
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSummaryCard(),
+          _buildSummaryCard(context),
           const SizedBox(height: 16),
-          _buildConsistencyScoreCard(),
+          _buildConsistencyScoreCard(context),
           const SizedBox(height: 16),
-          _buildTopIncorrectTermsCard(),
+          _buildTopIncorrectTermsCard(context),
           const SizedBox(height: 16),
-          _buildCorrectionsListCard(),
+          _buildCorrectionsListCard(context),
         ],
       ),
     );
   }
 
-  Widget _buildSummaryCard() {
-    // ReportScreen'deki özet kartı uyarla
+  Widget _buildSummaryCard(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Özet',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              localizations.summary,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildSummaryItem(
-                  'Toplam Belge',
+                  localizations.totalLines,
                   '${project.documents.length}',
                   Icons.description,
                 ),
                 _buildSummaryItem(
-                  'Toplam Düzeltme',
+                  localizations.totalCorrections,
                   '${project.corrections.length}',
                   Icons.auto_fix_high,
                 ),
                 _buildSummaryItem(
-                  'Toplam Terim',
+                  localizations.termLabel,
                   '${_getTermCount()}',
                   Icons.library_books,
                 ),
@@ -85,22 +84,22 @@ class ReportScreenForProject extends StatelessWidget {
     );
   }
 
-  Widget _buildConsistencyScoreCard() {
-    // ReportScreen'deki tutarlılık puanı kartını uyarla
-    return const Card(
+  Widget _buildConsistencyScoreCard(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    return Card(
       child: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Tutarlılık Puanı',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              localizations.consistencyScore,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 100,
                   width: 100,
                   child: Center(
@@ -114,17 +113,17 @@ class ReportScreenForProject extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Orta düzeyde tutarlılık',
-                      style: TextStyle(fontSize: 16),
+                      localizations.mediumConsistency,
+                      style: const TextStyle(fontSize: 16),
                     ),
                     Text(
-                      'Daha fazla düzeltme için belgeleri işleyin',
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                      localizations.clickButtonForCorrections,
+                      style: const TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                   ],
                 ),
@@ -136,17 +135,17 @@ class ReportScreenForProject extends StatelessWidget {
     );
   }
 
-  Widget _buildTopIncorrectTermsCard() {
-    // ReportScreen'deki yanlış terimler kartını uyarla
+  Widget _buildTopIncorrectTermsCard(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'En Sık Yanlış Çevrilen Terimler',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              localizations.mostFrequentlyMistranslatedTerms,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             // Örnek veri gösterimi
@@ -158,8 +157,8 @@ class ReportScreenForProject extends StatelessWidget {
                   : min(5, project.corrections.length),
               itemBuilder: (context, index) {
                 if (project.corrections.isEmpty) {
-                  return const ListTile(
-                    title: Text('Henüz düzeltme yapılmadı'),
+                  return ListTile(
+                    title: Text(localizations.noMistranslatedTermsFound),
                   );
                 }
 
@@ -167,9 +166,9 @@ class ReportScreenForProject extends StatelessWidget {
                 return ListTile(
                   title: Text(
                       '${correction.chineseTerm} - ${correction.incorrectEnglishTerm}'),
-                  trailing: const Text(
-                    '1 kez',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  trailing: Text(
+                    localizations.timesOccurred(1),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 );
               },
@@ -180,8 +179,8 @@ class ReportScreenForProject extends StatelessWidget {
     );
   }
 
-  Widget _buildCorrectionsListCard() {
-    // ReportScreen'deki düzeltmeler listesi kartını uyarla
+  Widget _buildCorrectionsListCard(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -191,19 +190,20 @@ class ReportScreenForProject extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Düzeltme Detayları',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Text(
+                  localizations.correctionDetails,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'Toplam: ${project.corrections.length} düzeltme',
+                  localizations.totalCorrections2(project.corrections.length),
                   style: const TextStyle(color: Colors.grey),
                 ),
               ],
             ),
             const SizedBox(height: 16),
             project.corrections.isEmpty
-                ? const Center(child: Text('Henüz düzeltme önerisi yok'))
+                ? Center(child: Text(localizations.noCorrectionSuggestions))
                 : ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -223,7 +223,7 @@ class ReportScreenForProject extends StatelessWidget {
                           '${correction.chineseTerm}: ${correction.incorrectEnglishTerm} → ${correction.correctEnglishTerm}',
                         ),
                         subtitle: Text(
-                            'Belge: ${_getDocumentName(correction.documentId)}'),
+                            '${localizations.document}: ${_getDocumentName(correction.documentId)}'),
                       );
                     },
                   ),
@@ -242,7 +242,7 @@ class ReportScreenForProject extends StatelessWidget {
     // Düzeltmenin hangi belgeye ait olduğunu bul
     final document = project.documents.firstWhere(
       (doc) => doc.id == documentId,
-      orElse: () => Document(name: 'Bilinmeyen Belge', lines: []),
+      orElse: () => Document(name: 'Unknown Document', lines: []),
     );
 
     return document.name;

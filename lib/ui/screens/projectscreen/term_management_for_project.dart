@@ -1,3 +1,4 @@
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 import 'package:chinese_english_term_corrector/models/project.dart';
 import 'package:chinese_english_term_corrector/models/term_pair.dart';
 import 'package:chinese_english_term_corrector/repositories/term_repository.dart';
@@ -19,6 +20,7 @@ class TermManagementForProject extends StatelessWidget {
   Widget build(BuildContext context) {
     // Her buildda TermRepository'nin mevcut projeyi görüntülediğinden emin ol
     final termRepo = Provider.of<TermRepository>(context, listen: false);
+    final localizations = AppLocalizations.of(context)!;
     print('DEBUG: TermManagementForProject build - projectId: ${project.id}');
 
     // Eğer şu anki proje TermRepository'deki set edilmiş projeden farklıysa, güncelle
@@ -36,9 +38,9 @@ class TermManagementForProject extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Proje Terimleri',
-                style: TextStyle(
+              Text(
+                localizations.projectTerms,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -51,7 +53,7 @@ class TermManagementForProject extends StatelessWidget {
                       _importTermsFromTxt(context);
                     },
                     icon: const Icon(Icons.file_upload, size: 16),
-                    label: const Text('İçe Aktar'),
+                    label: Text(localizations.import),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton.icon(
@@ -60,7 +62,7 @@ class TermManagementForProject extends StatelessWidget {
                       _showAddTermDialog(context);
                     },
                     icon: const Icon(Icons.add, size: 16),
-                    label: const Text('Yeni Terim'),
+                    label: Text(localizations.newTerm),
                   ),
                 ],
               ),
@@ -86,15 +88,15 @@ class TermManagementForProject extends StatelessWidget {
                         color: Colors.grey.shade400,
                       ),
                       const SizedBox(height: 16),
-                      const Text(
-                        'Bu projede henüz terim yok',
-                        style: TextStyle(fontSize: 18),
+                      Text(
+                        localizations.noTermsInProject,
+                        style: const TextStyle(fontSize: 18),
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton.icon(
                         onPressed: () => _showAddTermDialog(context),
                         icon: const Icon(Icons.add),
-                        label: const Text('Terim Ekle'),
+                        label: Text(localizations.addTerm),
                       ),
                     ],
                   ),
@@ -110,19 +112,20 @@ class TermManagementForProject extends StatelessWidget {
   }
 
   Widget _buildTermList(BuildContext context, TermRepository termRepo) {
-    // Mevcut term_management_screen.dart'taki terim listesini kullan
+    final localizations = AppLocalizations.of(context)!;
     return ListView.builder(
       itemCount: termRepo.terms.length,
       itemBuilder: (context, index) {
         final term = termRepo.terms[index];
         return ListTile(
           title: Text('${term.chineseTerm} - ${term.englishTerm}'),
-          subtitle: Text(_getCategoryName(term.category)),
+          subtitle: Text(_getCategoryName(context, term.category)),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
                 icon: const Icon(Icons.edit),
+                tooltip: localizations.editButton,
                 onPressed: () {
                   // Terim düzenleme
                   _showEditTermDialog(context, term);
@@ -130,6 +133,7 @@ class TermManagementForProject extends StatelessWidget {
               ),
               IconButton(
                 icon: const Icon(Icons.delete, color: Colors.red),
+                tooltip: localizations.deleteButton,
                 onPressed: () {
                   // Terim silme - hem ID hem de Çince terimi geçiyoruz
                   _confirmDeleteTerm(context, term.id, term.chineseTerm);
@@ -143,6 +147,7 @@ class TermManagementForProject extends StatelessWidget {
   }
 
   void _showAddTermDialog(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     // Yerel state değişkenleri
     String chineseTerm = '';
     String englishTerm = '';
@@ -155,15 +160,15 @@ class TermManagementForProject extends StatelessWidget {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text('Yeni Terim Ekle'),
+              title: Text(localizations.addNewTerm),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'Çince Terim',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: localizations.chineseTerm,
+                        border: const OutlineInputBorder(),
                       ),
                       onChanged: (value) {
                         chineseTerm = value;
@@ -171,9 +176,9 @@ class TermManagementForProject extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'İngilizce Terim',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: localizations.englishTerm,
+                        border: const OutlineInputBorder(),
                       ),
                       onChanged: (value) {
                         englishTerm = value;
@@ -181,15 +186,16 @@ class TermManagementForProject extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<TermCategory>(
-                      decoration: const InputDecoration(
-                        labelText: 'Kategori',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: localizations.category,
+                        border: const OutlineInputBorder(),
                       ),
                       value: selectedCategory,
                       items: TermCategory.values
                           .map((category) => DropdownMenuItem(
                                 value: category,
-                                child: Text(_getCategoryName(category)),
+                                child:
+                                    Text(_getCategoryName(context, category)),
                               ))
                           .toList(),
                       onChanged: (value) {
@@ -202,9 +208,9 @@ class TermManagementForProject extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'Notlar (İsteğe Bağlı)',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: localizations.optionalNotes,
+                        border: const OutlineInputBorder(),
                       ),
                       maxLines: 3,
                       onChanged: (value) {
@@ -217,7 +223,7 @@ class TermManagementForProject extends StatelessWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('İptal'),
+                  child: Text(localizations.cancel),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -242,18 +248,17 @@ class TermManagementForProject extends StatelessWidget {
                       Navigator.of(context).pop();
 
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Terim eklendi')),
+                        SnackBar(content: Text(localizations.termAdded)),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Text('Çince ve İngilizce terimler gereklidir'),
+                        SnackBar(
+                          content: Text(localizations.termsRequired),
                         ),
                       );
                     }
                   },
-                  child: const Text('Ekle'),
+                  child: Text(localizations.add),
                 ),
               ],
             );
@@ -264,6 +269,7 @@ class TermManagementForProject extends StatelessWidget {
   }
 
   void _showEditTermDialog(BuildContext context, TermPair term) {
+    final localizations = AppLocalizations.of(context)!;
     // Yerel state değişkenleri
     String chineseTerm = term.chineseTerm;
     String englishTerm = term.englishTerm;
@@ -276,15 +282,15 @@ class TermManagementForProject extends StatelessWidget {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text('Terimi Düzenle'),
+              title: Text(localizations.editTerm),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'Çince Terim',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: localizations.chineseTerm,
+                        border: const OutlineInputBorder(),
                       ),
                       controller: TextEditingController(text: chineseTerm),
                       onChanged: (value) {
@@ -293,9 +299,9 @@ class TermManagementForProject extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'İngilizce Terim',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: localizations.englishTerm,
+                        border: const OutlineInputBorder(),
                       ),
                       controller: TextEditingController(text: englishTerm),
                       onChanged: (value) {
@@ -304,15 +310,16 @@ class TermManagementForProject extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     DropdownButtonFormField<TermCategory>(
-                      decoration: const InputDecoration(
-                        labelText: 'Kategori',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: localizations.category,
+                        border: const OutlineInputBorder(),
                       ),
                       value: selectedCategory,
                       items: TermCategory.values
                           .map((category) => DropdownMenuItem(
                                 value: category,
-                                child: Text(_getCategoryName(category)),
+                                child:
+                                    Text(_getCategoryName(context, category)),
                               ))
                           .toList(),
                       onChanged: (value) {
@@ -325,9 +332,9 @@ class TermManagementForProject extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     TextField(
-                      decoration: const InputDecoration(
-                        labelText: 'Notlar (İsteğe Bağlı)',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: localizations.optionalNotes,
+                        border: const OutlineInputBorder(),
                       ),
                       controller: TextEditingController(text: notes ?? ''),
                       maxLines: 3,
@@ -341,7 +348,7 @@ class TermManagementForProject extends StatelessWidget {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('İptal'),
+                  child: Text(localizations.cancel),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -367,18 +374,17 @@ class TermManagementForProject extends StatelessWidget {
                       Navigator.of(context).pop();
 
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Terim güncellendi')),
+                        SnackBar(content: Text(localizations.termUpdated)),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content:
-                              Text('Çince ve İngilizce terimler gereklidir'),
+                        SnackBar(
+                          content: Text(localizations.termsRequired),
                         ),
                       );
                     }
                   },
-                  child: const Text('Güncelle'),
+                  child: Text(localizations.update),
                 ),
               ],
             );
@@ -390,6 +396,7 @@ class TermManagementForProject extends StatelessWidget {
 
   void _confirmDeleteTerm(
       BuildContext context, String termId, String chineseTerm) {
+    final localizations = AppLocalizations.of(context)!;
     // Silmeden önce terim listesini yazdır
     final termRepo = Provider.of<TermRepository>(context, listen: false);
     print(
@@ -398,13 +405,13 @@ class TermManagementForProject extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Terimi Sil'),
-        content: Text(
-            'Bu terimi silmek istediğinizden emin misiniz?\n\n$chineseTerm'),
+        title: Text(localizations.deleteTerm),
+        content:
+            Text('${localizations.deleteTermConfirmation}\n\n$chineseTerm'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('İptal'),
+            child: Text(localizations.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -429,11 +436,11 @@ class TermManagementForProject extends StatelessWidget {
                   'DEBUG: Silme sonrası terim listesi: ${termRepo.terms.map((t) => '${t.id}: ${t.chineseTerm}').join(', ')}');
 
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Terim silindi')),
+                SnackBar(content: Text(localizations.termDeleted)),
               );
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text('Sil'),
+            child: Text(localizations.delete),
           ),
         ],
       ),
@@ -441,6 +448,7 @@ class TermManagementForProject extends StatelessWidget {
   }
 
   Future<void> _importTermsFromTxt(BuildContext context) async {
+    final localizations = AppLocalizations.of(context)!;
     try {
       // Dosya seçme
       final result = await FilePicker.platform.pickFiles(
@@ -472,25 +480,28 @@ class TermManagementForProject extends StatelessWidget {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Hata: $e')),
+        SnackBar(
+          content: Text(localizations.error(e.toString())),
+        ),
       );
     }
   }
 
-  String _getCategoryName(TermCategory category) {
+  String _getCategoryName(BuildContext context, TermCategory category) {
+    final localizations = AppLocalizations.of(context)!;
     switch (category) {
       case TermCategory.person:
-        return 'Kişi İsmi';
+        return localizations.personName;
       case TermCategory.place:
-        return 'Yer İsmi';
+        return localizations.placeName;
       case TermCategory.organization:
-        return 'Organizasyon';
+        return localizations.organization;
       case TermCategory.technical:
-        return 'Teknik Terim';
+        return localizations.technicalTerm;
       case TermCategory.general:
-        return 'Genel';
+        return localizations.general;
       case TermCategory.other:
-        return 'Diğer';
+        return localizations.other;
     }
   }
 }

@@ -456,7 +456,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suggestedTerm => 'Suggested Term: ';
 
   @override
-  String get dataDiscrepancyWarning => 'Warning: There may be discrepancies between the data. The information in the term database may not match the current content of the line! You can make your own correction.';
+  String get dataDiscrepancyWarning => 'Warning: You can make your own correction.';
 
   @override
   String get saveChanges => 'Save Changes';

@@ -1,18 +1,77 @@
 // lib/services/correction_service.dart
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
+
 import '../models/document.dart';
 import '../models/correction.dart';
 import '../repositories/document_repository.dart';
 import 'term_matcher.dart';
+import 'package:flutter/material.dart';
 
 class CorrectionService {
   final TermMatcher _termMatcher;
+  final BuildContext? context;
 
-  CorrectionService(this._termMatcher);
+  CorrectionService(this._termMatcher, {this.context});
+
+  Object _getLocalizedString(String key) {
+    if (context == null) return key;
+    final localizations = AppLocalizations.of(context!);
+    if (localizations == null) return key;
+
+    // Map service's hardcoded strings to the localized versions
+    switch (key) {
+      case 'Satır bulunamadı':
+        return localizations.lineNotFound;
+      case 'Belge işleniyor':
+        return localizations.processingDocument;
+      case 'satır işleniyor':
+        return localizations.processingLine;
+      case 'terim eşleşmesi bulundu':
+        return localizations.termMatchesFound;
+      case 'UYARI':
+        return localizations.warning;
+      case 'Eşleşme satır numarası':
+        return localizations.mismatchedLineNumbers;
+      case 'Düzeltiliyor':
+        return localizations.correcting;
+      case 'Düzeltme':
+        return localizations.correction;
+      case 'olması gereken':
+        return localizations.shouldBe;
+      case 'Hatalı terim':
+        return localizations.incorrectTermNotFound;
+      case 'satır':
+        return localizations.inLine;
+      case 'metninde bulunamadı':
+        return localizations.incorrectTermNotFound;
+      case 'düzeltme uygulandı':
+        return localizations.correctionsApplied;
+      case 'Uygulanacak düzeltme bulunamadı':
+        return localizations.noCorrectionsToApply;
+      case 'doğru':
+        return localizations.correct;
+      case 'toplam':
+        return localizations.total;
+      case 'Tutarlılık puanı':
+        return localizations.consistencyScore;
+      case 'tekrarlar dahil':
+        return localizations.includingDuplicates;
+      case 'Benzersiz':
+        return localizations.uniqueCorrections;
+      case 'düzeltme bulundu':
+        return localizations.correctionsFound;
+      case 'satırda':
+        return localizations.inLine;
+      default:
+        return key;
+    }
+  }
 
   /// Belgedeki tüm satırlar için düzeltme önerileri oluşturur
   List<Correction> generateCorrections(Document document) {
     final List<Correction> corrections = [];
-    print("Belge işleniyor: ${document.name}, ${document.lines.length} satır");
+    print(
+        "${_getLocalizedString('Belge işleniyor')}: ${document.name}, ${document.lines.length} ${_getLocalizedString('satır')}");
 
     // Her satırı ayrı ayrı işleyerek tüm düzeltmeleri topluyoruz
     for (var line in document.lines) {
@@ -21,21 +80,24 @@ class CorrectionService {
             generateCorrectionsForLine(document, line.lineNumber);
         if (lineCorrections.isNotEmpty) {
           print(
-              "${line.lineNumber}. satırda ${lineCorrections.length} düzeltme bulundu");
+              "${line.lineNumber}. ${_getLocalizedString('satırda')} ${lineCorrections.length} ${_getLocalizedString('düzeltme bulundu')}");
         }
         corrections.addAll(lineCorrections);
       } catch (e) {
-        print('Satır işlenirken hata: Line ${line.lineNumber}, Hata: $e');
+        print(
+            '${_getLocalizedString('Satır işlenirken hata')}: Line ${line.lineNumber}, $e');
         // Hatayı yakalıyoruz ama işlemi durdurmuyoruz
       }
     }
 
     // Toplam düzeltme sayısı
-    print("Toplam ${corrections.length} düzeltme bulundu (tekrarlar dahil)");
+    print(
+        "${_getLocalizedString('Toplam')} ${corrections.length} ${_getLocalizedString('düzeltme bulundu')} (${_getLocalizedString('tekrarlar dahil')})");
 
     // Benzersiz düzeltmeleri filtreleyip dönüyoruz
     final uniqueCorrections = _deduplicateCorrections(corrections);
-    print("Benzersiz ${uniqueCorrections.length} düzeltme bulundu");
+    print(
+        "${_getLocalizedString('Benzersiz')} ${uniqueCorrections.length} ${_getLocalizedString('düzeltme bulundu')}");
 
     return uniqueCorrections;
   }
@@ -47,16 +109,18 @@ class CorrectionService {
   ) {
     final line = document.lines.firstWhere(
       (line) => line.lineNumber == lineNumber,
-      orElse: () => throw Exception('Satır bulunamadı: $lineNumber'),
+      orElse: () => throw Exception(
+          '${_getLocalizedString('Satır bulunamadı')}: $lineNumber'),
     );
 
-    print("$lineNumber. satır işleniyor:");
+    print("$lineNumber. ${_getLocalizedString('satır işleniyor')}:");
     print("  Çince: ${line.chineseText}");
     print("  İngilizce: ${line.englishText}");
 
     // TermMatcher servisini kullanarak eşleşmeleri buluyoruz
     final matches = _termMatcher.findTermMatches(line);
-    print("  ${matches.length} terim eşleşmesi bulundu");
+    print(
+        "  ${matches.length} ${_getLocalizedString('terim eşleşmesi bulundu')}");
 
     // Eşleşmeler yoksa boş liste dönüyoruz
     if (matches.isEmpty) {
@@ -69,7 +133,7 @@ class CorrectionService {
         // Satır numarasını doğrulayalım
         if (match.lineNumber != lineNumber) {
           print(
-              "  UYARI: Eşleşme satır numarası (${match.lineNumber}) ve istenen satır numarası ($lineNumber) uyuşmuyor. Düzeltiliyor.");
+              "  ${_getLocalizedString('UYARI')}: ${_getLocalizedString('Eşleşme satır numarası')} (${match.lineNumber}) ve istenen satır numarası ($lineNumber) uyuşmuyor. ${_getLocalizedString('Düzeltiliyor')}.");
         }
 
         return Correction(
@@ -85,7 +149,7 @@ class CorrectionService {
     // Eşleşmelerin detayını göster
     for (var correction in corrections) {
       print(
-          "  Düzeltme (Satır $lineNumber): '${correction.chineseTerm}' -> '${correction.incorrectEnglishTerm}' olması gereken: '${correction.correctEnglishTerm}'");
+          "  ${_getLocalizedString('Düzeltme')} (${_getLocalizedString('satır')} $lineNumber): '${correction.chineseTerm}' -> '${correction.incorrectEnglishTerm}' ${_getLocalizedString('olması gereken')}: '${correction.correctEnglishTerm}'");
 
       // Terimler satırda var mı kontrol edelim
       final hasIncorrectTerm = line.englishText
@@ -93,7 +157,7 @@ class CorrectionService {
           .contains(correction.incorrectEnglishTerm.toLowerCase());
       if (!hasIncorrectTerm) {
         print(
-            "  UYARI: Hatalı terim '${correction.incorrectEnglishTerm}' satır $lineNumber metninde bulunamadı!");
+            "  ${_getLocalizedString('UYARI')}: ${_getLocalizedString('Hatalı terim')} '${correction.incorrectEnglishTerm}' ${_getLocalizedString('satır')} $lineNumber ${_getLocalizedString('metninde bulunamadı')}!");
       }
     }
 
@@ -130,9 +194,10 @@ class CorrectionService {
     if (unappliedCorrections > 0) {
       // Tüm düzeltmeleri tek seferde uygula
       repository.applyAllCorrections();
-      print("$unappliedCorrections düzeltme uygulandı");
+      print(
+          "$unappliedCorrections ${_getLocalizedString('düzeltme uygulandı')}");
     } else {
-      print("Uygulanacak düzeltme bulunamadı");
+      print("${_getLocalizedString('Uygulanacak düzeltme bulunamadı')}");
     }
   }
 
@@ -166,7 +231,7 @@ class CorrectionService {
     // Tutarlılık yüzdesi
     final score = ((totalTerms - incorrectTerms) / totalTerms * 100).round();
     print(
-        "Tutarlılık puanı: $score (doğru: ${totalTerms - incorrectTerms}, toplam: $totalTerms)");
+        "${_getLocalizedString('Tutarlılık puanı')}: $score (${_getLocalizedString('doğru')}: ${totalTerms - incorrectTerms}, ${_getLocalizedString('toplam')}: $totalTerms)");
     return score;
   }
 
