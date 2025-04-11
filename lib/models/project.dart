@@ -10,7 +10,7 @@ class Project {
   List<Correction> corrections;
   DateTime createdAt;
   DateTime updatedAt;
-  String? savePath; // Projenin kaydedildiği dosya yolu
+  String? savePath; // Path where the project is saved
 
   Project({
     String? id,
@@ -25,40 +25,40 @@ class Project {
         createdAt = DateTime.now(),
         updatedAt = DateTime.now();
 
-  // Bir belgeyi projeye ekler
+  // Adds a document to the project
   void addDocument(Document document) {
     documents.add(document);
     updatedAt = DateTime.now();
   }
 
-  // Bir belgeyi projeden kaldırır
+  // Removes a document from the project
   void removeDocument(String documentId) {
     documents.removeWhere((doc) => doc.id == documentId);
     updatedAt = DateTime.now();
   }
 
-  // Bir düzeltmeyi projeye ekler
+  // Adds a correction to the project
   void addCorrection(Correction correction) {
-    // Aynı satır ve terim için mevcut bir düzeltme var mı kontrol et
+    // Check if a correction for the same line and term already exists
     final existingIndex =
         corrections.indexWhere((c) => c.uniqueKey == correction.uniqueKey);
     if (existingIndex != -1) {
-      // Var olan düzeltmeyi güncelle
+      // Update existing correction
       corrections[existingIndex] = correction;
     } else {
-      // Yeni düzeltme ekle
+      // Add new correction
       corrections.add(correction);
     }
     updatedAt = DateTime.now();
   }
 
-  // Bir düzeltmeyi projeden kaldırır
+  // Removes a correction from the project
   void removeCorrection(String correctionId) {
     corrections.removeWhere((corr) => corr.id == correctionId);
     updatedAt = DateTime.now();
   }
 
-  // JSON'a dönüştürme
+  // Convert to JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -72,7 +72,7 @@ class Project {
     };
   }
 
-  // JSON'dan oluşturma
+  // Create from JSON
   factory Project.fromJson(Map<String, dynamic> json) {
     return Project(
       id: json['id'],
@@ -88,12 +88,12 @@ class Project {
     );
   }
 
-  // Projeyi JSON string'e dönüştürme
+  // Convert project to JSON string
   String toJsonString() {
     return jsonEncode(toJson());
   }
 
-  // JSON string'den proje oluşturma
+  // Create project from JSON string
   static Project fromJsonString(String jsonString) {
     final Map<String, dynamic> json = jsonDecode(jsonString);
     return Project.fromJson(json);

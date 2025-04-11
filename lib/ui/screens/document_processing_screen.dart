@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart'; // Import localization
 import '../../repositories/document_repository.dart';
 import '../../repositories/term_repository.dart';
 import '../../services/term_matcher.dart';
@@ -55,20 +56,20 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Corrections listesini her build işleminde repository'den al
+    final l10n = AppLocalizations.of(context)!; // Get localization instance
     _corrections = _documentRepo.corrections;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Belge İşleme'),
+        title: Text(l10n.documentProcessingTitle), // Localized title
         actions: [
           // Dikey/Yatay panel değiştirme butonu
           IconButton(
             icon: Icon(
                 _showVerticalPanel ? Icons.view_sidebar : Icons.view_agenda),
             tooltip: _showVerticalPanel
-                ? 'Yatay Panel Görünümü'
-                : 'Dikey Panel Görünümü',
+                ? l10n.horizontalPanelTooltip // Localized tooltip
+                : l10n.verticalPanelTooltip, // Localized tooltip
             onPressed: () {
               setState(() {
                 _showVerticalPanel = !_showVerticalPanel;
@@ -83,7 +84,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
           ),
           IconButton(
             icon: Icon(_showSideBySide ? Icons.view_agenda : Icons.view_column),
-            tooltip: 'Görünümü Değiştir',
+            tooltip: l10n.changeViewTooltip, // Localized tooltip
             onPressed: () {
               setState(() {
                 _showSideBySide = !_showSideBySide;
@@ -92,12 +93,12 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.file_open),
-            tooltip: 'Belge Aç',
+            tooltip: l10n.openDocumentTooltip, // Localized tooltip
             onPressed: _loadDocument,
           ),
           IconButton(
             icon: const Icon(Icons.save),
-            tooltip: 'Belgeyi Kaydet',
+            tooltip: l10n.saveDocumentTooltip, // Localized tooltip
             onPressed:
                 _documentRepo.currentDocument != null ? _saveDocument : null,
           ),
@@ -117,11 +118,12 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
 
   // Dikey bölünmüş görünüm (panel altta)
   Widget _buildVerticalSplitView() {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         Expanded(
           child: _documentRepo.currentDocument == null
-              ? const Center(child: Text('Lütfen bir belge yükleyin'))
+              ? Center(child: Text(l10n.pleaseUploadDocument)) // Localized text
               : _buildDocumentPreview(),
         ),
         GestureDetector(
@@ -159,6 +161,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
 
   // Yatay bölünmüş görünüm (panel sağda)
   Widget _buildHorizontalSplitView() {
+    final l10n = AppLocalizations.of(context)!;
     final screenWidth = MediaQuery.of(context).size.width;
     // Dikey mod için uygun panel genişliği
     final defaultPanelWidth = screenWidth * 0.4;
@@ -172,7 +175,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
       children: [
         Expanded(
           child: _documentRepo.currentDocument == null
-              ? const Center(child: Text('Lütfen bir belge yükleyin'))
+              ? Center(child: Text(l10n.pleaseUploadDocument)) // Localized text
               : _buildDocumentPreview(),
         ),
         GestureDetector(
@@ -217,6 +220,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
   }
 
   Widget _buildDocumentPreview() {
+    final l10n = AppLocalizations.of(context)!;
     if (_documentRepo.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -224,7 +228,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
     if (_documentRepo.error != null) {
       return Center(
         child: Text(
-          'Hata: ${_documentRepo.error}',
+          l10n.errorWithMessage(_documentRepo.error!), // Localized error
           style: const TextStyle(color: Colors.red),
         ),
       );
@@ -241,6 +245,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
   }
 
   Widget _buildCorrectionPanel({bool isVertical = false}) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
@@ -278,7 +283,8 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Düzeltmeler (${_corrections.length})',
+                      l10n.correctionsCount(
+                          _corrections.length), // Localized text with count
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
@@ -289,7 +295,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                   // Panel boyutunu sıfırlama butonu
                   IconButton(
                     icon: const Icon(Icons.aspect_ratio, size: 20),
-                    tooltip: 'Panel Boyutunu Sıfırla',
+                    tooltip: l10n.resetPanelSizeTooltip, // Localized tooltip
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
                     onPressed: () {
@@ -319,7 +325,9 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                           : null,
                       icon: const Icon(Icons.done_all, size: 16),
                       label: Text(
-                        isVertical ? 'Uygula' : 'Tümünü Uygula',
+                        isVertical
+                            ? l10n.applyCorrections
+                            : l10n.applyAllCorrections, // Localized label
                         style: const TextStyle(fontSize: 14),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -339,7 +347,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                           : null,
                       icon: const Icon(Icons.clear_all, size: 16),
                       label: Text(
-                        isVertical ? 'Temizle' : 'Temizle',
+                        l10n.clearCorrections, // Localized label
                         style: const TextStyle(fontSize: 14),
                       ),
                       style: OutlinedButton.styleFrom(
@@ -365,19 +373,19 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _buildStatCard(
-                    'Toplam',
+                    l10n.total, // Localized title
                     _corrections.length.toString(),
                     Icons.format_list_numbered,
                     Colors.blue,
                   ),
                   _buildStatCard(
-                    'Uygulandı',
+                    l10n.applied, // Localized title
                     _corrections.where((c) => c.isApplied).length.toString(),
                     Icons.check_circle,
                     Colors.green,
                   ),
                   _buildStatCard(
-                    'Bekliyor',
+                    l10n.pending, // Localized title
                     _corrections.where((c) => !c.isApplied).length.toString(),
                     Icons.pending,
                     Colors.orange,
@@ -400,19 +408,19 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                               color: Colors.grey.shade400,
                             ),
                             const SizedBox(height: 16),
-                            const Text(
-                              'Henüz düzeltme önerisi yok',
-                              style: TextStyle(
+                            Text(
+                              l10n.noCorrectionsYet, // Localized text
+                              style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey,
                               ),
                             ),
                             const SizedBox(height: 8),
-                            const Text(
-                              'Düzeltme önerilerini görmek için sağ alt köşedeki düğmeye tıklayın',
+                            Text(
+                              l10n.clickButtonForCorrections, // Localized text
                               textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.grey),
+                              style: const TextStyle(
+                                  fontSize: 14, color: Colors.grey),
                             ),
                           ],
                         ),
@@ -434,7 +442,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                                     size: 18, color: Colors.blue.shade700),
                                 const SizedBox(width: 6),
                                 Text(
-                                  'Satıra göre filtrele:',
+                                  l10n.filterByLine, // Localized text
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -453,10 +461,11 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                                     ),
                                     child: DropdownButtonHideUnderline(
                                       child: DropdownButton<int>(
-                                        hint: const Padding(
-                                          padding: EdgeInsets.symmetric(
+                                        hint: Padding(
+                                          padding: const EdgeInsets.symmetric(
                                               horizontal: 8),
-                                          child: Text('Tüm satırlar'),
+                                          child: Text(
+                                              l10n.allLines), // Localized hint
                                         ),
                                         isExpanded: true,
                                         padding: const EdgeInsets.symmetric(
@@ -467,7 +476,8 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                                             .map((lineNum) {
                                           return DropdownMenuItem<int>(
                                             value: lineNum,
-                                            child: Text('Satır $lineNum'),
+                                            child: Text(l10n.lineNumber(
+                                                lineNum)), // Localized item text
                                           );
                                         }).toList(),
                                         onChanged: (value) {
@@ -534,16 +544,18 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
   }
 
   Future<void> _loadDocument() async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final chineseResult = await FilePicker.platform.pickFiles(
-        dialogTitle: 'Çince Kaynak Belgeyi Seçin',
+        dialogTitle: l10n.selectChineseSourceDocument, // Localized dialog title
         type: FileType.custom,
         allowedExtensions: ['txt', 'ass'],
       );
 
       if (chineseResult != null) {
         final englishResult = await FilePicker.platform.pickFiles(
-          dialogTitle: 'İngilizce Çeviri Belgesini Seçin',
+          dialogTitle:
+              l10n.selectEnglishTranslationDocument, // Localized dialog title
           type: FileType.custom,
           allowedExtensions: ['txt', 'ass'],
         );
@@ -561,31 +573,39 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
     } catch (e) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Hata: $e')));
+      ).showSnackBar(SnackBar(
+          content:
+              Text(l10n.errorWithMessage(e.toString())))); // Localized error
     }
   }
 
   Future<void> _saveDocument() async {
+    final l10n = AppLocalizations.of(context)!;
     try {
       final result = await FilePicker.platform.getDirectoryPath(
-        dialogTitle: 'Kaydetmek İçin Klasör Seçin',
+        dialogTitle: l10n.selectFolderToSave, // Localized dialog title
       );
 
       if (result != null) {
         await _documentRepo.saveDocument(result);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Belge başarıyla kaydedildi')),
+          SnackBar(
+              content:
+                  Text(l10n.documentSavedSuccessfully)), // Localized message
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Hata: $e')));
+      ).showSnackBar(SnackBar(
+          content:
+              Text(l10n.errorWithMessage(e.toString())))); // Localized error
     }
   }
 
   Future<void> _processDocument() async {
+    final l10n = AppLocalizations.of(context)!;
     if (_documentRepo.currentDocument == null) return;
 
     setState(() {
@@ -599,8 +619,8 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
       // Terim veritabanını kontrol et
       if (termRepository.terms.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Terim veritabanı boş. Lütfen önce terim ekleyin.'),
+          SnackBar(
+            content: Text(l10n.emptyTermDatabase), // Localized warning
             backgroundColor: Colors.orange,
           ),
         );
@@ -615,7 +635,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
 
       // İşlem başlangıcında kullanıcıya bilgi ver
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Belge işleniyor, lütfen bekleyin...')),
+        SnackBar(content: Text(l10n.processingDocument)), // Localized message
       );
 
       final newCorrections = correctionService.generateCorrections(
@@ -639,16 +659,16 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
       // Sonuçla ilgili kullanıcıya detaylı geri bildirim
       if (newCorrections.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-                'Hiçbir düzeltme önerisi bulunamadı. Tüm terimler doğru kullanılmış veya eşleşen terim yok.'),
-            duration: Duration(seconds: 4),
+          SnackBar(
+            content: Text(l10n.noCorrectionsFound), // Localized message
+            duration: const Duration(seconds: 4),
           ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('${newCorrections.length} düzeltme önerisi bulundu.'),
+            content: Text(l10n.correctionsFound(
+                newCorrections.length)), // Localized message with count
             duration: const Duration(seconds: 3),
             backgroundColor: Colors.green,
           ),
@@ -664,7 +684,8 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
         context,
       ).showSnackBar(
         SnackBar(
-          content: Text('Belge işlenirken hata oluştu: $e'),
+          content: Text(l10n.errorProcessingDocument(
+              e.toString())), // Localized error with details
           backgroundColor: Colors.red,
           duration: const Duration(seconds: 5),
         ),
@@ -702,16 +723,17 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
   // Düzenlenen düzeltmeyi uygulamak için metot
   void _applyEditedCorrection(
       String correctionId, String newIncorrectTerm, String newCorrectTerm) {
+    final l10n = AppLocalizations.of(context)!;
     print("Düzenlenmiş düzeltme uygulanıyor: $correctionId");
     print("Yeni metin: $newIncorrectTerm");
 
     // Uygulamadan önce kullanıcının girdiği metni kontrol et
     if (newIncorrectTerm.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Düzeltme metni boş olamaz!'),
+        SnackBar(
+          content: Text(l10n.correctionTextEmpty), // Localized error
           backgroundColor: Colors.red,
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
       return;
@@ -753,10 +775,11 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Düzeltme başarıyla uygulandı'),
+        SnackBar(
+          content:
+              Text(l10n.correctionAppliedSuccessfully), // Localized message
           backgroundColor: Colors.green,
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     } catch (e) {
@@ -766,7 +789,8 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Düzeltme uygulanırken hata oluştu: $e'),
+          content: Text(l10n.errorApplyingCorrection(
+              e.toString())), // Localized error with details
           backgroundColor: Colors.red,
           duration: const Duration(seconds: 3),
         ),
@@ -775,10 +799,11 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
   }
 
   void _applyAllCorrections() {
+    final l10n = AppLocalizations.of(context)!;
     if (_corrections.isEmpty || _corrections.every((c) => c.isApplied)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Uygulanacak düzeltme bulunamadı'),
+        SnackBar(
+          content: Text(l10n.noCorrectionsToApply), // Localized message
           backgroundColor: Colors.orange,
         ),
       );
@@ -819,10 +844,10 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
 
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(const SnackBar(
-      content: Text('Tüm düzeltmeler uygulandı'),
+    ).showSnackBar(SnackBar(
+      content: Text(l10n.allCorrectionsApplied), // Localized message
       backgroundColor: Colors.green,
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
     ));
   }
 
@@ -915,6 +940,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
 
   // Filtrelenmiş düzeltmeleri görüntüleyen liste builder
   Widget _buildCorrectionsList() {
+    final l10n = AppLocalizations.of(context)!;
     return ListView.builder(
       controller: _correctionsScrollController,
       // Sadece uygulanmamış ve filtrelenmiş düzeltmeleri göster
@@ -956,7 +982,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Satır ${correction.lineNumber}',
+                      l10n.lineNumber(correction.lineNumber), // Localized text
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -976,7 +1002,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                         // Özelleştirilmiş düzeltme metodunu kullan
                         _applyEditedCorrection(correction.id, currentText, "");
                       },
-                      tooltip: 'Düzeltmeyi Uygula',
+                      tooltip: l10n.applyCorrection, // Localized tooltip
                       constraints: const BoxConstraints(),
                       padding: EdgeInsets.zero,
                       iconSize: 20,
@@ -1023,9 +1049,9 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                       children: [
                         const Icon(Icons.edit, size: 14, color: Colors.blue),
                         const SizedBox(width: 4),
-                        const Text(
-                          'Satırın Mevcut Metni:',
-                          style: TextStyle(
+                        Text(
+                          l10n.currentLineText, // Localized label
+                          style: const TextStyle(
                             fontSize: 14,
                             color: Colors.blue,
                             fontWeight: FontWeight.bold,
@@ -1033,7 +1059,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                         ),
                         const Spacer(),
                         Text(
-                          'Düzeltilmiş metni buraya yazın',
+                          l10n.enterCorrectedText, // Localized hint
                           style: TextStyle(
                             fontSize: 11,
                             color: Colors.grey.shade600,
@@ -1061,9 +1087,9 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                           borderRadius: BorderRadius.circular(8),
                           borderSide: BorderSide(color: Colors.blue.shade200),
                         ),
-                        hintText: "Düzeltilmiş metni buraya yazın",
-                        helperText:
-                            "Satır ${correction.lineNumber} için düzeltme",
+                        hintText: l10n.enterCorrectedText, // Localized hint
+                        helperText: l10n.correctionForLine(
+                            correction.lineNumber), // Localized helper text
                       ),
                       key: ValueKey(
                           "edit_${correction.id}_${correction.lineNumber}"), // Anahtar ekleyerek widget'in doğru yenilenmesini sağlıyoruz
@@ -1089,7 +1115,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Terim Veritabanı Referansı:',
+                      l10n.termDatabaseReference, // Localized title
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey.shade700,
@@ -1116,7 +1142,8 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                               ),
                               children: [
                                 TextSpan(
-                                  text: 'Veritabanında Aranan Terim: ',
+                                  text: l10n
+                                      .termSearchedInDatabase, // Localized label
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.red.shade700,
@@ -1140,7 +1167,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                               ),
                               children: [
                                 TextSpan(
-                                  text: 'Önerilen Terim: ',
+                                  text: l10n.suggestedTerm, // Localized label
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.green.shade700,
@@ -1159,7 +1186,7 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                           const Divider(),
                           const SizedBox(height: 4),
                           Text(
-                            'Uyarı: Veriler arasında uyumsuzluk olabilir. Terim veritabanındaki bilgiler satırın mevcut içeriğiyle uyuşmayabilir! Kendi düzeltmenizi yapabilirsiniz.',
+                            l10n.dataDiscrepancyWarning, // Localized warning
                             style: TextStyle(
                               fontSize: 11,
                               color: Colors.orange.shade800,
@@ -1196,9 +1223,9 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
                             ""); // doğru terime artık ihtiyaç yok
                       },
                       icon: const Icon(Icons.done_all, size: 16),
-                      label: const Text(
-                        'Değişiklikleri Kaydet',
-                        style: TextStyle(fontSize: 14),
+                      label: Text(
+                        l10n.saveChanges, // Localized label
+                        style: const TextStyle(fontSize: 14),
                       ),
                       style: ElevatedButton.styleFrom(
                         foregroundColor: Colors.white,

@@ -1,6 +1,7 @@
 // lib/ui/widgets/correction_item.dart
 import 'package:flutter/material.dart';
 import '../../models/correction.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 
 class CorrectionItem extends StatelessWidget {
   final Correction correction;
@@ -14,6 +15,8 @@ class CorrectionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return LayoutBuilder(builder: (context, constraints) {
       final isVerySmallWidth = constraints.maxWidth < 300;
 
@@ -36,13 +39,15 @@ class CorrectionItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                isVerySmallWidth ? _buildCompactHeader() : _buildWideHeader(),
+                isVerySmallWidth
+                    ? _buildCompactHeader(context)
+                    : _buildWideHeader(context),
                 const SizedBox(height: 8),
                 _buildChineseTermContainer(context),
                 const SizedBox(height: 8),
                 constraints.maxWidth < 450
-                    ? _buildVerticalTranslationSection()
-                    : _buildHorizontalTranslationSection(),
+                    ? _buildVerticalTranslationSection(context)
+                    : _buildHorizontalTranslationSection(context),
               ],
             ),
           ),
@@ -51,167 +56,166 @@ class CorrectionItem extends StatelessWidget {
     });
   }
 
-  Widget _buildCompactHeader() {
-    return Builder(builder: (BuildContext context) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: correction.isApplied ? Colors.green : Colors.orange,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Text(
-                    '${correction.lineNumber}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
+  Widget _buildCompactHeader(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                color: correction.isApplied ? Colors.green : Colors.orange,
+                shape: BoxShape.circle,
               ),
-              const SizedBox(width: 6),
-              Expanded(
+              child: Center(
                 child: Text(
-                  correction.chineseTerm,
-                  style: TextStyle(
-                    fontFamily: 'NotoSansSC',
+                  '${correction.lineNumber}',
+                  style: const TextStyle(
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.white
-                        : Colors.black87,
+                    fontSize: 12,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              if (!correction.isApplied)
-                SizedBox(
-                  height: 28,
-                  child: ElevatedButton.icon(
-                    onPressed: onApply,
-                    icon: const Icon(Icons.done, size: 14),
-                    label: const Text(
-                      'Uygula',
-                      style: TextStyle(fontSize: 11),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.green,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6, vertical: 0),
-                      minimumSize: Size.zero,
-                      visualDensity: VisualDensity.compact,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
+            ),
+            const SizedBox(width: 6),
+            Expanded(
+              child: Text(
+                correction.chineseTerm,
+                style: TextStyle(
+                  fontFamily: 'NotoSansSC',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black87,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 4),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            if (!correction.isApplied)
+              SizedBox(
+                height: 28,
+                child: ElevatedButton.icon(
+                  onPressed: onApply,
+                  icon: const Icon(Icons.done, size: 14),
+                  label: Text(
+                    l10n.applyButton,
+                    style: const TextStyle(fontSize: 11),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.green,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
+                    minimumSize: Size.zero,
+                    visualDensity: VisualDensity.compact,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                   ),
                 ),
-              if (correction.isApplied)
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: Colors.green.shade100,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.green.shade300),
-                  ),
-                  child: Text(
-                    'Uygulandı',
-                    style: TextStyle(
-                      color: Colors.green.shade800,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 11,
-                    ),
+              ),
+            if (correction.isApplied)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.green.shade100,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.green.shade300),
+                ),
+                child: Text(
+                  l10n.appliedStatus,
+                  style: TextStyle(
+                    color: Colors.green.shade800,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 11,
                   ),
                 ),
-            ],
-          ),
-        ],
-      );
-    });
+              ),
+          ],
+        ),
+      ],
+    );
   }
 
-  Widget _buildWideHeader() {
-    return Builder(builder: (BuildContext context) {
-      return Row(
-        children: [
-          Container(
-            width: 28,
-            height: 28,
-            decoration: BoxDecoration(
-              color: correction.isApplied ? Colors.green : Colors.orange,
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Center(
-              child: Text(
-                '${correction.lineNumber}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 12,
-                ),
-              ),
-            ),
+  Widget _buildWideHeader(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
+    return Row(
+      children: [
+        Container(
+          width: 28,
+          height: 28,
+          decoration: BoxDecoration(
+            color: correction.isApplied ? Colors.green : Colors.orange,
+            borderRadius: BorderRadius.circular(14),
           ),
-          const SizedBox(width: 6),
-          Expanded(
+          child: Center(
             child: Text(
-              'Satır ${correction.lineNumber}',
+              '${correction.lineNumber}',
               style: const TextStyle(
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
+                fontSize: 12,
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
           ),
-          const SizedBox(width: 4),
-          if (!correction.isApplied)
-            SizedBox(
-              height: 24,
-              child: ElevatedButton(
-                onPressed: onApply,
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.green,
-                  padding: EdgeInsets.zero,
-                  minimumSize: Size.zero,
-                  visualDensity: VisualDensity.compact,
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                child: const Icon(Icons.done, size: 16),
-              ),
+        ),
+        const SizedBox(width: 6),
+        Expanded(
+          child: Text(
+            l10n.lineNumber(correction.lineNumber),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
             ),
-          if (correction.isApplied)
-            Container(
-              padding: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: Colors.green.shade100,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.green.shade300, width: 1),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        const SizedBox(width: 4),
+        if (!correction.isApplied)
+          SizedBox(
+            height: 24,
+            child: ElevatedButton(
+              onPressed: onApply,
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.green,
+                padding: EdgeInsets.zero,
+                minimumSize: Size.zero,
+                visualDensity: VisualDensity.compact,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
-              child: Icon(
-                Icons.check,
-                color: Colors.green.shade800,
-                size: 12,
-              ),
+              child: const Icon(Icons.done, size: 16),
             ),
-        ],
-      );
-    });
+          ),
+        if (correction.isApplied)
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Colors.green.shade100,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.green.shade300, width: 1),
+            ),
+            child: Icon(
+              Icons.check,
+              color: Colors.green.shade800,
+              size: 12,
+            ),
+          ),
+      ],
+    );
   }
 
   Widget _buildChineseTermContainer(BuildContext context) {
@@ -245,12 +249,15 @@ class CorrectionItem extends StatelessWidget {
     );
   }
 
-  Widget _buildVerticalTranslationSection() {
+  Widget _buildVerticalTranslationSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildTranslationSection(
-          'Hatalı:',
+          context,
+          l10n.incorrectLabel,
           correction.incorrectEnglishTerm,
           Icons.error_outline,
           Colors.red,
@@ -266,7 +273,8 @@ class CorrectionItem extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         _buildTranslationSection(
-          'Doğru:',
+          context,
+          l10n.correctLabel,
           correction.correctEnglishTerm,
           Icons.check_circle_outline,
           Colors.green,
@@ -275,13 +283,16 @@ class CorrectionItem extends StatelessWidget {
     );
   }
 
-  Widget _buildHorizontalTranslationSection() {
+  Widget _buildHorizontalTranslationSection(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: _buildTranslationSection(
-            'Hatalı:',
+            context,
+            l10n.incorrectLabel,
             correction.incorrectEnglishTerm,
             Icons.error_outline,
             Colors.red,
@@ -298,7 +309,8 @@ class CorrectionItem extends StatelessWidget {
         ),
         Expanded(
           child: _buildTranslationSection(
-            'Doğru:',
+            context,
+            l10n.correctLabel,
             correction.correctEnglishTerm,
             Icons.check_circle_outline,
             Colors.green,
@@ -309,6 +321,7 @@ class CorrectionItem extends StatelessWidget {
   }
 
   Widget _buildTranslationSection(
+    BuildContext context,
     String title,
     String content,
     IconData icon,

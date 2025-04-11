@@ -6,3 +6,5 @@ preferred-supported-locales:
   - tr
   - en
   - zh 
+synthetic-package: false
+output-dir: lib/generated/l10n 

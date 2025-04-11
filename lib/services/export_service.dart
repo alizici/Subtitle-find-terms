@@ -1,19 +1,24 @@
 // lib/services/export_service.dart
+import 'package:flutter/material.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 import '../models/correction.dart';
 import '../models/document.dart';
 import '../models/term_pair.dart';
 
 class ExportService {
-  /// Terim çiftlerini CSV formatında dışa aktarır
-  Future<String> exportTermsToCSV(List<TermPair> terms) async {
+  /// Exports term pairs to CSV format
+  Future<String> exportTermsToCSV(
+      List<TermPair> terms, BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     final StringBuffer buffer = StringBuffer();
 
-    // Başlık satırı
-    buffer.writeln('Çince Terim,İngilizce Terim,Kategori,Notlar');
+    // Header row
+    buffer.writeln(
+        '${l10n.chineseTerm},${l10n.englishTerm},${l10n.category},${l10n.notes}');
 
-    // Terim satırları
+    // Term rows
     for (var term in terms) {
-      final category = term.category.toString().split('.').last;
+      final category = term.getCategoryName(context);
       final notes = term.notes?.replaceAll(',', ' ') ?? '';
 
       buffer.writeln(
@@ -24,34 +29,38 @@ class ExportService {
     return buffer.toString();
   }
 
-  /// Düzeltme raporunu CSV formatında dışa aktarır
-  Future<String> exportCorrectionsToCSV(List<Correction> corrections) async {
+  /// Exports correction report to CSV format
+  Future<String> exportCorrectionsToCSV(
+      List<Correction> corrections, BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     final StringBuffer buffer = StringBuffer();
 
-    // Başlık satırı
+    // Header row
     buffer.writeln(
-      'Satır No,Çince Terim,Yanlış İngilizce Terim,Doğru İngilizce Terim,Uygulandı',
+      '${l10n.lineNumber1},${l10n.chineseTerm},${l10n.incorrectEnglishTerm},${l10n.correctEnglishTerm},${l10n.statusLabel}',
     );
 
-    // Düzeltme satırları
+    // Correction rows
     for (var correction in corrections) {
       buffer.writeln(
         '${correction.lineNumber},${correction.chineseTerm},'
         '${correction.incorrectEnglishTerm},${correction.correctEnglishTerm},'
-        '${correction.isApplied ? "Evet" : "Hayır"}',
+        '${correction.isApplied ? l10n.appliedStatus : l10n.pendingStatus}',
       );
     }
 
     return buffer.toString();
   }
 
-  /// Tutarlılık raporunu HTML formatında dışa aktarır
+  /// Exports consistency report to HTML format
   Future<String> exportConsistencyReportToHTML(
     Document document,
     List<Correction> corrections,
     Map<String, int> termStats,
     int consistencyScore,
+    BuildContext context,
   ) async {
+    final l10n = AppLocalizations.of(context)!;
     final StringBuffer buffer = StringBuffer();
 
     buffer.writeln('''
@@ -59,7 +68,7 @@ class ExportService {
       <html>
       <head>
         <meta charset="UTF-8">
-        <title>Terim Tutarlılık Raporu</title>
+        <title>${l10n.consistencyReportTitle}</title>
         <style>
           body { font-family: Arial, sans-serif; margin: 20px; }
           h1, h2 { color: #333; }
@@ -71,30 +80,30 @@ class ExportService {
         </style>
       </head>
       <body>
-        <h1>Terim Tutarlılık Raporu</h1>
-        <p>Belge: ${document.name}</p>
-        <p>Oluşturulma Tarihi: ${DateTime.now().toString()}</p>
+        <h1>${l10n.consistencyReportTitle}</h1>
+        <p>${l10n.document}: ${document.name}</p>
+        <p>${l10n.creationDate}: ${DateTime.now().toString()}</p>
         
-        <h2>Tutarlılık Puanı</h2>
+        <h2>${l10n.consistencyScore}</h2>
         <p class="score">$consistencyScore%</p>
         
-        <h2>Özet</h2>
+        <h2>${l10n.summary}</h2>
         <ul>
-          <li>Toplam satır sayısı: ${document.lines.length}</li>
-          <li>Düzeltilen satır sayısı: ${document.lines.where((l) => l.hasCorrections).length}</li>
-          <li>Toplam düzeltme sayısı: ${corrections.length}</li>
-          <li>Uygulanan düzeltme sayısı: ${corrections.where((c) => c.isApplied).length}</li>
+          <li>${l10n.totalLinesReport}: ${document.lines.length}</li>
+          <li>${l10n.correctedLinesReport}: ${document.lines.where((l) => l.hasCorrections).length}</li>
+          <li>${l10n.totalCorrectionsReport}: ${corrections.length}</li>
+          <li>${l10n.appliedCorrectionsReport}: ${corrections.where((c) => c.isApplied).length}</li>
         </ul>
         
-        <h2>En Sık Yanlış Çevrilen Terimler</h2>
+        <h2>${l10n.mostFrequentlyMistranslatedTerms}</h2>
         <table>
           <tr>
-            <th>Terim</th>
-            <th>Sıklık</th>
+            <th>${l10n.termLabel}</th>
+            <th>${l10n.frequencyLabel}</th>
           </tr>
     ''');
 
-    // Terim istatistiklerini sırala ve işle
+    // Sort and process term statistics
     final sortedStats = termStats.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
 
@@ -102,7 +111,7 @@ class ExportService {
       buffer.writeln('''
         <tr>
           <td>${entry.key}</td>
-          <td>${entry.value}</td>
+          <td>${entry.value} ${entry.value == 1 ? l10n.correct : l10n.correctionsApplied}</td>
         </tr>
       ''');
     }
@@ -110,14 +119,14 @@ class ExportService {
     buffer.writeln('''
         </table>
         
-        <h2>Düzeltme Detayları</h2>
+        <h2>${l10n.correctionDetails}</h2>
         <table>
           <tr>
-            <th>Satır No</th>
-            <th>Çince Terim</th>
-            <th>Yanlış İngilizce Terim</th>
-            <th>Doğru İngilizce Terim</th>
-            <th>Durum</th>
+            <th>${l10n.lineNumber1}</th>
+            <th>${l10n.chineseTerm}</th>
+            <th>${l10n.incorrectEnglishTerm}</th>
+            <th>${l10n.correctEnglishTerm}</th>
+            <th>${l10n.statusLabel}</th>
           </tr>
     ''');
 
@@ -128,7 +137,7 @@ class ExportService {
           <td>${correction.chineseTerm}</td>
           <td>${correction.incorrectEnglishTerm}</td>
           <td>${correction.correctEnglishTerm}</td>
-          <td>${correction.isApplied ? "Uygulandı" : "Beklemede"}</td>
+          <td>${correction.isApplied ? l10n.appliedStatus : l10n.pendingStatus}</td>
         </tr>
       ''');
     }

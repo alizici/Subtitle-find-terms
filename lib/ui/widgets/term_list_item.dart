@@ -1,6 +1,7 @@
 // lib/ui/widgets/term_list_item.dart
 import 'package:flutter/material.dart';
 import '../../models/term_pair.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 
 class TermListItem extends StatelessWidget {
   final TermPair term;
@@ -16,6 +17,8 @@ class TermListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
@@ -69,12 +72,12 @@ class TermListItem extends StatelessWidget {
               children: [
                 IconButton(
                   icon: const Icon(Icons.edit),
-                  tooltip: 'Düzenle',
+                  tooltip: localizations.editButton,
                   onPressed: onEdit,
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete),
-                  tooltip: 'Sil',
+                  tooltip: localizations.deleteButton,
                   color: Colors.red,
                   onPressed: onDelete,
                 ),

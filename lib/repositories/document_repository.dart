@@ -331,63 +331,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         _logger.info("  Satır ${correction.lineNumber} düzeltiliyor");
         _logger.info("  Orijinal satır metni: ${line.englishText}");
 
-        // DÜZELTME: Kullanıcının girdiği metni doğrudan tüm satıra yerleştirmek yerine
-        // sadece belirli bir kelimeyi değiştiriyoruz
-        if (correction.editedIncorrectTerm != null) {
-          // Eğer kullanıcı tarafından düzenlenmiş bir metin varsa, o zaman
-          // orijinal metinden bu düzenlenen metne değiştirme yap
-          if (line.englishText.contains(correction.incorrectEnglishTerm)) {
-            line.englishText = line.englishText.replaceAll(
-              correction.incorrectEnglishTerm,
-              newIncorrectTerm,
-            );
-            _logger.info(
-                "  Belirli kısım değiştirildi: ${correction.incorrectEnglishTerm} -> $newIncorrectTerm");
-          } else {
-            // Eğer tam eşleşme yoksa, benzer bir kelime bulmaya çalış
-            try {
-              final pattern = RegExp(
-                  correction.incorrectEnglishTerm.replaceAll(r'$', r'\$'),
-                  caseSensitive: false);
-              if (pattern.hasMatch(line.englishText)) {
-                line.englishText =
-                    line.englishText.replaceAll(pattern, newIncorrectTerm);
-                _logger.info(
-                    "  Esnek eşleşme ile düzeltildi: ${correction.incorrectEnglishTerm} -> $newIncorrectTerm");
-              } else {
-                // Hala bir eşleşme bulunamadıysa, basit bir arama yap
-                final englishLower = line.englishText.toLowerCase();
-                final incorrectLower =
-                    correction.incorrectEnglishTerm.toLowerCase();
-
-                if (englishLower.contains(incorrectLower)) {
-                  // Aynı büyük/küçük harf durumunu koru
-                  final startIndex = englishLower.indexOf(incorrectLower);
-                  final endIndex = startIndex + incorrectLower.length;
-
-                  final before = line.englishText.substring(0, startIndex);
-                  final after = line.englishText.substring(endIndex);
-
-                  line.englishText = before + newIncorrectTerm + after;
-                  _logger.info(
-                      "  Basit eşleşme ile düzeltildi: ${correction.incorrectEnglishTerm} -> $newIncorrectTerm");
-                } else {
-                  _logger.warning(
-                      "  Hiçbir şekilde eşleşme bulunamadı! Tüm satır değiştiriliyor...");
-                  line.englishText = newIncorrectTerm;
-                }
-              }
-            } catch (e) {
-              _logger
-                  .severe("  Regex hatası: $e - Doğrudan değiştirme yapılıyor");
-              line.englishText = newIncorrectTerm;
-            }
-          }
-        } else {
-          // Kullanıcı tarafından düzenlenmiş metin yoksa, tam metin yerleştirme yap
-          line.englishText = newIncorrectTerm;
-          _logger.info("  Tüm satır metni değiştirildi: $newIncorrectTerm");
-        }
+        // Kullanıcının girdiği metni doğrudan tüm satıra yerleştir
+        line.englishText = newIncorrectTerm;
+        _logger.info("  Tüm satır metni değiştirildi: $newIncorrectTerm");
 
         // Düzeltmeyi uygulanmış olarak işaretle
         correction.apply();

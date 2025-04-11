@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:window_size/window_size.dart';
 import 'dart:io';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 
 import 'repositories/term_repository.dart';
 import 'repositories/project_repository.dart';

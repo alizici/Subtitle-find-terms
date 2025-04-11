@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import '../../models/term_pair.dart';
 import '../../repositories/term_repository.dart';
 import '../widgets/term_list_item.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 
 class TermManagementScreen extends StatefulWidget {
   const TermManagementScreen({Key? key}) : super(key: key);
@@ -34,18 +35,20 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Terim Yönetimi'),
+        title: Text(localizations.termManagement),
         actions: [
           IconButton(
             icon: const Icon(Icons.file_upload),
-            tooltip: 'İçe Aktar',
+            tooltip: localizations.import,
             onPressed: _importTerms,
           ),
           IconButton(
             icon: const Icon(Icons.file_download),
-            tooltip: 'Dışa Aktar',
+            tooltip: localizations.export,
             onPressed: _exportTerms,
           ),
         ],
@@ -58,9 +61,9 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
               children: [
                 Expanded(
                   child: TextField(
-                    decoration: const InputDecoration(
-                      labelText: 'Terim Ara',
-                      prefixIcon: Icon(Icons.search),
+                    decoration: InputDecoration(
+                      labelText: localizations.searchTerm,
+                      prefixIcon: const Icon(Icons.search),
                     ),
                     onChanged: (value) {
                       setState(() {
@@ -71,7 +74,7 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
                 ),
                 const SizedBox(width: 16),
                 DropdownButton<TermCategory?>(
-                  hint: const Text('Kategori Filtrele'),
+                  hint: Text(localizations.filterCategory),
                   value: _filterCategory,
                   onChanged: (TermCategory? value) {
                     setState(() {
@@ -79,14 +82,14 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
                     });
                   },
                   items: [
-                    const DropdownMenuItem<TermCategory?>(
+                    DropdownMenuItem<TermCategory?>(
                       value: null,
-                      child: Text('Tümü'),
+                      child: Text(localizations.all),
                     ),
                     ...TermCategory.values.map((category) {
                       return DropdownMenuItem<TermCategory?>(
                         value: category,
-                        child: Text(_getCategoryName(category)),
+                        child: Text(_getCategoryName(category, localizations)),
                       );
                     }).toList(),
                   ],
@@ -104,7 +107,7 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
                 if (termRepo.error != null) {
                   return Center(
                     child: Text(
-                      'Hata: ${termRepo.error}',
+                      localizations.errorWithMessage(termRepo.error ?? ''),
                       style: const TextStyle(color: Colors.red),
                     ),
                   );
@@ -128,7 +131,7 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
                 }).toList();
 
                 if (filteredTerms.isEmpty) {
-                  return const Center(child: Text('Hiçbir terim bulunamadı'));
+                  return Center(child: Text(localizations.noTermsFound));
                 }
 
                 return ListView.builder(
@@ -154,24 +157,26 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
     );
   }
 
-  String _getCategoryName(TermCategory category) {
+  String _getCategoryName(
+      TermCategory category, AppLocalizations localizations) {
     switch (category) {
       case TermCategory.person:
-        return 'Kişi İsmi';
+        return localizations.personName;
       case TermCategory.place:
-        return 'Yer İsmi';
+        return localizations.placeName;
       case TermCategory.organization:
-        return 'Organizasyon';
+        return localizations.organization;
       case TermCategory.technical:
-        return 'Teknik Terim';
+        return localizations.technicalTerm;
       case TermCategory.general:
-        return 'Genel';
+        return localizations.general;
       case TermCategory.other:
-        return 'Diğer';
+        return localizations.other;
     }
   }
 
   void _showTermDialog(BuildContext context, [TermPair? term]) {
+    final localizations = AppLocalizations.of(context)!;
     final bool isEditing = term != null;
 
     if (isEditing) {
@@ -189,7 +194,8 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(isEditing ? 'Terimi Düzenle' : 'Yeni Terim Ekle'),
+        title:
+            Text(isEditing ? localizations.editTerm : localizations.addNewTerm),
         content: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -198,35 +204,36 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
               children: [
                 TextFormField(
                   controller: _chineseTermController,
-                  decoration: const InputDecoration(
-                    labelText: 'Çince Terim',
+                  decoration: InputDecoration(
+                    labelText: localizations.chineseTerm,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Lütfen Çince terimi girin';
+                      return localizations.enterChineseTerm;
                     }
                     return null;
                   },
                 ),
                 TextFormField(
                   controller: _englishTermController,
-                  decoration: const InputDecoration(
-                    labelText: 'İngilizce Terim',
+                  decoration: InputDecoration(
+                    labelText: localizations.englishTerm,
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Lütfen İngilizce terimi girin';
+                      return localizations.enterEnglishTerm;
                     }
                     return null;
                   },
                 ),
                 DropdownButtonFormField<TermCategory>(
                   value: _selectedCategory,
-                  decoration: const InputDecoration(labelText: 'Kategori'),
+                  decoration:
+                      InputDecoration(labelText: localizations.category),
                   items: TermCategory.values.map((category) {
                     return DropdownMenuItem<TermCategory>(
                       value: category,
-                      child: Text(_getCategoryName(category)),
+                      child: Text(_getCategoryName(category, localizations)),
                     );
                   }).toList(),
                   onChanged: (value) {
@@ -239,7 +246,7 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
                 ),
                 TextField(
                   controller: _notesController,
-                  decoration: const InputDecoration(labelText: 'Notlar'),
+                  decoration: InputDecoration(labelText: localizations.notes),
                   maxLines: 2,
                 ),
               ],
@@ -249,7 +256,7 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('İptal'),
+            child: Text(localizations.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -278,7 +285,7 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
                 Navigator.of(context).pop();
               }
             },
-            child: Text(isEditing ? 'Güncelle' : 'Ekle'),
+            child: Text(isEditing ? localizations.update : localizations.add),
           ),
         ],
       ),
@@ -286,17 +293,17 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
   }
 
   void _deleteTerm(BuildContext context, String termId) {
+    final localizations = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Terimi Sil'),
-        content: const Text(
-          'Bu terimi silmek istediğinizden emin misiniz?',
-        ),
+        title: Text(localizations.deleteTerm),
+        content: Text(localizations.deleteTermConfirmation),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('İptal'),
+            child: Text(localizations.cancel),
           ),
           ElevatedButton(
             onPressed: () {
@@ -308,7 +315,7 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
               Navigator.of(context).pop();
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-            child: const Text('Sil'),
+            child: Text(localizations.delete),
           ),
         ],
       ),
@@ -316,6 +323,8 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
   }
 
   Future<void> _importTerms() async {
+    final localizations = AppLocalizations.of(context)!;
+
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -345,26 +354,28 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
           _showErrorDialog(termRepo.error!);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Terimler başarıyla içe aktarıldı')),
+            SnackBar(content: Text(localizations.importSuccess)),
           );
         }
       }
     } catch (e) {
-      _showErrorDialog('Hata: $e');
+      _showErrorDialog('${localizations.error}: $e');
     }
   }
 
   // Sonuç mesajını dialog olarak göster
   void _showResultDialog(String message) {
+    final localizations = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('İçe Aktarma Sonucu'),
+        title: Text(localizations.importResult),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Tamam'),
+            child: Text(localizations.ok),
           ),
         ],
       ),
@@ -373,15 +384,17 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
 
   // Hata mesajını dialog olarak göster
   void _showErrorDialog(String message) {
+    final localizations = AppLocalizations.of(context)!;
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Hata'),
+        title: Text(localizations.error as String),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Tamam'),
+            child: Text(localizations.ok),
           ),
         ],
       ),
@@ -389,13 +402,15 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
   }
 
   Future<void> _exportTerms() async {
+    final localizations = AppLocalizations.of(context)!;
+
     try {
       final termRepo = Provider.of<TermRepository>(context, listen: false);
       final jsonContent = await termRepo.exportTerms();
 
       final result = await FilePicker.platform.saveFile(
-        dialogTitle: 'Terimleri Dışa Aktar',
-        fileName: 'terms.json',
+        dialogTitle: localizations.exportTerms,
+        fileName: localizations.defaultTermsFileName,
         type: FileType.custom,
         allowedExtensions: ['json'],
       );
@@ -405,13 +420,13 @@ class _TermManagementScreenState extends State<TermManagementScreen> {
         await file.writeAsString(jsonContent);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Terimler başarıyla dışa aktarıldı')),
+          SnackBar(content: Text(localizations.exportSuccess)),
         );
       }
     } catch (e) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Hata: $e')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(localizations.errorWithMessage(e.toString()))),
+      );
     }
   }
 }

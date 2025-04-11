@@ -535,16 +535,6 @@
     "description": "Tooltip for import project button"
   },
 
-  "errorWithMessage": "Error: {message}",
-  "@errorWithMessage": {
-    "description": "Error message with specific error details",
-    "placeholders": {
-      "message": {
-        "type": "String"
-      }
-    }
-  },
-
   "noProjectsMessage": "You haven't created any projects yet",
   "@noProjectsMessage": {
     "description": "Message shown when user has no projects"
@@ -1267,5 +1257,91 @@
   "correct": "correct",
   "@correct": {
     "description": "Label for correct items count"
+  },
+  "subscriptionTitle": "My Subscription",
+  "@subscriptionTitle": {
+    "description": "Title of subscription screen"
+  },
+  
+  "subtitleUploadsRemaining": "Remaining uploads: {remaining} / {max}",
+  "@subtitleUploadsRemaining": {
+    "description": "Shows remaining subtitle upload credits",
+    "placeholders": {
+      "remaining": {
+        "type": "int",
+        "example": "3"
+      },
+      "max": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  
+  "subtitleUploadRights": "Subtitle Upload Rights",
+  "@subtitleUploadRights": {
+    "description": "Header for the remaining upload rights section"
+  },
+  
+  "noUploadsRemaining": "You have no subtitle uploads remaining. Renew your subscription to upload more subtitles.",
+  "@noUploadsRemaining": {
+    "description": "Message shown when user has no uploads remaining"
+  },
+  
+  "packages": "Packages",
+  "@packages": {
+    "description": "Header for subscription packages section"
+  },
+  
+  "basicPackage": "Basic Package",
+  "@basicPackage": {
+    "description": "Name of the basic subscription package"
+  },
+  
+  "premiumPackage": "Premium Package",
+  "@premiumPackage": {
+    "description": "Name of the premium subscription package"
+  },
+  
+  "proPackage": "Pro Package",
+  "@proPackage": {
+    "description": "Name of the pro subscription package"
+  },
+  
+  "subtitleUploads": "{count} subtitle upload rights",
+  "@subtitleUploads": {
+    "description": "Number of subtitle upload rights in a package",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  
+  "purchase": "Purchase",
+  "@purchase": {
+    "description": "Purchase button text"
+  },
+  
+  "recommended": "Recommended",
+  "@recommended": {
+    "description": "Label for recommended package"
+  },
+  
+  "paymentSuccessful": "Payment Successful",
+  "@paymentSuccessful": {
+    "description": "Title for successful payment dialog"
+  },
+  
+  "purchasedUploads": "You have purchased {count} subtitle upload rights.",
+  "@purchasedUploads": {
+    "description": "Message showing number of purchased uploads",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
   }
-} 
+}

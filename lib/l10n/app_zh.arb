@@ -534,16 +534,6 @@
     "description": "Tooltip for import project button"
   },
 
-  "errorWithMessage": "错误：{message}",
-  "@errorWithMessage": {
-    "description": "Error message with specific error details",
-    "placeholders": {
-      "message": {
-        "type": "String"
-      }
-    }
-  },
-
   "noProjectsMessage": "您尚未创建任何项目",
   "@noProjectsMessage": {
     "description": "Message shown when user has no projects"
@@ -1266,5 +1256,91 @@
   "correct": "正确",
   "@correct": {
     "description": "Label for correct items count"
+  },
+  "subscriptionTitle": "我的订阅",
+  "@subscriptionTitle": {
+    "description": "Title of subscription screen"
+  },
+  
+  "subtitleUploadsRemaining": "剩余上传次数: {remaining} / {max}",
+  "@subtitleUploadsRemaining": {
+    "description": "Shows remaining subtitle upload credits",
+    "placeholders": {
+      "remaining": {
+        "type": "int",
+        "example": "3"
+      },
+      "max": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  
+  "subtitleUploadRights": "字幕上传权限",
+  "@subtitleUploadRights": {
+    "description": "Header for the remaining upload rights section"
+  },
+  
+  "noUploadsRemaining": "您没有剩余的字幕上传次数。请续订您的订阅以上传更多字幕。",
+  "@noUploadsRemaining": {
+    "description": "Message shown when user has no uploads remaining"
+  },
+  
+  "packages": "套餐",
+  "@packages": {
+    "description": "Header for subscription packages section"
+  },
+  
+  "basicPackage": "基础套餐",
+  "@basicPackage": {
+    "description": "Name of the basic subscription package"
+  },
+  
+  "premiumPackage": "高级套餐",
+  "@premiumPackage": {
+    "description": "Name of the premium subscription package"
+  },
+  
+  "proPackage": "专业套餐",
+  "@proPackage": {
+    "description": "Name of the pro subscription package"
+  },
+  
+  "subtitleUploads": "{count}次字幕上传权限",
+  "@subtitleUploads": {
+    "description": "Number of subtitle upload rights in a package",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+  
+  "purchase": "购买",
+  "@purchase": {
+    "description": "Purchase button text"
+  },
+  
+  "recommended": "推荐",
+  "@recommended": {
+    "description": "Label for recommended package"
+  },
+  
+  "paymentSuccessful": "支付成功",
+  "@paymentSuccessful": {
+    "description": "Title for successful payment dialog"
+  },
+  
+  "purchasedUploads": "您已购买{count}次字幕上传权限。",
+  "@purchasedUploads": {
+    "description": "Message showing number of purchased uploads",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
   }
 } 

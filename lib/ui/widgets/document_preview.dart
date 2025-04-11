@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import '../../models/document.dart';
 import '../../models/correction.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 
 class DocumentPreview extends StatelessWidget {
   final Document document;
@@ -25,12 +26,13 @@ class DocumentPreview extends StatelessWidget {
   }
 
   Widget _buildSideBySideView(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return Row(
       children: [
         Expanded(
           child: _buildColumnView(
             context,
-            '源文本 (Kaynak Metin)',
+            localizations.sourceText,
             (line) => line.chineseText,
             true,
           ),
@@ -39,7 +41,7 @@ class DocumentPreview extends StatelessWidget {
         Expanded(
           child: _buildColumnView(
             context,
-            'İngilizce Çeviri',
+            localizations.englishTranslation,
             (line) => line.englishText,
             false,
           ),
@@ -49,6 +51,7 @@ class DocumentPreview extends StatelessWidget {
   }
 
   Widget _buildStackedView(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
     return ListView.builder(
       itemCount: document.lines.length,
       itemBuilder: (context, index) {
@@ -94,7 +97,7 @@ class DocumentPreview extends StatelessWidget {
                       ),
                       child: Text(
                         '${line.lineNumber}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -147,15 +150,15 @@ class DocumentPreview extends StatelessWidget {
                           color: Colors.green,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.check_circle,
+                            const Icon(Icons.check_circle,
                                 color: Colors.white, size: 16),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
-                              'Düzeltildi',
-                              style: TextStyle(
+                              localizations.corrected,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,

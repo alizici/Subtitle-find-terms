@@ -5,10 +5,10 @@ class Document {
   final List<DocumentLine> lines;
   DateTime importedAt;
   DateTime? lastProcessedAt;
-  String? chineseFilePath; // Çince dosyanın yolu
-  String? englishFilePath; // İngilizce dosyanın yolu
-  String? chineseFileName; // Çince dosyanın adı
-  String? englishFileName; // İngilizce dosyanın adı
+  String? chineseFilePath; // Path of the Chinese file
+  String? englishFilePath; // Path of the English file
+  String? chineseFileName; // Name of the Chinese file
+  String? englishFileName; // Name of the English file
 
   Document({
     String? id,

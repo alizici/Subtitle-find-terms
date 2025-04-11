@@ -1,5 +1,5 @@
 class UserSubscription {
-  static const int maxSubtitleUploads = 5; // Maksimum 5 altyazı yükleme hakkı
+  static const int maxSubtitleUploads = 5; // Maximum 5 subtitle upload rights
 
   int _remainingUploads;
   DateTime _lastReset;
@@ -14,7 +14,7 @@ class UserSubscription {
   DateTime get lastReset => _lastReset;
   bool get hasRemainingUploads => _remainingUploads > 0;
 
-  // Altyazı yüklendi, kalan hakkı azalt
+  // Use an upload right, decrement remaining uploads
   bool useUpload() {
     if (_remainingUploads > 0) {
       _remainingUploads--;
@@ -23,13 +23,13 @@ class UserSubscription {
     return false;
   }
 
-  // Hakları sıfırla (örneğin ödeme yapıldığında)
+  // Reset rights (for example after payment)
   void resetUploads() {
     _remainingUploads = maxSubtitleUploads;
     _lastReset = DateTime.now();
   }
 
-  // Kalan yükleme hakkını artır
+  // Increase remaining upload rights
   void addUploads(int count) {
     _remainingUploads += count;
   }

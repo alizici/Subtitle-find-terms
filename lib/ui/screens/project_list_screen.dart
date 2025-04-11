@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 import '../../repositories/project_repository.dart';
 import '../../models/project.dart';
 
@@ -33,7 +33,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.file_upload),
-            tooltip: 'Projeyi İçe Aktar',
+            tooltip: l10n.importProjectTooltip,
             onPressed: _importProject,
           ),
         ],
@@ -47,7 +47,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
           if (projectRepo.error != null) {
             return Center(
               child: Text(
-                'Hata: ${projectRepo.error}',
+                l10n.errorWithMessage(projectRepo.error!),
                 style: const TextStyle(color: Colors.red),
               ),
             );
@@ -64,9 +64,9 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
                     color: Colors.grey.shade400,
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Henüz bir proje oluşturmadınız',
-                    style: TextStyle(fontSize: 18),
+                  Text(
+                    l10n.noProjectsMessage,
+                    style: const TextStyle(fontSize: 18),
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton.icon(
@@ -84,7 +84,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  'Toplam ${projectRepo.projects.length} proje',
+                  l10n.totalProjects(projectRepo.projects.length),
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey.shade700,
@@ -133,17 +133,16 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
               controller: nameController,
               decoration: InputDecoration(
                 labelText: l10n.projectName,
-                hintText: 'Örn: Wuxia Serisi Terim Çevirisi',
+                hintText: l10n.projectNameHint,
               ),
               autofocus: true,
             ),
             const SizedBox(height: 16),
             TextField(
               controller: descriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Açıklama (İsteğe Bağlı)',
-                hintText:
-                    'Örn: 5 sezonluk Wuxia serisi altyazı termlerinin standardizasyonu',
+              decoration: InputDecoration(
+                labelText: l10n.descriptionOptional,
+                hintText: l10n.descriptionHint,
               ),
               maxLines: 3,
             ),
@@ -225,12 +224,14 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
       await projectRepo.deleteProject(projectId);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Proje silindi')),
+        SnackBar(content: Text(l10n.projectDeleted)),
       );
     }
   }
 
   Future<void> _exportProject(Project project) async {
+    final l10n = AppLocalizations.of(context)!;
+
     try {
       final projectRepo = Provider.of<ProjectRepository>(
         context,
@@ -239,7 +240,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
       final jsonContent = await projectRepo.exportProject(project);
 
       final result = await FilePicker.platform.saveFile(
-        dialogTitle: 'Projeyi Dışa Aktar',
+        dialogTitle: l10n.exportProjectDialogTitle,
         fileName: '${project.name.replaceAll(' ', '_')}_project.json',
         type: FileType.custom,
         allowedExtensions: ['json'],
@@ -250,17 +251,19 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
         await file.writeAsString(jsonContent);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Proje başarıyla dışa aktarıldı')),
+          SnackBar(content: Text(l10n.exportSuccess)),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Hata: $e')),
+        SnackBar(content: Text(l10n.errorWithMessage(e.toString()))),
       );
     }
   }
 
   Future<void> _importProject() async {
+    final l10n = AppLocalizations.of(context)!;
+
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
@@ -278,8 +281,8 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
         final project = await projectRepo.importProject(content);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Proje başarıyla içe aktarıldı'),
+          SnackBar(
+            content: Text(l10n.importSuccess),
           ),
         );
 
@@ -287,7 +290,7 @@ class _ProjectListScreenState extends State<ProjectListScreen> {
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Hata: $e')),
+        SnackBar(content: Text(l10n.errorWithMessage(e.toString()))),
       );
     }
   }
@@ -309,6 +312,8 @@ class ProjectListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -329,7 +334,8 @@ class ProjectListItem extends StatelessWidget {
             ),
           const SizedBox(height: 4),
           Text(
-            'Belgeler: ${project.documents.length} | Son güncelleme: ${_formatDate(project.updatedAt)}',
+            l10n.projectDetails(
+                project.documents.length, _formatDate(project.updatedAt)),
             style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
           ),
         ],
@@ -343,23 +349,24 @@ class ProjectListItem extends StatelessWidget {
           }
         },
         itemBuilder: (context) => [
-          const PopupMenuItem(
+          PopupMenuItem(
             value: 'export',
             child: Row(
               children: [
-                Icon(Icons.file_download, size: 18),
-                SizedBox(width: 8),
-                Text('Dışa Aktar'),
+                const Icon(Icons.file_download, size: 18),
+                const SizedBox(width: 8),
+                Text(l10n.exportAction),
               ],
             ),
           ),
-          const PopupMenuItem(
+          PopupMenuItem(
             value: 'delete',
             child: Row(
               children: [
-                Icon(Icons.delete, size: 18, color: Colors.red),
-                SizedBox(width: 8),
-                Text('Sil', style: TextStyle(color: Colors.red)),
+                const Icon(Icons.delete, size: 18, color: Colors.red),
+                const SizedBox(width: 8),
+                Text(l10n.deleteAction,
+                    style: const TextStyle(color: Colors.red)),
               ],
             ),
           ),

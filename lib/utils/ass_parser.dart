@@ -1,6 +1,6 @@
 import 'dart:core'; // Duration için gerekli
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 
 // Lokalizasyon yardımcı sınıfı
 class AssParserLocalizer {

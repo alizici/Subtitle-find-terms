@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 import '../../repositories/document_repository.dart';
 import '../../services/term_matcher.dart';
 import '../../services/correction_service.dart';
@@ -23,22 +24,24 @@ class _ReportScreenState extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Raporlar'),
+        title: Text(l10n.reports),
         actions: [
           IconButton(
             icon: const Icon(Icons.file_download),
-            tooltip: 'Rapor Dışa Aktar',
+            tooltip: l10n.exportReport,
             onPressed:
                 _documentRepo.currentDocument != null ? _exportReport : null,
           ),
         ],
       ),
       body: _documentRepo.currentDocument == null
-          ? const Center(
+          ? Center(
               child: Text(
-                'Lütfen önce Belge İşleme ekranından bir belge yükleyin',
+                l10n.pleaseUploadDocument,
               ),
             )
           : _buildReportContent(),
@@ -46,6 +49,8 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   Widget _buildReportContent() {
+    final l10n = AppLocalizations.of(context)!;
+
     if (_documentRepo.isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -53,7 +58,7 @@ class _ReportScreenState extends State<ReportScreen> {
     if (_documentRepo.error != null) {
       return Center(
         child: Text(
-          'Hata: ${_documentRepo.error}',
+          l10n.errorWithMessage(_documentRepo.error!),
           style: const TextStyle(color: Colors.red),
         ),
       );
@@ -89,27 +94,29 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   Widget _buildSummaryCard() {
+    final l10n = AppLocalizations.of(context)!;
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Özet',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              l10n.summary,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildSummaryItem(
-                  'Toplam Satır',
+                  l10n.totalLines,
                   _documentRepo.currentDocument!.lines.length.toString(),
                   Icons.format_list_numbered,
                 ),
                 _buildSummaryItem(
-                  'Düzeltilen Satır',
+                  l10n.correctedLines,
                   _documentRepo.currentDocument!.lines
                       .where((l) => l.hasCorrections)
                       .length
@@ -117,12 +124,12 @@ class _ReportScreenState extends State<ReportScreen> {
                   Icons.edit,
                 ),
                 _buildSummaryItem(
-                  'Toplam Düzeltme',
+                  l10n.totalCorrections,
                   _documentRepo.corrections.length.toString(),
                   Icons.auto_fix_high,
                 ),
                 _buildSummaryItem(
-                  'Uygulanan Düzeltme',
+                  l10n.appliedCorrections,
                   _documentRepo.corrections
                       .where((c) => c.isApplied)
                       .length
@@ -152,6 +159,8 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   Widget _buildConsistencyScoreCard() {
+    final l10n = AppLocalizations.of(context)!;
+
     Color scoreColor;
 
     if (_consistencyScore! >= 90) {
@@ -168,9 +177,9 @@ class _ReportScreenState extends State<ReportScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Tutarlılık Puanı',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              l10n.consistencyScore,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             Row(
@@ -205,7 +214,7 @@ class _ReportScreenState extends State<ReportScreen> {
                         ),
                       ),
                       Text(
-                        '${_consistencyScore}%',
+                        '$_consistencyScore%',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -220,7 +229,7 @@ class _ReportScreenState extends State<ReportScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${_consistencyScore}%',
+                      '$_consistencyScore%',
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -242,20 +251,24 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   String _getScoreDescription(int score) {
+    final l10n = AppLocalizations.of(context)!;
+
     if (score >= 90) {
-      return 'Mükemmel tutarlılık';
+      return l10n.excellentConsistency;
     } else if (score >= 80) {
-      return 'İyi tutarlılık';
+      return l10n.goodConsistency;
     } else if (score >= 70) {
-      return 'Orta tutarlılık';
+      return l10n.mediumConsistency;
     } else if (score >= 50) {
-      return 'Düşük tutarlılık';
+      return l10n.lowConsistency;
     } else {
-      return 'Çok düşük tutarlılık';
+      return l10n.veryLowConsistency;
     }
   }
 
   Widget _buildTopIncorrectTermsCard(Map<String, int> termStats) {
+    final l10n = AppLocalizations.of(context)!;
+
     final sortedStats = termStats.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
 
@@ -267,13 +280,13 @@ class _ReportScreenState extends State<ReportScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'En Sık Yanlış Çevrilen Terimler',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Text(
+              l10n.mostFrequentlyMistranslatedTerms,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             topStats.isEmpty
-                ? const Center(child: Text('Yanlış çevrilen terim bulunamadı'))
+                ? Center(child: Text(l10n.noMistranslatedTermsFound))
                 : ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -283,7 +296,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       return ListTile(
                         title: Text(entry.key),
                         trailing: Text(
-                          '${entry.value} kez',
+                          l10n.timesOccurred(entry.value),
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       );
@@ -296,6 +309,8 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   Widget _buildCorrectionsListCard() {
+    final l10n = AppLocalizations.of(context)!;
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -305,19 +320,20 @@ class _ReportScreenState extends State<ReportScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Düzeltme Detayları',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Text(
+                  l10n.correctionDetails,
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  'Toplam: ${_documentRepo.corrections.length} düzeltme',
+                  l10n.totalCorrections2(_documentRepo.corrections.length),
                   style: const TextStyle(color: Colors.grey),
                 ),
               ],
             ),
             const SizedBox(height: 16),
             _documentRepo.corrections.isEmpty
-                ? const Center(child: Text('Henüz düzeltme önerisi yok'))
+                ? Center(child: Text(l10n.noCorrectionSuggestions))
                 : ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -336,7 +352,7 @@ class _ReportScreenState extends State<ReportScreen> {
                         title: Text(
                           '${correction.chineseTerm}: ${correction.incorrectEnglishTerm} → ${correction.correctEnglishTerm}',
                         ),
-                        subtitle: Text('Satır: ${correction.lineNumber}'),
+                        subtitle: Text(l10n.line(correction.lineNumber)),
                       );
                     },
                   ),
@@ -347,16 +363,16 @@ class _ReportScreenState extends State<ReportScreen> {
   }
 
   Future<void> _exportReport() async {
+    final l10n = AppLocalizations.of(context)!;
+
     try {
       final termMatcher = Provider.of<TermMatcher>(context, listen: false);
       final correctionService = CorrectionService(termMatcher);
 
-      if (_consistencyScore == null) {
-        _consistencyScore = correctionService.calculateConsistencyScore(
-          _documentRepo.currentDocument!,
-          _documentRepo.corrections,
-        );
-      }
+      _consistencyScore ??= correctionService.calculateConsistencyScore(
+        _documentRepo.currentDocument!,
+        _documentRepo.corrections,
+      );
 
       final termStats = _documentRepo.getTermCorrectionStats();
 
@@ -365,11 +381,12 @@ class _ReportScreenState extends State<ReportScreen> {
         _documentRepo.corrections,
         termStats,
         _consistencyScore!,
+        context, // Added the missing context parameter
       );
 
       final result = await FilePicker.platform.saveFile(
-        dialogTitle: 'Raporu Kaydet',
-        fileName: 'terim_tutarlilik_raporu.html',
+        dialogTitle: l10n.saveReport,
+        fileName: l10n.consistencyReportFileName,
         type: FileType.custom,
         allowedExtensions: ['html'],
       );
@@ -379,13 +396,14 @@ class _ReportScreenState extends State<ReportScreen> {
         await file.writeAsString(htmlReport);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Rapor başarıyla kaydedildi')),
+          SnackBar(content: Text(l10n.reportSavedSuccessfully)),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text('Hata: $e')));
+      ).showSnackBar(
+          SnackBar(content: Text(l10n.errorWithMessage(e.toString()))));
     }
   }
 }

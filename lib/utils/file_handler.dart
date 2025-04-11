@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 import '../models/term_pair.dart';
 
 class FileHandler {

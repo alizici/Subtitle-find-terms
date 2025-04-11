@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart';
 import '../../repositories/subscription_repository.dart';
 import '../../models/user_subscription.dart';
 
@@ -8,12 +9,13 @@ class SubscriptionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final subscriptionRepo = Provider.of<SubscriptionRepository>(context);
     final subscription = subscriptionRepo.subscription;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Abonelik Bilgilerim'),
+        title: Text(l10n.subscriptionTitle),
       ),
       body: subscriptionRepo.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -23,6 +25,8 @@ class SubscriptionScreen extends StatelessWidget {
 
   Widget _buildSubscriptionInfo(
       BuildContext context, UserSubscription subscription) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -35,16 +39,17 @@ class SubscriptionScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Altyazı Yükleme Hakkınız',
-                    style: TextStyle(
+                  Text(
+                    l10n.subtitleUploadRights,
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Kalan hakkınız: ${subscription.remainingUploads} / ${UserSubscription.maxSubtitleUploads}',
+                    l10n.subtitleUploadsRemaining(subscription.remainingUploads,
+                        UserSubscription.maxSubtitleUploads),
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 16),
@@ -62,9 +67,9 @@ class SubscriptionScreen extends StatelessWidget {
                   ),
                   if (subscription.remainingUploads == 0) ...[
                     const SizedBox(height: 16),
-                    const Text(
-                      'Altyazı yükleme hakkınız kalmadı. Daha fazla altyazı yüklemek için aboneliğinizi yenileyin.',
-                      style: TextStyle(color: Colors.red),
+                    Text(
+                      l10n.noUploadsRemaining,
+                      style: const TextStyle(color: Colors.red),
                     ),
                   ],
                 ],
@@ -72,9 +77,9 @@ class SubscriptionScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 32),
-          const Text(
-            'Paketler',
-            style: TextStyle(
+          Text(
+            l10n.packages,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -82,16 +87,16 @@ class SubscriptionScreen extends StatelessWidget {
           const SizedBox(height: 16),
           _buildSubscriptionCard(
             context,
-            title: 'Temel Paket',
-            description: '5 altyazı yükleme hakkı',
+            title: l10n.basicPackage,
+            description: l10n.subtitleUploads(5),
             price: '₺49.99',
             onTap: () => _purchaseSubscription(context, 5),
           ),
           const SizedBox(height: 16),
           _buildSubscriptionCard(
             context,
-            title: 'Premium Paket',
-            description: '15 altyazı yükleme hakkı',
+            title: l10n.premiumPackage,
+            description: l10n.subtitleUploads(15),
             price: '₺129.99',
             onTap: () => _purchaseSubscription(context, 15),
             isRecommended: true,
@@ -99,8 +104,8 @@ class SubscriptionScreen extends StatelessWidget {
           const SizedBox(height: 16),
           _buildSubscriptionCard(
             context,
-            title: 'Pro Paket',
-            description: '30 altyazı yükleme hakkı',
+            title: l10n.proPackage,
+            description: l10n.subtitleUploads(30),
             price: '₺249.99',
             onTap: () => _purchaseSubscription(context, 30),
           ),
@@ -117,6 +122,8 @@ class SubscriptionScreen extends StatelessWidget {
     required VoidCallback onTap,
     bool isRecommended = false,
   }) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Stack(
       children: [
         Card(
@@ -161,7 +168,7 @@ class SubscriptionScreen extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: onTap,
-                        child: const Text('Satın Al'),
+                        child: Text(l10n.purchase),
                       ),
                     ],
                   ),
@@ -183,9 +190,9 @@ class SubscriptionScreen extends StatelessWidget {
                   bottomLeft: Radius.circular(8),
                 ),
               ),
-              child: const Text(
-                'Önerilen',
-                style: TextStyle(
+              child: Text(
+                l10n.recommended,
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
@@ -197,14 +204,16 @@ class SubscriptionScreen extends StatelessWidget {
   }
 
   void _purchaseSubscription(BuildContext context, int uploads) {
+    final l10n = AppLocalizations.of(context)!;
+
     // Burada ödeme işlemi entegrasyonu yapılacak
     // Şimdilik sadece hak ekleyeceğiz
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Ödeme Başarılı'),
-        content: Text('$uploads altyazı yükleme hakkı satın aldınız.'),
+        title: Text(l10n.paymentSuccessful),
+        content: Text(l10n.purchasedUploads(uploads)),
         actions: [
           TextButton(
             onPressed: () {
@@ -213,7 +222,7 @@ class SubscriptionScreen extends StatelessWidget {
               Provider.of<SubscriptionRepository>(context, listen: false)
                   .addUploads(uploads);
             },
-            child: const Text('Tamam'),
+            child: Text(l10n.ok),
           ),
         ],
       ),

@@ -50,7 +50,7 @@ class CorrectionService {
       orElse: () => throw Exception('Satır bulunamadı: $lineNumber'),
     );
 
-    print("${lineNumber}. satır işleniyor:");
+    print("$lineNumber. satır işleniyor:");
     print("  Çince: ${line.chineseText}");
     print("  İngilizce: ${line.englishText}");
 

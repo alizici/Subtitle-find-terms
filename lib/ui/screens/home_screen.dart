@@ -1,5 +1,6 @@
 // lib/ui/screens/home_screen.dart
 import 'package:flutter/material.dart';
+import 'package:chinese_english_term_corrector/generated/l10n/app_localizations.dart'; // Import localization
 import 'term_management_screen.dart';
 import 'document_processing_screen.dart';
 import 'report_screen.dart';
@@ -22,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!; // Get localization instance
+
     return Scaffold(
       body: Row(
         children: [
@@ -33,18 +36,18 @@ class _HomeScreenState extends State<HomeScreen> {
               });
             },
             labelType: NavigationRailLabelType.all,
-            destinations: const [
+            destinations: [
               NavigationRailDestination(
-                icon: Icon(Icons.library_books),
-                label: Text('Terim Yönetimi'),
+                icon: const Icon(Icons.library_books),
+                label: Text(l10n.termManagement), // Localized label
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.edit),
-                label: Text('Belge İşleme'),
+                icon: const Icon(Icons.edit),
+                label: Text(l10n.documentProcessing), // Localized label
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.assessment),
-                label: Text('Raporlar'),
+                icon: const Icon(Icons.assessment),
+                label: Text(l10n.reports), // Localized label
               ),
             ],
           ),

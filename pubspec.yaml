@@ -16,7 +16,7 @@ dependencies:
   # Temel bileşenler
   provider: ^6.0.5        # Durum yönetimi için
   path_provider: ^2.1.1   # Dosya sistemi erişimi için
-  file_picker: ^5.3.3     # Dosya seçme diyalogları için
+  file_picker: ^10.1.0    # Dosya seçme diyalogları için
   shared_preferences: ^2.2.2  # Kullanıcı tercihlerini kaydetmek için
   
   # Kullanıcı arayüzü bileşenleri
