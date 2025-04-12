@@ -59,60 +59,68 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
     final l10n = AppLocalizations.of(context)!; // Get localization instance
     _corrections = _documentRepo.corrections;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.documentProcessingTitle), // Localized title
-        actions: [
-          // Dikey/Yatay panel değiştirme butonu
-          IconButton(
-            icon: Icon(
-                _showVerticalPanel ? Icons.view_sidebar : Icons.view_agenda),
-            tooltip: _showVerticalPanel
-                ? l10n.horizontalPanelTooltip // Localized tooltip
-                : l10n.verticalPanelTooltip, // Localized tooltip
-            onPressed: () {
-              setState(() {
-                _showVerticalPanel = !_showVerticalPanel;
-                // Dikey panele geçerken boyutu sıfırla
-                if (_showVerticalPanel) {
-                  _panelSize = MediaQuery.of(context).size.width * 0.35;
-                } else {
-                  _panelSize = 300.0;
-                }
-              });
-            },
-          ),
-          IconButton(
-            icon: Icon(_showSideBySide ? Icons.view_agenda : Icons.view_column),
-            tooltip: l10n.changeViewTooltip, // Localized tooltip
-            onPressed: () {
-              setState(() {
-                _showSideBySide = !_showSideBySide;
-              });
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.file_open),
-            tooltip: l10n.openDocumentTooltip, // Localized tooltip
-            onPressed: _loadDocument,
-          ),
-          IconButton(
-            icon: const Icon(Icons.save),
-            tooltip: l10n.saveDocumentTooltip, // Localized tooltip
-            onPressed:
-                _documentRepo.currentDocument != null ? _saveDocument : null,
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        // Kullanıcı geri tuşuna bastığında belge değişikliklerini kaydet
+        _documentRepo.updateStaticDocument();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(l10n.documentProcessingTitle), // Localized title
+          actions: [
+            // Dikey/Yatay panel değiştirme butonu
+            IconButton(
+              icon: Icon(
+                  _showVerticalPanel ? Icons.view_sidebar : Icons.view_agenda),
+              tooltip: _showVerticalPanel
+                  ? l10n.horizontalPanelTooltip // Localized tooltip
+                  : l10n.verticalPanelTooltip, // Localized tooltip
+              onPressed: () {
+                setState(() {
+                  _showVerticalPanel = !_showVerticalPanel;
+                  // Dikey panele geçerken boyutu sıfırla
+                  if (_showVerticalPanel) {
+                    _panelSize = MediaQuery.of(context).size.width * 0.35;
+                  } else {
+                    _panelSize = 300.0;
+                  }
+                });
+              },
+            ),
+            IconButton(
+              icon:
+                  Icon(_showSideBySide ? Icons.view_agenda : Icons.view_column),
+              tooltip: l10n.changeViewTooltip, // Localized tooltip
+              onPressed: () {
+                setState(() {
+                  _showSideBySide = !_showSideBySide;
+                });
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.file_open),
+              tooltip: l10n.openDocumentTooltip, // Localized tooltip
+              onPressed: _loadDocument,
+            ),
+            IconButton(
+              icon: const Icon(Icons.save),
+              tooltip: l10n.saveDocumentTooltip, // Localized tooltip
+              onPressed:
+                  _documentRepo.currentDocument != null ? _saveDocument : null,
+            ),
+          ],
+        ),
+        body: _showVerticalPanel
+            ? _buildHorizontalSplitView() // Dikey panel görünümü (yatay bölünmüş)
+            : _buildVerticalSplitView(), // Yatay panel görünümü (dikey bölünmüş)
+        floatingActionButton: _documentRepo.currentDocument != null
+            ? FloatingActionButton(
+                onPressed: _processDocument,
+                child: const Icon(Icons.auto_fix_high),
+              )
+            : null,
       ),
-      body: _showVerticalPanel
-          ? _buildHorizontalSplitView() // Dikey panel görünümü (yatay bölünmüş)
-          : _buildVerticalSplitView(), // Yatay panel görünümü (dikey bölünmüş)
-      floatingActionButton: _documentRepo.currentDocument != null
-          ? FloatingActionButton(
-              onPressed: _processDocument,
-              child: const Icon(Icons.auto_fix_high),
-            )
-          : null,
     );
   }
 
@@ -588,6 +596,8 @@ class _DocumentProcessingScreenState extends State<DocumentProcessingScreen> {
 
       if (result != null) {
         await _documentRepo.saveDocument(result);
+        // Statik değişkeni güncelle
+        _documentRepo.updateStaticDocument();
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

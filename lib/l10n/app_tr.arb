@@ -1343,5 +1343,9 @@
         "example": "5"
       }
     }
+  },
+  "documentFilesNotFound": "Belge dosyaları bulunamadı",
+  "@documentFilesNotFound": {
+    "description": "Error message when document files cannot be found"
   }
 } 

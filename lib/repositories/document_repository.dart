@@ -40,6 +40,19 @@ class DocumentRepository extends ChangeNotifier {
     _savedCorrections = [];
   }
 
+  // Statik belgeyi dışarıdan erişilebilir hale getiren getter
+  static Document? getLoadedDocument() {
+    return _loadedDocument;
+  }
+
+  // Belge içeriğini statik değişkene güncelleyen metod
+  void updateStaticDocument() {
+    if (_currentDocument != null) {
+      _loadedDocument = _currentDocument;
+      _logger.info("Belge içeriği statik değişkene güncellendi");
+    }
+  }
+
   Future<void> loadDocument(File chineseFile, File englishFile) async {
     _isLoading = true;
     _error = null;
@@ -248,6 +261,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
       }
     }
 
+    // Değişiklikleri statik değişkene güncelle
+    updateStaticDocument();
+
     _logger.info(
         "Düzeltme işlemi tamamlandı: $appliedCount başarılı, $failedCount başarısız.");
     notifyListeners();
@@ -357,6 +373,9 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             otherCorrection.apply();
           }
         }
+
+        // Değişiklikleri statik değişkene güncelle
+        updateStaticDocument();
 
         notifyListeners();
         return;

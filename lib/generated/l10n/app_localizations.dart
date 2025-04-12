@@ -1440,6 +1440,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You have purchased {count} subtitle upload rights.'**
   String purchasedUploads(int count);
+
+  /// Error message when document files cannot be found
+  ///
+  /// In en, this message translates to:
+  /// **'Document files not found'**
+  String get documentFilesNotFound;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

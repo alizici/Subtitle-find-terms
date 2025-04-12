@@ -9,6 +9,7 @@ class Document {
   String? englishFilePath; // Path of the English file
   String? chineseFileName; // Name of the Chinese file
   String? englishFileName; // Name of the English file
+  bool isCompleted; // Altyazının tamamlanıp tamamlanmadığını gösteren değişken
 
   Document({
     String? id,
@@ -18,11 +19,16 @@ class Document {
     this.englishFilePath,
     this.chineseFileName,
     this.englishFileName,
+    this.isCompleted = false,
   })  : id = id ?? DateTime.now().millisecondsSinceEpoch.toString(),
         importedAt = DateTime.now();
 
   void markAsProcessed() {
     lastProcessedAt = DateTime.now();
+  }
+
+  void markAsCompleted(bool completed) {
+    isCompleted = completed;
   }
 
   Map<String, dynamic> toJson() {
@@ -36,6 +42,7 @@ class Document {
       'englishFilePath': englishFilePath,
       'chineseFileName': chineseFileName,
       'englishFileName': englishFileName,
+      'isCompleted': isCompleted,
     };
   }
 
@@ -50,6 +57,7 @@ class Document {
       englishFilePath: json['englishFilePath'],
       chineseFileName: json['chineseFileName'],
       englishFileName: json['englishFileName'],
+      isCompleted: json['isCompleted'] ?? false,
     )
       ..importedAt = json['importedAt'] != null
           ? DateTime.parse(json['importedAt'])

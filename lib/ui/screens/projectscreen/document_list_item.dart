@@ -5,12 +5,16 @@ class DocumentListItem extends StatelessWidget {
   final Document document;
   final VoidCallback onTap;
   final VoidCallback onDelete;
+  final Function(bool) onCompletedToggle;
+  final bool isLastAccessed;
 
   const DocumentListItem({
     Key? key,
     required this.document,
     required this.onTap,
     required this.onDelete,
+    required this.onCompletedToggle,
+    this.isLastAccessed = false,
   }) : super(key: key);
 
   @override
@@ -20,35 +24,81 @@ class DocumentListItem extends StatelessWidget {
     final correctionCount =
         document.lines.where((l) => l.hasCorrections).length;
 
-    return ListTile(
-      leading: Icon(
-        hasBeenProcessed ? Icons.assignment_turned_in : Icons.assignment,
-        color: hasBeenProcessed ? Colors.green : Colors.orange,
-        size: 36,
+    return Container(
+      decoration: isLastAccessed
+          ? BoxDecoration(
+              border: Border.all(color: Colors.blue, width: 2),
+              borderRadius: BorderRadius.circular(4),
+            )
+          : null,
+      child: ListTile(
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Checkbox(
+              value: document.isCompleted,
+              onChanged: (value) {
+                if (value != null) {
+                  onCompletedToggle(value);
+                }
+              },
+              activeColor: Colors.green,
+            ),
+            Icon(
+              hasBeenProcessed ? Icons.assignment_turned_in : Icons.assignment,
+              color: hasBeenProcessed ? Colors.green : Colors.orange,
+              size: 36,
+            ),
+          ],
+        ),
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(
+                document.name,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            if (isLastAccessed)
+              const Tooltip(
+                message: 'Son erişilen altyazı',
+                child: Icon(
+                  Icons.access_time,
+                  color: Colors.blue,
+                  size: 16,
+                ),
+              ),
+          ],
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 4),
+            Text(
+              'Satır sayısı: $lineCount | ${correctionCount > 0 ? '$correctionCount satırda düzeltme' : 'Henüz düzeltme yok'}',
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            ),
+            Text(
+              'Eklenme: ${_formatDate(document.importedAt)} ${hasBeenProcessed ? '| Son işlem: ${_formatDate(document.lastProcessedAt!)}' : ''}',
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+            ),
+            if (document.isCompleted)
+              const Text(
+                'Durum: Tamamlandı',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.green,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+          ],
+        ),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete, color: Colors.red),
+          onPressed: onDelete,
+        ),
+        onTap: onTap,
       ),
-      title: Text(
-        document.name,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      ),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 4),
-          Text(
-            'Satır sayısı: $lineCount | ${correctionCount > 0 ? '$correctionCount satırda düzeltme' : 'Henüz düzeltme yok'}',
-            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
-          ),
-          Text(
-            'Eklenme: ${_formatDate(document.importedAt)} ${hasBeenProcessed ? '| Son işlem: ${_formatDate(document.lastProcessedAt!)}' : ''}',
-            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
-          ),
-        ],
-      ),
-      trailing: IconButton(
-        icon: const Icon(Icons.delete, color: Colors.red),
-        onPressed: onDelete,
-      ),
-      onTap: onTap,
     );
   }
 

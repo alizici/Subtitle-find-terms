@@ -733,4 +733,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String purchasedUploads(int count) {
     return '您已购买$count次字幕上传权限。';
   }
+
+  @override
+  String get documentFilesNotFound => '找不到文档文件';
 }

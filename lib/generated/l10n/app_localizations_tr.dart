@@ -733,4 +733,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String purchasedUploads(int count) {
     return '$count altyazı yükleme hakkı satın aldınız.';
   }
+
+  @override
+  String get documentFilesNotFound => 'Belge dosyaları bulunamadı';
 }

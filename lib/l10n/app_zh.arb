@@ -1342,5 +1342,9 @@
         "example": "5"
       }
     }
+  },
+  "documentFilesNotFound": "找不到文档文件",
+  "@documentFilesNotFound": {
+    "description": "Error message when document files cannot be found"
   }
 } 

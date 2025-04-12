@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'document_list_item.dart';
 import 'term_management_for_project.dart';
@@ -30,6 +31,7 @@ class ProjectScreen extends StatefulWidget {
 class _ProjectScreenState extends State<ProjectScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  String? _lastAccessedDocumentId;
 
   @override
   void initState() {
@@ -46,6 +48,27 @@ class _ProjectScreenState extends State<ProjectScreen>
       // Proje ID'si ve terim listesini kontrol etmek için
       print(
           'DEBUG: initState sonrası - Terim listesi: ${termRepo.terms.map((t) => '${t.id}: ${t.chineseTerm}').join(', ')}');
+
+      // Son erişilen belge ID'sini oku
+      _loadLastAccessedDocumentId();
+    });
+  }
+
+  // Son erişilen belge ID'sini yükleme
+  Future<void> _loadLastAccessedDocumentId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final lastDocId = prefs.getString('last_document_${widget.project.id}');
+    setState(() {
+      _lastAccessedDocumentId = lastDocId;
+    });
+  }
+
+  // Son erişilen belge ID'sini kaydetme
+  Future<void> _saveLastAccessedDocumentId(String documentId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('last_document_${widget.project.id}', documentId);
+    setState(() {
+      _lastAccessedDocumentId = documentId;
     });
   }
 
@@ -222,6 +245,10 @@ class _ProjectScreenState extends State<ProjectScreen>
                     document: document,
                     onTap: () => _openDocument(document),
                     onDelete: () => _deleteDocument(document.id),
+                    onCompletedToggle: (completed) {
+                      _toggleDocumentCompletion(document.id, completed);
+                    },
+                    isLastAccessed: document.id == _lastAccessedDocumentId,
                   );
                 },
               ),
@@ -705,20 +732,50 @@ class _ProjectScreenState extends State<ProjectScreen>
     return document;
   }
 
-  void _openDocument(Document document) {
-    // Belgeyi yükleme ve işleme için DocumentRepository'ye aktar
-    //final documentRepo = DocumentRepository();
+  void _openDocument(Document document) async {
+    final l10n = AppLocalizations.of(context)!;
+    // Belgelerin var olduğundan emin ol
+    if (document.chineseFilePath == null || document.englishFilePath == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.documentFilesNotFound)),
+      );
+      return;
+    }
 
-    // Static belge bilgisini ayarla (DocumentRepository üzerinden erişilebilir)
+    // Statik olarak belgeyi ayarla
     DocumentRepository.setLoadedDocument(document);
 
+    // Son erişilen belge ID'sini kaydet
+    await _saveLastAccessedDocumentId(document.id);
+
     // Belge işleme ekranına git
-    Navigator.push(
+    await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => const DocumentProcessingScreen(),
       ),
     );
+
+    // Statik belgedeki değişiklikleri aldık, şimdi projemize kaydedelim
+    final projectRepo = Provider.of<ProjectRepository>(context, listen: false);
+
+    // Document repository'den güncellenen belgeyi al
+    final updatedDocument = DocumentRepository.getLoadedDocument();
+
+    if (updatedDocument != null) {
+      // Belgeyi güncelle
+      await projectRepo.updateDocument(updatedDocument);
+
+      // UI'yi güncelle
+      setState(() {});
+    }
+  }
+
+  // Belgenin tamamlanma durumunu değiştir
+  Future<void> _toggleDocumentCompletion(
+      String documentId, bool completed) async {
+    final projectRepo = Provider.of<ProjectRepository>(context, listen: false);
+    await projectRepo.updateDocumentCompletionStatus(documentId, completed);
   }
 
   Future<void> _deleteDocument(String documentId) async {

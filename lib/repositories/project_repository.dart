@@ -128,6 +128,19 @@ class ProjectRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Belgeyi güncelle
+  Future<void> updateDocument(Document updatedDocument) async {
+    if (_currentProject == null) return;
+
+    final docIndex = _currentProject!.documents
+        .indexWhere((d) => d.id == updatedDocument.id);
+    if (docIndex != -1) {
+      _currentProject!.documents[docIndex] = updatedDocument;
+      await _saveProject(_currentProject!);
+      notifyListeners();
+    }
+  }
+
   // Düzeltme ekle
   Future<void> addCorrection(Correction correction) async {
     if (_currentProject == null) return;
@@ -196,6 +209,56 @@ class ProjectRepository extends ChangeNotifier {
       project.savePath = filePath;
     } catch (e) {
       _error = 'Proje kaydedilirken hata oluştu: $e';
+      notifyListeners();
+    }
+  }
+
+  // Projeyi kaydet (public erişim için)
+  Future<void> saveProject() async {
+    if (_currentProject == null) return;
+    await _saveProject(_currentProject!);
+    notifyListeners();
+  }
+
+  // Projeyi yenile
+  Future<void> refreshProject(String projectId) async {
+    if (_currentProject == null || _currentProject!.id != projectId) {
+      selectProject(projectId);
+    }
+
+    // Eğer projenin kaydedildiği bir yer varsa, oradan yeniden yükle
+    if (_currentProject != null && _currentProject!.savePath != null) {
+      try {
+        final file = File(_currentProject!.savePath!);
+        if (await file.exists()) {
+          final content = await file.readAsString();
+          final refreshedProject = Project.fromJsonString(content);
+
+          // Mevcut projeyi yeniden yüklenen ile değiştir
+          final index = _projects.indexWhere((p) => p.id == projectId);
+          if (index != -1) {
+            _projects[index] = refreshedProject;
+            _currentProject = refreshedProject;
+          }
+        }
+      } catch (e) {
+        _error = 'Proje yenilenirken hata oluştu: $e';
+      }
+    }
+
+    notifyListeners();
+  }
+
+  // Belge tamamlanma durumunu güncelle
+  Future<void> updateDocumentCompletionStatus(
+      String documentId, bool completed) async {
+    if (_currentProject == null) return;
+
+    final docIndex =
+        _currentProject!.documents.indexWhere((d) => d.id == documentId);
+    if (docIndex != -1) {
+      _currentProject!.documents[docIndex].markAsCompleted(completed);
+      await _saveProject(_currentProject!);
       notifyListeners();
     }
   }

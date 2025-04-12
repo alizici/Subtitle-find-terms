@@ -733,4 +733,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String purchasedUploads(int count) {
     return 'You have purchased $count subtitle upload rights.';
   }
+
+  @override
+  String get documentFilesNotFound => 'Document files not found';
 }

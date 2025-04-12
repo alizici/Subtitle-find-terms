@@ -1343,5 +1343,9 @@
         "example": "5"
       }
     }
+  },
+  "documentFilesNotFound": "Document files not found",
+  "@documentFilesNotFound": {
+    "description": "Error message when document files cannot be found"
   }
 }
